@@ -13,7 +13,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     importDeclaration.setModuleSpecifier("zod/v4");
   });
 
-  collectZodReferences(importDeclarations).map((node) => {
+  collectZodReferences(importDeclarations).forEach((node) => {
     const parentStatement =
       node.getFirstAncestorByKind(SyntaxKind.ExpressionStatement) ??
       node.getFirstAncestorByKind(SyntaxKind.VariableDeclaration);
