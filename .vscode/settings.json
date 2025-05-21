@@ -7,5 +7,5 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.organizeImports": {
     "caseFirst": "lower"
-  },
+  }
 }
