@@ -104,6 +104,11 @@ describe("Zod v3 to v4", () => {
       "replaces dropped single-argument `z.record()` with a double-arguments version",
     );
   });
+
+  // Not documented, but seems to be gone from the types in v4
+  it.todo("drops `description` in creation params");
+
+  it.todo("combines all migrations together");
 });
 
 async function runScenario(fixturePath: string) {
