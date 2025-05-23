@@ -12,7 +12,7 @@ describe("Zod v3 to v4", () => {
       await runScenario("error-customization.deprecate-message");
     });
 
-    it.todo("drops `invalid_type_error` and `required_error`", async () => {
+    it("replaces deprecated `invalid_type_error` and `required_error` with `error` function", async () => {
       await runScenario("error-customization.drop-outdated-error-keys");
     });
 

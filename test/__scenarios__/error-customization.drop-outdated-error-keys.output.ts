@@ -13,3 +13,7 @@ z.string({
 z.string({
   error: (issue) => (issue.input === undefined ? undefined : "Not a number"),
 });
+
+z.string({
+  error: "This message takes precedence",
+});
