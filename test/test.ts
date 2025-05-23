@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { extname } from "node:path";
+import * as prettier from "prettier";
 import { Project } from "ts-morph";
 import { describe, expect, it } from "vitest";
 import { handleSourceFile } from "../src/index.js";
@@ -108,7 +109,7 @@ describe("Zod v3 to v4", () => {
 async function runScenario(fixturePath: string) {
   const { input, output } = await readFixtures(fixturePath);
 
-  const { actual, expected } = transform(input, output);
+  const { actual, expected } = await transform(input, output);
 
   expect(actual).toEqual(expected);
 }
@@ -129,7 +130,11 @@ async function readFixtures(name: string) {
   };
 }
 
-function transform(beforeText: string, afterText: string, path = "index.tsx") {
+async function transform(
+  beforeText: string,
+  afterText: string,
+  path = "index.tsx",
+) {
   const project = new Project({
     useInMemoryFileSystem: true,
     skipFileDependencyResolution: true,
@@ -139,11 +144,24 @@ function transform(beforeText: string, afterText: string, path = "index.tsx") {
   });
 
   const actualSourceFile = project.createSourceFile(path, beforeText);
-  const actual = handleSourceFile(actualSourceFile);
+  let actual = handleSourceFile(actualSourceFile) ?? "";
 
-  const expected = project
+  let expected = project
     .createSourceFile(`expected${extname(path)}`, afterText)
     .getFullText();
+
+  // Format both code the same way so we don't have false positives
+  try {
+    actual = await prettier.format(actual, { parser: "typescript" });
+  } catch {
+    throw new Error(`Failed to format actual code:\n\n${actual}`);
+  }
+
+  try {
+    expected = await prettier.format(expected, { parser: "typescript" });
+  } catch {
+    throw new Error(`Failed to format expected code:\n\n${expected}`);
+  }
 
   return {
     actual,
