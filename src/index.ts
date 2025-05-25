@@ -19,6 +19,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
       node.getFirstAncestorByKind(SyntaxKind.ExpressionStatement) ??
       node.getFirstAncestorByKind(SyntaxKind.VariableDeclaration);
 
+    convertErrorMapToErrorFunction(parentStatement);
     convertMessageKeyToError(parentStatement);
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
   });
@@ -112,6 +113,86 @@ function convertDeprecatedErrorKeysToErrorFunction(
         name: "error",
         initializer: errorFunctionText,
       });
+    });
+}
+
+function convertErrorMapToErrorFunction(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+) {
+  // Find all errorMap properties
+  node
+    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .filter(
+      (id) =>
+        id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
+        id.getText() === "errorMap",
+    )
+    .map((id) =>
+      id.getParent()?.getParentIfKind(SyntaxKind.ObjectLiteralExpression),
+    )
+    .filter(
+      (objectLiteral): objectLiteral is ObjectLiteralExpression =>
+        objectLiteral !== undefined,
+    )
+    .forEach((objectLiteral) => {
+      const errorMapProp = objectLiteral.getProperty("errorMap");
+      const errorMapFunction = errorMapProp?.getLastChildIfKind(
+        SyntaxKind.ArrowFunction,
+      );
+
+      if (!errorMapFunction) {
+        return;
+      }
+
+      const issueParam = errorMapFunction.getParameters()[0]?.getName();
+      const contextParam = errorMapFunction.getParameters()[1]?.getName();
+      if (!issueParam) {
+        return;
+      }
+
+      const functionBody = errorMapFunction.getBody();
+      if (!functionBody) {
+        return;
+      }
+
+      let hasOnlyDefaultReturns = true;
+      const returnStatements = functionBody.getDescendantsOfKind(
+        SyntaxKind.ReturnStatement,
+      );
+      returnStatements.forEach((statement) => {
+        const expression = statement.getExpression();
+
+        if (!expression?.isKind(SyntaxKind.ObjectLiteralExpression)) {
+          hasOnlyDefaultReturns = false;
+          return;
+        }
+
+        const messageProp = expression.getProperty("message");
+        if (!messageProp) {
+          hasOnlyDefaultReturns = false;
+          return;
+        }
+
+        const messageValueText = messageProp.getLastChild()?.getText();
+        if (messageValueText === `${contextParam}.defaultError`) {
+          statement.replaceWithText("return;");
+        } else {
+          statement.replaceWithText(`return ${messageValueText};`);
+          hasOnlyDefaultReturns = false;
+        }
+      });
+
+      // If it only has default returns, we don't need an error function
+      if (hasOnlyDefaultReturns) {
+        errorMapProp?.remove();
+        return;
+      }
+
+      objectLiteral.addPropertyAssignment({
+        name: "error",
+        initializer: `(${issueParam}) => ${functionBody.getText()}`,
+      });
+      errorMapProp?.remove();
     });
 }
 
