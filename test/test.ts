@@ -34,9 +34,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=znumber
   describe("z.number()", () => {
-    it.todo("replaces deprecated `z.number().safe()` with `z.int()`");
-
-    it.todo("replaces `z.number().int()` with `z.int()`");
+    it("replaces deprecated `z.number().safe()` and `z.number().int() with `z.int()`", async () => {
+      await runScenario("z-number");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=zstring
