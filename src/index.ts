@@ -1,5 +1,4 @@
 import {
-  CallExpression,
   ExpressionStatement,
   ImportDeclaration,
   Node,
@@ -8,6 +7,10 @@ import {
   SyntaxKind,
   VariableDeclaration,
 } from "ts-morph";
+import {
+  convertZNumberPatternsToZInt,
+  convertZStringPatternsToTopLevelApi,
+} from "./convert-name-to-top-level-api.js";
 
 export function handleSourceFile(sourceFile: SourceFile): string | undefined {
   const importDeclarations = collectZodImportDeclarations(sourceFile);
@@ -35,6 +38,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     parentType?.getRight().replaceWithText("ZodJSONSchema");
 
     convertZNumberPatternsToZInt(parentStatement, zodName);
+    convertZStringPatternsToTopLevelApi(parentStatement, zodName);
   });
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
@@ -176,60 +180,6 @@ function convertMessageKeyToError(
         objectLiteral.getProperty("invalid_type_error");
       requiredErrorProp?.remove();
       invalidTypeErrorProp?.remove();
-    });
-}
-
-function convertZNumberPatternsToZInt(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-  zodName: string,
-) {
-  node
-    ?.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-    .filter((e) => e.getName() === "number")
-    // Get the full `z.number().X().Y()` call chain
-    .map((expression) =>
-      expression.getParentWhile(
-        (parent) =>
-          parent.isKind(SyntaxKind.PropertyAccessExpression) ||
-          parent.isKind(SyntaxKind.CallExpression),
-      ),
-    )
-    .filter((e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression))
-    // Only keep the ones with `.int()` and `.safe()` inside
-    .filter((expression) =>
-      expression.getDescendants().some((child) => {
-        const looksLikeZodNumberInt =
-          child.isKind(SyntaxKind.PropertyAccessExpression) &&
-          child.getName() === "int";
-        const looksLikeZodNumberSafe =
-          child.isKind(SyntaxKind.PropertyAccessExpression) &&
-          child.getName() === "safe";
-
-        return looksLikeZodNumberInt || looksLikeZodNumberSafe;
-      }),
-    )
-    .forEach((expression) => {
-      // Remove `.int()` and `.safe()` from the chain
-      expression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-        .filter(
-          (expression) =>
-            expression.getName() === "int" || expression.getName() === "safe",
-        )
-        .forEach((expression) => {
-          const parent = expression.getFirstAncestorByKind(
-            SyntaxKind.CallExpression,
-          );
-          parent?.replaceWithText(expression.getExpression().getText());
-        });
-
-      // Replace `z.number()` with `z.int()`
-      expression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-        .filter((e) => e.getName() === "number")
-        .forEach((e) => {
-          e.replaceWithText(`${zodName}.int`);
-        });
     });
 }
 

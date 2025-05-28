@@ -41,7 +41,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=zstring
   describe("z.string()", () => {
-    it.todo("replaces deprecated `z.string().*()` with top-level APIs");
+    it("replaces deprecated `z.string().*()` with top-level APIs", async () => {
+      await runScenario("z-string");
+    });
 
     it.todo(
       "replaces dropped `z.string().ip()` with `z.union([z.ipv4(), z.ipv6()])`",
