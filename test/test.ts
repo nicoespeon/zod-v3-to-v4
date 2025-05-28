@@ -27,9 +27,9 @@ describe("Zod v3 to v4", () => {
       await runScenario("zod-error.use-treeify-error");
     });
 
-    it.todo(
-      "replaces deprecated `.addIssue()` and `.addIssues()` with direct pushes to `.issues`",
-    );
+    it("replaces deprecated `.addIssue()` and `.addIssues()` with direct pushes to `.issues`", async () => {
+      await runScenario("zod-error.push-to-issues");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=znumber

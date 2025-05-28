@@ -1,6 +1,7 @@
 import {
   ExpressionStatement,
   ImportDeclaration,
+  Node,
   ObjectLiteralExpression,
   type SourceFile,
   SyntaxKind,
@@ -28,6 +29,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
   });
 
   convertZodErrorToTreeifyError(sourceFile);
+  convertZodErrorAddIssueToDirectPushes(sourceFile);
 
   return sourceFile.getFullText();
 }
@@ -36,13 +38,12 @@ function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((expression) => {
+      const argsCount = expression.getArguments().length;
       const methodCalled = expression.getExpression().getLastChild();
       const looksLikeZodErrorFormat =
-        methodCalled?.getText() === "format" &&
-        methodCalled?.getChildCount() === 0;
+        methodCalled?.getText() === "format" && argsCount === 0;
       const looksLikeZodErrorFlatten =
-        methodCalled?.getText() === "flatten" &&
-        methodCalled?.getChildCount() === 0;
+        methodCalled?.getText() === "flatten" && argsCount === 0;
 
       // TODO: prevent matches that don't belong to Zod
 
@@ -67,6 +68,66 @@ function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
       const caller = expression.getFirstChild()?.getText() ?? "";
       expression.replaceWithText(`z.treeifyError(${caller})`);
     });
+}
+
+function convertZodErrorAddIssueToDirectPushes(sourceFile: SourceFile) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((expression) => {
+      const argsCount = expression.getArguments().length;
+      const methodCalled = expression.getExpression().getLastChild();
+      const looksLikeZodErrorAddIssue =
+        methodCalled?.getText() === "addIssue" && argsCount === 1;
+      const looksLikeZodErrorAddIssues =
+        methodCalled?.getText() === "addIssues" && argsCount === 1;
+
+      // TODO: prevent matches that don't belong to Zod
+
+      return looksLikeZodErrorAddIssue || looksLikeZodErrorAddIssues;
+    })
+    .forEach((expression) => {
+      const caller =
+        expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
+      const argument = expression.getArguments()[0];
+      if (!argument) {
+        return;
+      }
+
+      convertZodIssueToV4(argument);
+
+      const newArgument = argument.isKind(SyntaxKind.ArrayLiteralExpression)
+        ? argument
+            .getElements()
+            .map((element) => element.getText())
+            .join(",\n")
+        : argument.getText();
+
+      expression.replaceWithText(`${caller}.issues.push(${newArgument})`);
+    });
+}
+
+function convertZodIssueToV4(node: Node) {
+  if (node.isKind(SyntaxKind.ArrayLiteralExpression)) {
+    const arrayElements = node.getElements();
+    arrayElements.forEach((element) => {
+      convertZodIssueToV4(element);
+    });
+    return;
+  }
+
+  if (!node.isKind(SyntaxKind.ObjectLiteralExpression)) {
+    return;
+  }
+
+  node.addPropertyAssignment({
+    name: "input",
+    initializer: "''",
+  });
+
+  const typeProperty = node.getProperty("type");
+  if (typeProperty && typeProperty.isKind(SyntaxKind.PropertyAssignment)) {
+    typeProperty.rename("origin");
+  }
 }
 
 function convertMessageKeyToError(
