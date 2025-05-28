@@ -27,12 +27,12 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     parentType?.getRight().replaceWithText("ZodJSONSchema");
   });
 
-  convertZodErrorFormatToTreeifyError(sourceFile);
+  convertZodErrorToTreeifyError(sourceFile);
 
   return sourceFile.getFullText();
 }
 
-function convertZodErrorFormatToTreeifyError(sourceFile: SourceFile) {
+function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((callExpression) => {
@@ -40,9 +40,13 @@ function convertZodErrorFormatToTreeifyError(sourceFile: SourceFile) {
       const looksLikeZodErrorFormat =
         methodCalled?.getText() === "format" &&
         methodCalled?.getChildCount() === 0;
+      const looksLikeZodErrorFlatten =
+        methodCalled?.getText() === "flatten" &&
+        methodCalled?.getChildCount() === 0;
 
-      // TODO: prevent matching `.format()` that's not from `.safeParse()`
-      return looksLikeZodErrorFormat;
+      // TODO: prevent matching calls that's not from `.safeParse()`
+
+      return looksLikeZodErrorFormat || looksLikeZodErrorFlatten;
     })
     .forEach((formatCallExpression) => {
       const caller =

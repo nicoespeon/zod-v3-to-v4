@@ -6,6 +6,9 @@ export function parseAndReport(schema: z.ZodJSONSchema, input: unknown) {
   if (!result.success) {
     const formatted = z.treeifyError(result.error);
     console.error(formatted);
+
+    const flattened = z.treeifyError(result.error);
+    console.error(flattened);
   }
 
   return result;

@@ -6,6 +6,9 @@ export function parseAndReport(schema: z.ZodSchema, input: unknown) {
   if (!result.success) {
     const formatted = result.error.format();
     console.error(formatted);
+
+    const flattened = result.error.flatten();
+    console.error(flattened);
   }
 
   return result;
