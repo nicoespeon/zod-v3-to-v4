@@ -23,7 +23,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=zoderror
   describe("ZodError", () => {
-    it.todo("replaces deprecated `.format()` with `z.treeifyError()`");
+    it("replaces deprecated `.format()` with `z.treeifyError()`", async () => {
+      await runScenario("zod-error.drop-format");
+    });
 
     it.todo("replaces deprecated `.flatten()` with `z.treeifyError()`");
 

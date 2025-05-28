@@ -10,8 +10,8 @@ import {
 export function handleSourceFile(sourceFile: SourceFile): string | undefined {
   const importDeclarations = collectZodImportDeclarations(sourceFile);
 
-  importDeclarations.forEach((importDeclaration) => {
-    importDeclaration.setModuleSpecifier("zod/v4");
+  importDeclarations.forEach((declaration) => {
+    declaration.setModuleSpecifier("zod/v4");
   });
 
   collectZodReferences(importDeclarations).forEach((node) => {
@@ -22,9 +22,33 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     convertErrorMapToErrorFunction(parentStatement);
     convertMessageKeyToError(parentStatement);
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
+
+    const parentType = node.getFirstAncestorByKind(SyntaxKind.QualifiedName);
+    parentType?.getRight().replaceWithText("ZodJSONSchema");
   });
 
+  convertZodErrorFormatToTreeifyError(sourceFile);
+
   return sourceFile.getFullText();
+}
+
+function convertZodErrorFormatToTreeifyError(sourceFile: SourceFile) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((callExpression) => {
+      const methodCalled = callExpression.getExpression().getLastChild();
+      const looksLikeZodErrorFormat =
+        methodCalled?.getText() === "format" &&
+        methodCalled?.getChildCount() === 0;
+
+      // TODO: prevent matching `.format()` that's not from `.safeParse()`
+      return looksLikeZodErrorFormat;
+    })
+    .forEach((formatCallExpression) => {
+      const caller =
+        formatCallExpression.getFirstChild()?.getFirstChild()?.getText() ?? "";
+      formatCallExpression.replaceWithText(`z.treeifyError(${caller})`);
+    });
 }
 
 function convertMessageKeyToError(
