@@ -35,8 +35,8 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
 function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
-    .filter((callExpression) => {
-      const methodCalled = callExpression.getExpression().getLastChild();
+    .filter((expression) => {
+      const methodCalled = expression.getExpression().getLastChild();
       const looksLikeZodErrorFormat =
         methodCalled?.getText() === "format" &&
         methodCalled?.getChildCount() === 0;
@@ -44,14 +44,28 @@ function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
         methodCalled?.getText() === "flatten" &&
         methodCalled?.getChildCount() === 0;
 
-      // TODO: prevent matching calls that's not from `.safeParse()`
+      // TODO: prevent matches that don't belong to Zod
 
       return looksLikeZodErrorFormat || looksLikeZodErrorFlatten;
     })
-    .forEach((formatCallExpression) => {
+    .forEach((expression) => {
       const caller =
-        formatCallExpression.getFirstChild()?.getFirstChild()?.getText() ?? "";
-      formatCallExpression.replaceWithText(`z.treeifyError(${caller})`);
+        expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
+      expression.replaceWithText(`z.treeifyError(${caller})`);
+    });
+
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((expression) => {
+      const looksLikeZodErrorFormErrors = expression.getName() === "formErrors";
+
+      // TODO: prevent matches that don't belong to Zod
+
+      return looksLikeZodErrorFormErrors;
+    })
+    .forEach((expression) => {
+      const caller = expression.getFirstChild()?.getText() ?? "";
+      expression.replaceWithText(`z.treeifyError(${caller})`);
     });
 }
 

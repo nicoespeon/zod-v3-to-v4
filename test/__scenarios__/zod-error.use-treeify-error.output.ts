@@ -9,6 +9,8 @@ export function parseAndReport(schema: z.ZodJSONSchema, input: unknown) {
 
     const flattened = z.treeifyError(result.error);
     console.error(flattened);
+
+    console.error(z.treeifyError(result.error));
   }
 
   return result;

@@ -9,6 +9,8 @@ export function parseAndReport(schema: z.ZodSchema, input: unknown) {
 
     const flattened = result.error.flatten();
     console.error(flattened);
+
+    console.error(result.error.formErrors);
   }
 
   return result;
