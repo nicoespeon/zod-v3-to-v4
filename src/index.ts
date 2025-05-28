@@ -16,6 +16,12 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     declaration.setModuleSpecifier("zod/v4");
   });
 
+  const zodImport = importDeclarations[0]
+    ?.getNamedImports()
+    .find((namedImport) => namedImport.getName() === "z");
+  const zodImportNode = zodImport?.getAliasNode() ?? zodImport?.getNameNode();
+  const zodName = zodImportNode?.getText() ?? "z";
+
   collectZodReferences(importDeclarations).forEach((node) => {
     const parentStatement =
       node.getFirstAncestorByKind(SyntaxKind.ExpressionStatement) ??
@@ -28,16 +34,19 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     const parentType = node.getFirstAncestorByKind(SyntaxKind.QualifiedName);
     parentType?.getRight().replaceWithText("ZodJSONSchema");
 
-    convertZNumberPatternsToZInt(parentStatement);
+    convertZNumberPatternsToZInt(parentStatement, zodName);
   });
 
-  convertZodErrorToTreeifyError(sourceFile);
+  convertZodErrorToTreeifyError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile);
 
   return sourceFile.getFullText();
 }
 
-function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
+function convertZodErrorToTreeifyError(
+  sourceFile: SourceFile,
+  zodName: string,
+) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((expression) => {
@@ -55,7 +64,7 @@ function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
     .forEach((expression) => {
       const caller =
         expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
-      expression.replaceWithText(`z.treeifyError(${caller})`);
+      expression.replaceWithText(`${zodName}.treeifyError(${caller})`);
     });
 
   sourceFile
@@ -69,7 +78,7 @@ function convertZodErrorToTreeifyError(sourceFile: SourceFile) {
     })
     .forEach((expression) => {
       const caller = expression.getFirstChild()?.getText() ?? "";
-      expression.replaceWithText(`z.treeifyError(${caller})`);
+      expression.replaceWithText(`${zodName}.treeifyError(${caller})`);
     });
 }
 
@@ -172,6 +181,7 @@ function convertMessageKeyToError(
 
 function convertZNumberPatternsToZInt(
   node: ExpressionStatement | VariableDeclaration | undefined,
+  zodName: string,
 ) {
   node
     ?.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
@@ -218,7 +228,7 @@ function convertZNumberPatternsToZInt(
         .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
         .filter((e) => e.getName() === "number")
         .forEach((e) => {
-          e.replaceWithText("z.int");
+          e.replaceWithText(`${zodName}.int`);
         });
     });
 }
@@ -358,7 +368,7 @@ function convertErrorMapToErrorFunction(
 function collectZodReferences(importDeclarations: ImportDeclaration[]) {
   return importDeclarations.flatMap((importDeclaration) =>
     importDeclaration.getNamedImports().flatMap((namedImport) => {
-      const namedNode = namedImport.getNameNode();
+      const namedNode = namedImport.getAliasNode() ?? namedImport.getNameNode();
       if (!namedNode.isKind(SyntaxKind.Identifier)) {
         return [];
       }

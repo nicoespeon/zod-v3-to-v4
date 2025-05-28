@@ -107,6 +107,10 @@ describe("Zod v3 to v4", () => {
   it.todo("drops `description` in creation params");
 
   it.todo("combines all migrations together");
+
+  it("handles import aliases", async () => {
+    await runScenario("import-aliases");
+  });
 });
 
 async function runScenario(fixturePath: string) {
