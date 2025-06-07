@@ -43,6 +43,13 @@ export function convertZStringPatternsToTopLevelApi(
     nameToWrap: "ip",
     renames: [{ name: "ipv4" }, { name: "ipv6" }],
   });
+
+  convertNameToTopLevelApiAndWrapInUnion(node, {
+    zodName,
+    oldName: "string",
+    nameToWrap: "cidr",
+    renames: [{ name: "cidrv4" }, { name: "cidrv6" }],
+  });
 }
 
 type NodeToConvert =

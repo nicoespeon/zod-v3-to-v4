@@ -49,9 +49,9 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-string.convert-ip");
     });
 
-    it.todo(
-      "replaces dropped `z.string().cidr()` with `z.union([z.cidrv4(), z.cidrv6()])`",
-    );
+    it("replaces dropped `z.string().cidr()` with `z.union([z.cidrv4(), z.cidrv6()])`", async () => {
+      await runScenario("z-string.convert-cidr");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=default-updates
