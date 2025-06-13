@@ -1,4 +1,9 @@
-import { type SourceFile, SyntaxKind } from "ts-morph";
+import {
+  ExpressionStatement,
+  type SourceFile,
+  SyntaxKind,
+  VariableDeclaration,
+} from "ts-morph";
 import {
   collectZodImportDeclarations,
   collectZodReferences,
@@ -38,10 +43,27 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
 
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
+
+    convertZDefaultToZPrefault(parentStatement);
   });
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile);
 
   return sourceFile.getFullText();
+}
+
+function convertZDefaultToZPrefault(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+) {
+  node
+    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .filter(
+      (id) =>
+        id.getParentIfKind(SyntaxKind.PropertyAccessExpression) &&
+        id.getText() === "default",
+    )
+    .forEach((identifier) => {
+      identifier.replaceWithText("prefault");
+    });
 }
