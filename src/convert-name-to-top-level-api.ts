@@ -62,6 +62,8 @@ export function convertZObjectPatternsToTopLevelApi(
     renames: [
       { name: "strict", newName: "strictObject" },
       { name: "passthrough", newName: "looseObject" },
+      { name: "strip", newName: "object" },
+      { name: "nonstrict", newName: "object" },
     ],
   });
 }

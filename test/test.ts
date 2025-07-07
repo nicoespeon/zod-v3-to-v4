@@ -71,9 +71,9 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-object.convert-passthrough");
     });
 
-    it.todo("replaces deprecated `z.strip()` with `z.object()`");
-
-    it.todo("replaces dropped `z.nonstrict()` with `z.object()`");
+    it("replaces deprecated `z.strip()` and `z.nonstrict()` with `z.object()`", async () => {
+      await runScenario("z-object.convert-strip");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=znativeenum-deprecated
