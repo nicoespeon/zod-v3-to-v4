@@ -52,6 +52,17 @@ export function convertZStringPatternsToTopLevelApi(
   });
 }
 
+export function convertZObjectPatternsToTopLevelApi(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+  zodName: string,
+) {
+  convertNameToTopLevelApi(node, {
+    zodName,
+    oldName: "object",
+    renames: [{ name: "strict", newName: "strictObject" }],
+  });
+}
+
 type NodeToConvert =
   | ExpressionStatement
   | VariableDeclaration

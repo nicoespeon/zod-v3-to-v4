@@ -63,9 +63,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=zobject
   describe("z.object()", () => {
-    it.todo(
-      "replaces deprecated `z.object().strict()` with `z.strictObject()`",
-    );
+    it("replaces deprecated `z.object().strict()` with `z.strictObject()`", async () => {
+      await runScenario("z-object.convert-strict");
+    });
 
     it.todo(
       "replaces deprecated `z.object().passthrough()` with `z.looseObject()`",

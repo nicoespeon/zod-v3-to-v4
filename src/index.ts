@@ -11,6 +11,7 @@ import {
 } from "./collect-imports.js";
 import {
   convertZNumberPatternsToZInt,
+  convertZObjectPatternsToTopLevelApi,
   convertZStringPatternsToTopLevelApi,
 } from "./convert-name-to-top-level-api.js";
 import {
@@ -30,6 +31,10 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
   });
 
   collectZodReferences(importDeclarations).forEach((node) => {
+    if (node.wasForgotten()) {
+      return;
+    }
+
     const parentStatement =
       node.getFirstAncestorByKind(SyntaxKind.ExpressionStatement) ??
       node.getFirstAncestorByKind(SyntaxKind.VariableDeclaration);
@@ -43,6 +48,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
 
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
+    convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
 
     convertZDefaultToZPrefault(parentStatement);
   });
