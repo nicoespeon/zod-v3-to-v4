@@ -67,9 +67,9 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-object.convert-strict");
     });
 
-    it.todo(
-      "replaces deprecated `z.object().passthrough()` with `z.looseObject()`",
-    );
+    it("replaces deprecated `z.object().passthrough()` with `z.looseObject()`", async () => {
+      await runScenario("z-object.convert-passthrough");
+    });
 
     it.todo("replaces deprecated `z.strip()` with `z.object()`");
 

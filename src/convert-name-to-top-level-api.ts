@@ -59,7 +59,10 @@ export function convertZObjectPatternsToTopLevelApi(
   convertNameToTopLevelApi(node, {
     zodName,
     oldName: "object",
-    renames: [{ name: "strict", newName: "strictObject" }],
+    renames: [
+      { name: "strict", newName: "strictObject" },
+      { name: "passthrough", newName: "looseObject" },
+    ],
   });
 }
 
