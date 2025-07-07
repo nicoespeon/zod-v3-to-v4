@@ -50,7 +50,8 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
 
-    convertZDefaultToZPrefault(parentStatement);
+    renameZDefaultToZPrefault(parentStatement);
+    renameZNativeEnumToZEnum(parentStatement);
   });
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
@@ -59,7 +60,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
   return sourceFile.getFullText();
 }
 
-function convertZDefaultToZPrefault(
+function renameZDefaultToZPrefault(
   node: ExpressionStatement | VariableDeclaration | undefined,
 ) {
   node
@@ -71,5 +72,20 @@ function convertZDefaultToZPrefault(
     )
     .forEach((identifier) => {
       identifier.replaceWithText("prefault");
+    });
+}
+
+function renameZNativeEnumToZEnum(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+) {
+  node
+    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .filter(
+      (id) =>
+        id.getParentIfKind(SyntaxKind.PropertyAccessExpression) &&
+        id.getText() === "nativeEnum",
+    )
+    .forEach((identifier) => {
+      identifier.replaceWithText("enum");
     });
 }

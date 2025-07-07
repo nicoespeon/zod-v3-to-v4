@@ -78,7 +78,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=znativeenum-deprecated
   describe("z.nativeEnum()", () => {
-    it.todo("replaces deprecated `z.nativeEnum()` with `z.enum()`");
+    it("replaces deprecated `z.nativeEnum()` with `z.enum()`", async () => {
+      await runScenario("z-enum");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=zarray
