@@ -104,11 +104,6 @@ describe("Zod v3 to v4", () => {
     });
   });
 
-  // Not documented, but seems to be gone from the types in v4
-  it.todo("drops `description` in creation params");
-
-  it.todo("combines all migrations together");
-
   it("handles import aliases", async () => {
     await runScenario("import-aliases");
   });
