@@ -115,7 +115,6 @@ export function convertZArrayPatternsToTopLevelApi(
 
 export function convertZFunctionPatternsToTopLevelApi(
   node: ExpressionStatement | VariableDeclaration | undefined,
-  zodName: string,
 ) {
   const oldName = "function";
   const names = ["args", "returns"];
@@ -152,6 +151,34 @@ export function convertZFunctionPatternsToTopLevelApi(
       `{ input: ${inputText}, output: ${outputText} }`,
     );
   });
+}
+
+export function convertZRecordPatternsToTopLevelApi(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+) {
+  if (!node) {
+    return;
+  }
+
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((e) => e.getName() === "record")
+    // Get the full call chain
+    .map((expression) =>
+      expression.getParentWhile(
+        (parent) =>
+          parent.isKind(SyntaxKind.PropertyAccessExpression) ||
+          parent.isKind(SyntaxKind.CallExpression),
+      ),
+    )
+    .filter((e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression))
+    .forEach((e) => {
+      // Make sure `z.record()` has at least 2 args
+      const [firstArg, ...otherArgs] = e.getArguments();
+      if (firstArg && otherArgs.length === 0) {
+        e.addArgument(firstArg.getText());
+      }
+    });
 }
 
 type NodeToConvert =

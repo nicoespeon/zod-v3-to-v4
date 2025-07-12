@@ -14,6 +14,7 @@ import {
   convertZFunctionPatternsToTopLevelApi,
   convertZNumberPatternsToZInt,
   convertZObjectPatternsToTopLevelApi,
+  convertZRecordPatternsToTopLevelApi,
   convertZStringPatternsToTopLevelApi,
 } from "./convert-name-to-top-level-api.js";
 import {
@@ -52,7 +53,8 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
-    convertZFunctionPatternsToTopLevelApi(parentStatement, zodName);
+    convertZFunctionPatternsToTopLevelApi(parentStatement);
+    convertZRecordPatternsToTopLevelApi(parentStatement);
 
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);

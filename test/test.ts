@@ -99,9 +99,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=zrecord
   describe("z.record()", () => {
-    it.todo(
-      "replaces dropped single-argument `z.record()` with a double-arguments version",
-    );
+    it("replaces dropped single-argument `z.record()` with a double-arguments version", async () => {
+      await runScenario("z-record");
+    });
   });
 
   // Not documented, but seems to be gone from the types in v4
