@@ -79,7 +79,7 @@ export function convertZArrayPatternsToTopLevelApi(
     oldName,
     names,
   }).forEach((callExpression) => {
-    // Remove deprecated types from the chain
+    // Remove deprecated names from the chain
     callExpression
       .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
       .filter((expression) => names.includes(expression.getName()))
@@ -113,6 +113,47 @@ export function convertZArrayPatternsToTopLevelApi(
   });
 }
 
+export function convertZFunctionPatternsToTopLevelApi(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+  zodName: string,
+) {
+  const oldName = "function";
+  const names = ["args", "returns"];
+
+  getCallExpressionsToConvert(node, {
+    oldName,
+    names,
+  }).forEach((callExpression) => {
+    let inputText: string | undefined;
+    let outputText: string | undefined;
+
+    // Remove deprecated names from the chain
+    callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      // Start from the deepest, otherwise we can't get info from removed nodes
+      .reverse()
+      .filter((expression) => names.includes(expression.getName()))
+      .forEach((expression) => {
+        const parent = expression.getFirstAncestorByKind(
+          SyntaxKind.CallExpression,
+        );
+        if (expression.getName() === "args") {
+          inputText = `[${parent
+            ?.getArguments()
+            .map((arg) => arg.getText())
+            .join(", ")}]`;
+        } else if (expression.getName() === "returns") {
+          outputText = parent?.getArguments()[0]?.getText();
+        }
+        parent?.replaceWithText(expression.getExpression().getText());
+      });
+
+    callExpression.addArgument(
+      `{ input: ${inputText}, output: ${outputText} }`,
+    );
+  });
+}
+
 type NodeToConvert =
   | ExpressionStatement
   | VariableDeclaration
@@ -135,7 +176,7 @@ function convertNameToTopLevelApi(
       const match = renames.find((r) => r.name === name);
       const newName = match?.newName ?? match?.name;
 
-      // Remove deprecated types from the chain
+      // Remove deprecated names from the chain
       callExpression
         .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
         .filter((expression) => names.includes(expression.getName()))
@@ -174,7 +215,7 @@ function convertNameToTopLevelApiAndWrapInUnion(
 
   getCallExpressionsToConvert(node, { oldName: nameToWrap, names }).forEach(
     (callExpression) => {
-      // Remove deprecated types from the chain
+      // Remove deprecated names from the chain
       callExpression
         .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
         .filter((expression) => names.includes(expression.getName()))

@@ -90,18 +90,11 @@ describe("Zod v3 to v4", () => {
     });
   });
 
-  // https://zod.dev/v4/changelog?id=zpromise-deprecated
-  describe("z.promise()", () => {
-    it.todo("replaces `z.promise()` with an await call before parsing");
-
-    it.todo("replaces `z.function().promise()` with `z.implementAsync()`");
-  });
-
   // https://zod.dev/v4/changelog?id=zfunction
   describe("z.function()", () => {
-    it.todo(
-      "replaces `z.args()` and `z.returns()` with `z.function()` parameters",
-    );
+    it("replaces `z.args()` and `z.returns()` with `z.function()` parameters", async () => {
+      await runScenario("z-function");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=zrecord
