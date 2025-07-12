@@ -68,6 +68,51 @@ export function convertZObjectPatternsToTopLevelApi(
   });
 }
 
+export function convertZArrayPatternsToTopLevelApi(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+  zodName: string,
+) {
+  const oldName = "array";
+  const names = ["nonempty"];
+
+  getCallExpressionsToConvert(node, {
+    oldName,
+    names,
+  }).forEach((callExpression) => {
+    // Remove deprecated types from the chain
+    callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .filter((expression) => names.includes(expression.getName()))
+      .forEach((expression) => {
+        const parent = expression.getFirstAncestorByKind(
+          SyntaxKind.CallExpression,
+        );
+        parent?.replaceWithText(expression.getExpression().getText());
+      });
+
+    // Replace old name with top-level API
+    callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .filter((e) => e.getName() === oldName)
+      .forEach((e) => {
+        const parent = e.getParentIfKind(SyntaxKind.CallExpression);
+        if (!parent) {
+          return;
+        }
+
+        const arraySchemaArg = parent.getArguments()[0];
+        if (!arraySchemaArg) {
+          return;
+        }
+
+        const arraySchemaArgText = arraySchemaArg.getText();
+        parent.removeArgument(arraySchemaArg);
+        parent.addArgument(`[${arraySchemaArgText}], ${arraySchemaArgText}`);
+        e.replaceWithText(`${zodName}.tuple`);
+      });
+  });
+}
+
 type NodeToConvert =
   | ExpressionStatement
   | VariableDeclaration

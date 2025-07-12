@@ -85,7 +85,9 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=zarray
   describe("z.array()", () => {
-    it.todo("replaces `z.nonEmpty()` with `z.tuple()` to preserve behavior");
+    it("replaces `z.nonEmpty()` with `z.tuple()` to preserve behavior", async () => {
+      await runScenario("z-array.convert-nonempty");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=zpromise-deprecated

@@ -10,6 +10,7 @@ import {
   getZodName,
 } from "./collect-imports.js";
 import {
+  convertZArrayPatternsToTopLevelApi,
   convertZNumberPatternsToZInt,
   convertZObjectPatternsToTopLevelApi,
   convertZStringPatternsToTopLevelApi,
@@ -49,6 +50,7 @@ export function handleSourceFile(sourceFile: SourceFile): string | undefined {
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
+    convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
 
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);
