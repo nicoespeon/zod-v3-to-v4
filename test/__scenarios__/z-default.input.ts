@@ -6,3 +6,7 @@ const schema = z
   .default("tuna");
 
 schema.parse(undefined);
+
+function shouldNotMatch(someApi: any) {
+  return someApi.default("tuna");
+}

@@ -14,3 +14,8 @@ z.string().ulid();
 
 // With other params
 z.string().min(23).email().max(100);
+z.string()
+  .describe("Lorem ipsum dolor sit amet apercitur sit nuc")
+  .min(23)
+  .email()
+  .max(100);
