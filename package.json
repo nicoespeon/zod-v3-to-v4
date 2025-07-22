@@ -25,9 +25,10 @@
   "scripts": {
     "format": "prettier . --write",
     "format-check": "prettier . --list-different",
+    "playground": "pnpm playground:interactive playground/tsconfig.json",
+    "playground:interactive": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts",
     "prepare": "husky",
     "prepublishOnly": "typecheck && test",
-    "start": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "typecheck": "tsc --noEmit"
