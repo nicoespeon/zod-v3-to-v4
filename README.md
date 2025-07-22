@@ -14,7 +14,7 @@ npx (TODO: add command name when known)
 
 It will go through all your files and migrate Zod v3 code to v4.
 
-If the codemod missed something or did something wrong, please [open an issue](https://github.com/nicoespeon/zod-v3-to-v4/issues/new).
+If the codemod missed something or did something wrong, please [open an issue](https://github.com/nicoespeon/zod-v3-to-v4/issues).
 
 ## Contributing
 
