@@ -1,7 +1,7 @@
 # Zod v3 to v4
 
 [![NPM version](https://img.shields.io/npm/v/zod-v3-to-v4.svg?style=for-the-badge)](https://www.npmjs.com/package/zod-v3-to-v4)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/nicoespeon/zod-v3-to-v4/ci.yml?style=for-the-badge)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/nicoespeon/zod-v3-to-v4/ci.yml?style=for-the-badge)](https://github.com/nicoespeon/zod-v3-to-v4/actions/workflows/ci.yml)
 
 This is a [codemod](https://martinfowler.com/articles/codemods-api-refactoring.html) (a tool that automatically transforms code) for migrating from [Zod](https://zod.dev/) v3 to v4.
 
