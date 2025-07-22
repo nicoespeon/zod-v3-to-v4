@@ -17,6 +17,7 @@
     "*": "prettier --ignore-unknown --write"
   },
   "dependencies": {
+    "@clack/prompts": "1.0.0-alpha.1",
     "ts-morph": "26.0.0"
   },
   "devDependencies": {
