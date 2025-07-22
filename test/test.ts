@@ -3,7 +3,7 @@ import { extname } from "node:path";
 import * as prettier from "prettier";
 import { Project } from "ts-morph";
 import { describe, expect, it } from "vitest";
-import { handleSourceFile } from "../src/index.js";
+import { migrateZodV3ToV4 } from "../src/migrate.js";
 
 describe("Zod v3 to v4", () => {
   // https://zod.dev/v4/changelog?id=error-customization
@@ -147,7 +147,7 @@ async function transform(
   });
 
   const actualSourceFile = project.createSourceFile(path, beforeText);
-  let actual = handleSourceFile(actualSourceFile) ?? "";
+  let actual = migrateZodV3ToV4(actualSourceFile) ?? "";
 
   let expected = project
     .createSourceFile(`expected${extname(path)}`, afterText)
