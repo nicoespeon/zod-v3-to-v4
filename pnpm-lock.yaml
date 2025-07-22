@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      ts-morph:
+        specifier: 26.0.0
+        version: 26.0.0
     devDependencies:
       '@types/node':
         specifier: 20.9.0
@@ -29,9 +33,6 @@ importers:
       prettier-plugin-sh:
         specifier: 0.15.0
         version: 0.15.0(prettier@3.5.3)
-      ts-morph:
-        specifier: 26.0.0
-        version: 26.0.0
       typescript:
         specifier: 5.8.3
         version: 5.8.3
