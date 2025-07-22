@@ -8,7 +8,7 @@ import {
   collectZodImportDeclarations,
   collectZodReferences,
   getZodName,
-} from "./collect-imports.js";
+} from "./collect-imports.ts";
 import {
   convertZArrayPatternsToTopLevelApi,
   convertZFunctionPatternsToTopLevelApi,
@@ -16,14 +16,14 @@ import {
   convertZObjectPatternsToTopLevelApi,
   convertZRecordPatternsToTopLevelApi,
   convertZStringPatternsToTopLevelApi,
-} from "./convert-name-to-top-level-api.js";
+} from "./convert-name-to-top-level-api.ts";
 import {
   convertDeprecatedErrorKeysToErrorFunction,
   convertErrorMapToErrorFunction,
   convertMessageKeyToError,
   convertZodErrorAddIssueToDirectPushes,
   convertZodErrorToTreeifyError,
-} from "./convert-zod-errors.js";
+} from "./convert-zod-errors.ts";
 
 export function migrateZodV3ToV4(sourceFile: SourceFile): string | undefined {
   const importDeclarations = collectZodImportDeclarations(sourceFile);

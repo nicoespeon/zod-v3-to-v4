@@ -3,7 +3,7 @@ import { extname } from "node:path";
 import * as prettier from "prettier";
 import { Project } from "ts-morph";
 import { describe, expect, it } from "vitest";
-import { migrateZodV3ToV4 } from "../src/migrate.js";
+import { migrateZodV3ToV4 } from "../src/migrate.ts";
 
 describe("Zod v3 to v4", () => {
   // https://zod.dev/v4/changelog?id=error-customization
