@@ -10,13 +10,16 @@
   ],
   "homepage": "https://github.com/nicoespeon/zod-v3-to-v4",
   "bugs": "https://github.com/nicoespeon/zod-v3-to-v4/issues",
-  "repository": "nicoespeon/zod-v3-to-v4",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicoespeon/zod-v3-to-v4.git"
+  },
   "license": "MIT",
   "author": "Nicolas Carlo <nicolascarlo.espeon@gmail.com>",
   "type": "module",
   "main": "/dist/index.cjs",
   "bin": {
-    "zod-v3-to-v4": "/dist/index.cjs"
+    "zod-v3-to-v4": "dist/index.cjs"
   },
   "files": [
     "README.md",
