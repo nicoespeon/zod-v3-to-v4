@@ -28,7 +28,7 @@
     "playground": "pnpm playground:interactive playground/tsconfig.json",
     "playground:interactive": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts",
     "prepare": "husky",
-    "prepublishOnly": "typecheck && test",
+    "prepublishOnly": "pnpm typecheck && pnpm test",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "typecheck": "tsc --noEmit"
