@@ -1,16 +1,20 @@
 # Zod v3 to v4
 
-This is a [codemod](https://codemod.com) for migrating from [Zod](https://zod.dev/) v3 to v4.
+This is a [codemod](https://martinfowler.com/articles/codemods-api-refactoring.html) (a tool that automatically transforms code) for migrating from [Zod](https://zod.dev/) v3 to v4.
 
 The migration guide can be found at <https://zod.dev/v4/changelog>
 
 ## Using this codemod
 
-You can run this codemod with the following command:
+You can run it with the following command:
 
 ```bash
-npx codemod zod-v3-to-v4
+npx (TODO: add command name when known)
 ```
+
+It will go through all your files and migrate Zod v3 code to v4.
+
+If the codemod missed something or did something wrong, please [open an issue](https://github.com/nicoespeon/zod-v3-to-v4/issues/new).
 
 ## Contributing
 
@@ -32,5 +36,5 @@ Useful links:
 
 - [ts-morph](https://ts-morph.com)
 - [TS AST viewer](https://ts-ast-viewer.com/)
-- [codemod](https://codemod.com)
 - [vitest](https://vitest.dev)
+- [Zod v4 migration guide](https://zod.dev/v4/changelog)
