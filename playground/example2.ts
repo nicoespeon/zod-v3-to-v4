@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { z } from "zod";
 
 // More complex Zod v3 examples
