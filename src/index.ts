@@ -91,7 +91,7 @@ async function runMigration(tsConfigFilePath: string) {
 
     processedFilesCount++;
     progressBar.advance(
-      processedFilesCount,
+      1,
       `Migrated ${processedFilesCount}/${filesToProcess.length} files`,
     );
 
