@@ -7,6 +7,8 @@ This is a [codemod](https://martinfowler.com/articles/codemods-api-refactoring.h
 
 The migration guide can be found at <https://zod.dev/v4/changelog>
 
+![zod-v3-to-v4-demo](zod-v3-to-v4-demo.gif)
+
 ## Using this codemod
 
 > This assumes you have [Node.js](https://nodejs.org/) installed.
