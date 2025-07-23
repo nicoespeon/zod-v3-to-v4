@@ -17,17 +17,18 @@
   "license": "MIT",
   "author": "Nicolas Carlo <nicolascarlo.espeon@gmail.com>",
   "type": "module",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "bin": {
-    "zod-v3-to-v4": "dist/src/index.js"
+    "zod-v3-to-v4": "dist/index.js"
   },
   "files": [
     "README.md",
-    "dist/src/"
+    "dist/*.js"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc",
+    "build": "tsc --project tsconfig.build.json",
+    "postbuild": "chmod +x dist/index.js",
     "format": "prettier . --write",
     "format-check": "prettier . --list-different",
     "playground": "pnpm playground:interactive playground/tsconfig.json",
