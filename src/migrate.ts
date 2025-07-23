@@ -47,7 +47,9 @@ export function migrateZodV3ToV4(sourceFile: SourceFile): string | undefined {
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
 
     const parentType = node.getFirstAncestorByKind(SyntaxKind.QualifiedName);
-    parentType?.getRight().replaceWithText("ZodJSONSchema");
+    if (parentType?.getText().endsWith("ZodSchema")) {
+      parentType?.getRight().replaceWithText("ZodJSONSchema");
+    }
 
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
