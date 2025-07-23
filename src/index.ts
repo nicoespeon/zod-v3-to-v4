@@ -84,10 +84,7 @@ async function runMigration(tsConfigFilePath: string) {
   progressBar.start("Processing files...");
 
   for (const sourceFile of filesToProcess) {
-    const result = migrateZodV3ToV4(sourceFile);
-    if (result) {
-      await sourceFile.save();
-    }
+    migrateZodV3ToV4(sourceFile);
 
     processedFilesCount++;
     progressBar.advance(
@@ -98,6 +95,10 @@ async function runMigration(tsConfigFilePath: string) {
     // Wait the next tick to let the progress bar update
     await wait(0);
   }
+
+  // Only save at the end so we can cancel the migration in-flight.
+  // Also, it's much faster than saving each file individually.
+  await project.save();
 
   progressBar.stop("All files have been migrated.");
   outro(
