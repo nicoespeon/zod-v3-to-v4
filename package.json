@@ -17,13 +17,13 @@
   "license": "MIT",
   "author": "Nicolas Carlo <nicolascarlo.espeon@gmail.com>",
   "type": "module",
-  "main": "/dist/index.cjs",
+  "main": "dist/src/index.js",
   "bin": {
-    "zod-v3-to-v4": "dist/index.cjs"
+    "zod-v3-to-v4": "dist/src/index.js"
   },
   "files": [
     "README.md",
-    "/dist/index.cjs"
+    "dist"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
@@ -33,7 +33,7 @@
     "playground": "pnpm playground:interactive playground/tsconfig.json",
     "playground:interactive": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts",
     "prepare": "husky",
-    "prepublishOnly": "pnpm typecheck && pnpm test",
+    "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "typecheck": "tsc --noEmit"
