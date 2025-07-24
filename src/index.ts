@@ -84,7 +84,16 @@ async function runMigration(tsConfigFilePath: string) {
   progressBar.start("Processing files...");
 
   for (const sourceFile of filesToProcess) {
-    migrateZodV3ToV4(sourceFile);
+    try {
+      migrateZodV3ToV4(sourceFile);
+    } catch (err) {
+      let message = `Failed to migrate ${sourceFile.getFilePath()}`;
+      if (err instanceof Error) {
+        message += `\nReason: ${err.message}`;
+      }
+      message += `\n\nPlease report this at https://github.com/nicoespeon/zod-v3-to-v4/issues`;
+      log.error(message);
+    }
 
     processedFilesCount++;
     progressBar.advance(
