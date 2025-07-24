@@ -118,7 +118,7 @@ async function runMigration(tsConfigFilePath: string) {
 }
 
 function validateTsConfigPath(path: string) {
-  if (!path.endsWith("tsconfig.json")) {
+  if (!path.endsWith(".json")) {
     return {
       success: false,
       reason: "Please enter a valid tsconfig.json file path.",
