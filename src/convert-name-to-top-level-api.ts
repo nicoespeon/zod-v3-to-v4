@@ -194,35 +194,40 @@ function convertNameToTopLevelApi(
   const { zodName, oldName, renames } = options;
   const names = renames.map(({ name }) => name);
 
-  getCallExpressionsToConvert(node, { oldName, names }).forEach(
-    (callExpression) => {
-      const name = callExpression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-        .find((expression) => names.includes(expression.getName()))
-        ?.getName();
-      const match = renames.find((r) => r.name === name);
-      const newName = match?.newName ?? match?.name;
+  const callExpressions = getCallExpressionsToConvert(node, { oldName, names });
+  if (callExpressions.length > 1) {
+    // If we have more than one node to transform, start from the most nested
+    // to avoid issue described here: https://github.com/dsherret/ts-morph/issues/512
+    callExpressions.reverse();
+  }
 
-      // Remove deprecated names from the chain
-      callExpression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-        .filter((expression) => names.includes(expression.getName()))
-        .forEach((expression) => {
-          const parent = expression.getFirstAncestorByKind(
-            SyntaxKind.CallExpression,
-          );
-          parent?.replaceWithText(expression.getExpression().getText());
-        });
+  callExpressions.forEach((callExpression) => {
+    const name = callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .find((expression) => names.includes(expression.getName()))
+      ?.getName();
+    const match = renames.find((r) => r.name === name);
+    const newName = match?.newName ?? match?.name;
 
-      // Replace old name with top-level API
-      callExpression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-        .filter((e) => e.getName() === oldName)
-        .forEach((e) => {
-          e.replaceWithText(`${zodName}.${newName}`);
-        });
-    },
-  );
+    // Remove deprecated names from the chain
+    callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .filter((expression) => names.includes(expression.getName()))
+      .forEach((expression) => {
+        const parent = expression.getFirstAncestorByKind(
+          SyntaxKind.CallExpression,
+        );
+        parent?.replaceWithText(expression.getExpression().getText());
+      });
+
+    // Replace old name with top-level API
+    callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .filter((e) => e.getName() === oldName)
+      .forEach((e) => {
+        e.replaceWithText(`${zodName}.${newName}`);
+      });
+  });
 }
 
 type ConvertNameOptions = {
