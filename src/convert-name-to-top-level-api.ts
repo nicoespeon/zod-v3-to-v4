@@ -34,6 +34,10 @@ export function convertZStringPatternsToTopLevelApi(
       { name: "cuid" },
       { name: "cuid2" },
       { name: "ulid" },
+      { name: "date", newName: "iso.date" },
+      { name: "time", newName: "iso.time" },
+      { name: "datetime", newName: "iso.datetime" },
+      { name: "duration", newName: "iso.duration" },
     ],
   });
 
