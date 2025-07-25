@@ -56,7 +56,7 @@ export function migrateZodV3ToV4(sourceFile: SourceFile): string | undefined {
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
     convertZFunctionPatternsToTopLevelApi(parentStatement);
-    convertZRecordPatternsToTopLevelApi(parentStatement);
+    convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
 
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);

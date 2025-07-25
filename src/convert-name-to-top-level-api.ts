@@ -155,6 +155,7 @@ export function convertZFunctionPatternsToTopLevelApi(
 
 export function convertZRecordPatternsToTopLevelApi(
   node: ExpressionStatement | VariableDeclaration | undefined,
+  zodName: string,
 ) {
   if (!node) {
     return;
@@ -176,7 +177,7 @@ export function convertZRecordPatternsToTopLevelApi(
       // Make sure `z.record()` has at least 2 args
       const [firstArg, ...otherArgs] = e.getArguments();
       if (firstArg && otherArgs.length === 0) {
-        e.addArgument(firstArg.getText());
+        e.insertArgument(0, `${zodName}.string()`);
       }
     });
 }
