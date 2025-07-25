@@ -109,10 +109,14 @@ export function convertMessageKeyToError(
       const messageValue = messageProp
         ?.getLastChildIfKind(SyntaxKind.StringLiteral)
         ?.getText();
+      if (!messageValue) {
+        return;
+      }
+
       messageProp?.remove();
       objectLiteral.addPropertyAssignment({
         name: "error",
-        initializer: messageValue ?? "",
+        initializer: messageValue,
       });
 
       // If other error keys exist, `message` takes precedence in v3

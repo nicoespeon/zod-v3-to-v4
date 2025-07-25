@@ -8,3 +8,9 @@ const schema = z
   .max(10, {
     error: "Too long.",
   });
+
+// Unrelated, should not match
+const zPlatformAlert = z.object({
+  severity: z.enum(["info", "warning", "error"]),
+  message: z.string(),
+});
