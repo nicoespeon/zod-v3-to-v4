@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed some scenarios where nested `z.object()` would produced an invalid `z.undefined()`.
 - Sometimes, the codemod would try to migrate unrelated `message` keys to an `error` one, producing invalid code while doing so. This should be fixed now.
 - `z.record()` is now correctly migrated when using a custom key type (e.g. `z.record(Device)` => `z.record(z.string(), Device)`).
 

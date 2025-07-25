@@ -78,6 +78,10 @@ describe("Zod v3 to v4", () => {
     it("replaces deprecated `z.strip()` and `z.nonstrict()` with `z.object()`", async () => {
       await runScenario("z-object.convert-strip");
     });
+
+    it("supports nested `z.object()`", async () => {
+      await runScenario("z-object.nested");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=znativeenum-deprecated

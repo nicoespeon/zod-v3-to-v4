@@ -221,8 +221,13 @@ function convertNameToTopLevelApi(
       .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
       .find((expression) => names.includes(expression.getName()))
       ?.getName();
+
     const match = renames.find((r) => r.name === name);
-    const newName = match?.newName ?? match?.name;
+    if (!match) {
+      return;
+    }
+
+    const newName = match.newName ?? match.name;
 
     // Remove deprecated names from the chain
     callExpression
