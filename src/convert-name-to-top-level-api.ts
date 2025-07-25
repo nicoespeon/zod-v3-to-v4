@@ -174,10 +174,20 @@ export function convertZRecordPatternsToTopLevelApi(
     )
     .filter((e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression))
     .forEach((e) => {
-      // Make sure `z.record()` has at least 2 args
       const [firstArg, ...otherArgs] = e.getArguments();
-      if (firstArg && otherArgs.length === 0) {
+      if (!firstArg) {
+        return;
+      }
+
+      // Make sure `z.record()` has at least 2 args
+      if (otherArgs.length === 0) {
         e.insertArgument(0, `${zodName}.string()`);
+        return;
+      }
+
+      // Preserve partial types when `z.enum()` is used as the key
+      if (firstArg.getText().startsWith(`${zodName}.enum`)) {
+        e.getExpression().replaceWithText(`${zodName}.partialRecord`);
       }
     });
 }

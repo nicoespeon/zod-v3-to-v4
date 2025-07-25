@@ -102,6 +102,10 @@ describe("Zod v3 to v4", () => {
     it("replaces dropped single-argument `z.record()` with a double-arguments version", async () => {
       await runScenario("z-record.double-arguments");
     });
+
+    it("preserves partial types when `z.enum()` is used as the key", async () => {
+      await runScenario("z-record.partial-type");
+    });
   });
 
   it("handles import aliases", async () => {

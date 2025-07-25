@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Passing an enum as the first argument of a `z.record()` will now be migrated to `z.partialRecord()` [to preserve the partial type](https://zod.dev/v4/changelog?id=improves-enum-support).
+
 ### Fixed
 
 - `z.record()` is now correctly migrated when using a custom key type (e.g. `z.record(Device)` => `z.record(z.string(), Device)`).
