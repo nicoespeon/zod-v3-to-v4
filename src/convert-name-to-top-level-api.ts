@@ -170,10 +170,8 @@ export function convertZRecordPatternsToTopLevelApi(
     .filter((e) => e.getName() === "record")
     // Get the full call chain
     .map((expression) =>
-      expression.getParentWhile(
-        (parent) =>
-          parent.isKind(SyntaxKind.PropertyAccessExpression) ||
-          parent.isKind(SyntaxKind.CallExpression),
+      expression.getParentWhile((parent) =>
+        parent.isKind(SyntaxKind.CallExpression),
       ),
     )
     .filter((e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression))

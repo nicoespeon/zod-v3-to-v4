@@ -7,6 +7,8 @@ const schema = z
 
 schema.parse(undefined);
 
+const withRecord = z.record(z.string(), z.string()).prefault({});
+
 function shouldNotMatch(someApi: any) {
   return someApi.default("tuna");
 }
