@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { z } from "zod";
 
 // Example Zod v3 schemas that should be migrated to v4

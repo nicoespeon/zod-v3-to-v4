@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Source: https://github.com/Innablr/revolver/blob/39607dbd6b28cc193792f7209dbccf2b0d548674/lib/config-schema.ts
 import { z } from "zod";
 
