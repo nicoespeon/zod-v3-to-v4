@@ -79,6 +79,10 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-object.convert-strip");
     });
 
+    it("replaces deprecated `.merge()` with `.extend()`", async () => {
+      await runScenario("z-object.convert-merge");
+    });
+
     it("supports nested `z.object()`", async () => {
       await runScenario("z-object.nested");
     });

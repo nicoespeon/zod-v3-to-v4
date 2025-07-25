@@ -70,6 +70,32 @@ export function convertZObjectPatternsToTopLevelApi(
       { name: "nonstrict", newName: "object" },
     ],
   });
+
+  convertZObjectMergeToExtend(node);
+}
+
+function convertZObjectMergeToExtend(
+  node: ExpressionStatement | VariableDeclaration | undefined,
+) {
+  node
+    ?.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((e) => e.getName() === "merge")
+    .forEach((e) => {
+      const parent = e.getFirstAncestorByKind(SyntaxKind.CallExpression);
+      if (!parent) {
+        return;
+      }
+
+      const firstArg = parent.getArguments()[0];
+      if (!firstArg) {
+        return;
+      }
+
+      // Swap the first argument with its shape property
+      parent.insertArgument(0, `${firstArg.getText()}.shape`);
+      parent.removeArgument(1);
+      e.getNameNode().replaceWithText("extend");
+    });
 }
 
 export function convertZArrayPatternsToTopLevelApi(

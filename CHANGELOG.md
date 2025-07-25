@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Transform deprecated `z.object().merge()` to `z.object().extend()`
 - Support for `z.string().date()`, `z.string().time()`, `z.string().datetime()`, and `z.string().duration()` to `z.iso.*()` ([#4](https://github.com/nicoespeon/zod-v3-to-v4/pull/4))
 - Passing an enum as the first argument of a `z.record()` will now be migrated to `z.partialRecord()` [to preserve the partial type](https://zod.dev/v4/changelog?id=improves-enum-support).
 
