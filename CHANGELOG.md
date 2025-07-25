@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Stop transforming `message` property keys to `error` when they don't belong to a Zod schema. It was happening in some cases if there was a Zod reference within scope.
+
 ## [1.1.0] - 2025-07-25
 
 ### Added

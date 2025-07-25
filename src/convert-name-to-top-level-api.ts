@@ -1,14 +1,7 @@
-import {
-  CallExpression,
-  ExpressionStatement,
-  SyntaxKind,
-  VariableDeclaration,
-} from "ts-morph";
+import { CallExpression, SyntaxKind } from "ts-morph";
+import { type ZodNode } from "./zod-node.ts";
 
-export function convertZNumberPatternsToZInt(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-  zodName: string,
-) {
+export function convertZNumberPatternsToZInt(node: ZodNode, zodName: string) {
   convertNameToTopLevelApi(node, {
     zodName,
     oldName: "number",
@@ -17,7 +10,7 @@ export function convertZNumberPatternsToZInt(
 }
 
 export function convertZStringPatternsToTopLevelApi(
-  node: ExpressionStatement | VariableDeclaration | undefined,
+  node: ZodNode,
   zodName: string,
 ) {
   convertNameToTopLevelApi(node, {
@@ -57,9 +50,10 @@ export function convertZStringPatternsToTopLevelApi(
 }
 
 export function convertZObjectPatternsToTopLevelApi(
-  node: ExpressionStatement | VariableDeclaration | undefined,
+  node: ZodNode,
   zodName: string,
 ) {
+  node.getText(); //?
   convertNameToTopLevelApi(node, {
     zodName,
     oldName: "object",
@@ -74,11 +68,9 @@ export function convertZObjectPatternsToTopLevelApi(
   convertZObjectMergeToExtend(node);
 }
 
-function convertZObjectMergeToExtend(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-) {
+function convertZObjectMergeToExtend(node: ZodNode) {
   node
-    ?.getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .filter((e) => e.getName() === "merge")
     .forEach((e) => {
       const parent = e.getFirstAncestorByKind(SyntaxKind.CallExpression);
@@ -99,7 +91,7 @@ function convertZObjectMergeToExtend(
 }
 
 export function convertZArrayPatternsToTopLevelApi(
-  node: ExpressionStatement | VariableDeclaration | undefined,
+  node: ZodNode,
   zodName: string,
 ) {
   const oldName = "array";
@@ -143,9 +135,7 @@ export function convertZArrayPatternsToTopLevelApi(
   });
 }
 
-export function convertZFunctionPatternsToTopLevelApi(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-) {
+export function convertZFunctionPatternsToTopLevelApi(node: ZodNode) {
   const oldName = "function";
   const names = ["args", "returns"];
 
@@ -184,13 +174,9 @@ export function convertZFunctionPatternsToTopLevelApi(
 }
 
 export function convertZRecordPatternsToTopLevelApi(
-  node: ExpressionStatement | VariableDeclaration | undefined,
+  node: ZodNode,
   zodName: string,
 ) {
-  if (!node) {
-    return;
-  }
-
   node
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .filter((e) => e.getName() === "record")
@@ -220,11 +206,7 @@ export function convertZRecordPatternsToTopLevelApi(
     });
 }
 
-type NodeToConvert =
-  | ExpressionStatement
-  | VariableDeclaration
-  | CallExpression
-  | undefined;
+type NodeToConvert = ZodNode | CallExpression | undefined;
 
 function convertNameToTopLevelApi(
   node: NodeToConvert,

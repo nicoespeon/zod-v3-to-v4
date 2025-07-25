@@ -1,18 +1,15 @@
 import {
-  ExpressionStatement,
   Node,
   ObjectLiteralExpression,
   type SourceFile,
   SyntaxKind,
-  VariableDeclaration,
 } from "ts-morph";
+import { type ZodNode } from "./zod-node.ts";
 
-export function convertErrorMapToErrorFunction(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-) {
+export function convertErrorMapToErrorFunction(node: ZodNode) {
   // Find all errorMap properties
   node
-    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .getDescendantsOfKind(SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
@@ -87,11 +84,9 @@ export function convertErrorMapToErrorFunction(
     });
 }
 
-export function convertMessageKeyToError(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-) {
+export function convertMessageKeyToError(node: ZodNode) {
   node
-    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .getDescendantsOfKind(SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
@@ -128,11 +123,9 @@ export function convertMessageKeyToError(
     });
 }
 
-export function convertDeprecatedErrorKeysToErrorFunction(
-  node: ExpressionStatement | VariableDeclaration | undefined,
-) {
+export function convertDeprecatedErrorKeysToErrorFunction(node: ZodNode) {
   node
-    ?.getDescendantsOfKind(SyntaxKind.Identifier)
+    .getDescendantsOfKind(SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
