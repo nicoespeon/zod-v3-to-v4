@@ -100,7 +100,7 @@ describe("Zod v3 to v4", () => {
   // https://zod.dev/v4/changelog?id=zrecord
   describe("z.record()", () => {
     it("replaces dropped single-argument `z.record()` with a double-arguments version", async () => {
-      await runScenario("z-record");
+      await runScenario("z-record.double-arguments");
     });
   });
 
