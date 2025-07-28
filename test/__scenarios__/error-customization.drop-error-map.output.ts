@@ -10,3 +10,7 @@ const schema = z.string({
 });
 
 const defaultReturn = z.string({});
+
+const fooId = z.union([z.literal("VALUE_A"), z.literal("VALUE_B")], {
+  error: () => "Invalid Foo value: must be VALUE_A or VALUE_B",
+});

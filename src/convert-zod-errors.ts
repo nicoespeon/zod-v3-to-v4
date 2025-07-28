@@ -32,11 +32,8 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
         return;
       }
 
-      const issueParam = errorMapFunction.getParameters()[0]?.getName();
-      const contextParam = errorMapFunction.getParameters()[1]?.getName();
-      if (!issueParam) {
-        return;
-      }
+      const issueParam = errorMapFunction.getParameters()[0]?.getName() ?? "";
+      const contextParam = errorMapFunction.getParameters()[1]?.getName() ?? "";
 
       const functionBody = errorMapFunction.getBody();
       if (!functionBody) {
@@ -44,9 +41,12 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
       }
 
       let hasOnlyDefaultReturns = true;
-      const returnStatements = functionBody.getDescendantsOfKind(
-        SyntaxKind.ReturnStatement,
-      );
+
+      const returnStatements = functionBody.isKind(
+        SyntaxKind.ParenthesizedExpression,
+      )
+        ? [functionBody]
+        : functionBody.getDescendantsOfKind(SyntaxKind.ReturnStatement);
       returnStatements.forEach((statement) => {
         const expression = statement.getExpression();
 
@@ -61,11 +61,14 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
           return;
         }
 
-        const messageValueText = messageProp.getLastChild()?.getText();
+        const messageValueText = messageProp.getLastChild()?.getText() ?? `""`;
         if (messageValueText === `${contextParam}.defaultError`) {
           statement.replaceWithText("return;");
         } else {
-          statement.replaceWithText(`return ${messageValueText};`);
+          const newText = statement.isKind(SyntaxKind.ParenthesizedExpression)
+            ? messageValueText
+            : `return ${messageValueText};`;
+          statement.replaceWithText(newText);
           hasOnlyDefaultReturns = false;
         }
       });
@@ -76,11 +79,18 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
         return;
       }
 
-      objectLiteral.addPropertyAssignment({
-        name: "error",
-        initializer: `(${issueParam}) => ${functionBody.getText()}`,
-      });
-      errorMapProp?.remove();
+      if (functionBody.wasForgotten()) {
+        errorMapProp
+          ?.getDescendantsOfKind(SyntaxKind.Identifier)
+          .filter((id) => id.getText() === "errorMap")
+          .forEach((id) => id.replaceWithText("error"));
+      } else {
+        objectLiteral.addPropertyAssignment({
+          name: "error",
+          initializer: `(${issueParam}) => ${functionBody.getText()}`,
+        });
+        errorMapProp?.remove();
+      }
     });
 }
 

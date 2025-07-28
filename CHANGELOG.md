@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Fix `errorMap` transformations when the function body is an arrow function ([#6](https://github.com/nicoespeon/zod-v3-to-v4/pull/6)).
+
 ## [1.1.1] - 2025-07-25
 
 ### Fixed
