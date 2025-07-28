@@ -53,7 +53,6 @@ export function convertZObjectPatternsToTopLevelApi(
   node: ZodNode,
   zodName: string,
 ) {
-  node.getText(); //?
   convertNameToTopLevelApi(node, {
     zodName,
     oldName: "object",
