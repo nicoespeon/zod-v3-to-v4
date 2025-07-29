@@ -17,3 +17,11 @@ z.string({
 z.string({
   error: "This message takes precedence",
 });
+
+const password = (requiredMessage: string) =>
+  z
+    .string({
+      error: (issue) =>
+        issue.input === undefined ? requiredMessage : undefined,
+    })
+    .min(12);

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Fix replacements for `required_error` and `invalid_type_error` when they are variables ([#7](https://github.com/nicoespeon/zod-v3-to-v4/pull/7)).
+
 ## [1.1.2] - 2025-07-28
 
 ### Fixed

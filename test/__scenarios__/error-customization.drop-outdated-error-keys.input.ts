@@ -18,3 +18,6 @@ z.string({
   invalid_type_error: "Not a string",
   message: "This message takes precedence",
 });
+
+const password = (requiredMessage: string) =>
+  z.string({ required_error: requiredMessage }).min(12);
