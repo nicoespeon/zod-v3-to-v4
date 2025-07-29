@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.1.3] - 2025-07-29
+
 ### Fixed
 
 - Fix replacements for `required_error` and `invalid_type_error` when they are variables ([#7](https://github.com/nicoespeon/zod-v3-to-v4/pull/7)).
@@ -141,6 +143,7 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[1.1.3]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.0.2...1.1.0
