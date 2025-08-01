@@ -21,3 +21,16 @@ z.string({
 
 const password = (requiredMessage: string) =>
   z.string({ required_error: requiredMessage }).min(12);
+
+z.string()
+  .optional()
+  .refine((value) => {
+    if (!value) {
+      const error = {
+        code: "MISSING",
+        // Should be left untouched
+        message: "Value is missing!",
+      };
+      console.error(error);
+    }
+  });

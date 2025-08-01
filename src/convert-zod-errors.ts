@@ -4,12 +4,11 @@ import {
   type SourceFile,
   SyntaxKind,
 } from "ts-morph";
-import { type ZodNode } from "./zod-node.ts";
+import { getDirectDescendantsOfKind, type ZodNode } from "./zod-node.ts";
 
 export function convertErrorMapToErrorFunction(node: ZodNode) {
   // Find all errorMap properties
-  node
-    .getDescendantsOfKind(SyntaxKind.Identifier)
+  getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
@@ -95,8 +94,7 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
 }
 
 export function convertMessageKeyToError(node: ZodNode) {
-  node
-    .getDescendantsOfKind(SyntaxKind.Identifier)
+  getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&
@@ -134,8 +132,7 @@ export function convertMessageKeyToError(node: ZodNode) {
 }
 
 export function convertDeprecatedErrorKeysToErrorFunction(node: ZodNode) {
-  node
-    .getDescendantsOfKind(SyntaxKind.Identifier)
+  getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
     .filter(
       (id) =>
         id.getParentIfKind(SyntaxKind.PropertyAssignment) &&

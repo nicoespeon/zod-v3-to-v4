@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Don't replace `z.coerce` with top-level APIs because it would change the behaviour ([#12](https://github.com/nicoespeon/zod-v3-to-v4/pull/12)).
+- Target more specifically the descendants of Zod references to avoid transforming code that doesn't belong to Zod ([#9](https://github.com/nicoespeon/zod-v3-to-v4/pull/9)).
 
 ## [1.1.3] - 2025-07-29
 

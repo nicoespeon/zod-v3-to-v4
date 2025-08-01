@@ -25,3 +25,16 @@ const password = (requiredMessage: string) =>
         issue.input === undefined ? requiredMessage : undefined,
     })
     .min(12);
+
+z.string()
+  .optional()
+  .refine((value) => {
+    if (!value) {
+      const error = {
+        code: "MISSING",
+        // Should be left untouched
+        message: "Value is missing!",
+      };
+      console.error(error);
+    }
+  });
