@@ -222,6 +222,15 @@ function convertNameToTopLevelApi(
   }
 
   callExpressions.forEach((callExpression) => {
+    // `z.coerce.a().b()` should not be replaced like `z.a().b()`
+    const firstPropertyAccessExpressionName = callExpression
+      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      .map((i) => i.getName())
+      .at(-1);
+    if (firstPropertyAccessExpressionName === "coerce") {
+      return;
+    }
+
     const name = callExpression
       .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
       .find((expression) => names.includes(expression.getName()))
