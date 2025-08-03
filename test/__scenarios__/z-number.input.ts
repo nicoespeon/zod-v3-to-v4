@@ -10,3 +10,7 @@ type Integer = z.infer<typeof integerNumber>;
 
 // Coerce should be untouched, it doesn't have .int()
 const coercedInteger = z.coerce.number().positive().int();
+
+const zInt = z.number().int().or(z.string());
+const zIntWithPipe = z.number().or(z.string()).pipe(z.number().int());
+const manyZInts = z.number().int().or(z.string()).pipe(z.number().int());

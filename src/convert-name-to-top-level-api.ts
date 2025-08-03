@@ -322,11 +322,18 @@ function getCallExpressionsToConvert(
       .filter((e) => e.getName() === oldName)
       // Get the full call chain
       .map((expression) =>
-        expression.getParentWhile(
-          (parent) =>
-            parent.isKind(SyntaxKind.PropertyAccessExpression) ||
-            parent.isKind(SyntaxKind.CallExpression),
-        ),
+        expression.getParentWhile((parent, child) => {
+          // Exclude calls that would create a new branch, like `.or()`
+          const parentIsChainedPropertyAccessExpression =
+            parent.isKind(SyntaxKind.PropertyAccessExpression) &&
+            !["or", "and", "pipe"].includes(parent.getName());
+
+          return (
+            parentIsChainedPropertyAccessExpression ||
+            (parent.isKind(SyntaxKind.CallExpression) &&
+              child.getKind() !== parent.getKind())
+          );
+        }),
       )
       .filter(
         (e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression),
