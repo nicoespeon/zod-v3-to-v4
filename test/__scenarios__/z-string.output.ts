@@ -18,3 +18,6 @@ z.email()
   .describe("Lorem ipsum dolor sit amet apercitur sit nuc")
   .min(23)
   .max(100);
+
+// @ts-expect-error
+z.url().safeParse(stripeSession.url);

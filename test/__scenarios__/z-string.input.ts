@@ -19,3 +19,6 @@ z.string()
   .min(23)
   .email()
   .max(100);
+
+// @ts-expect-error
+z.string().url().safeParse(stripeSession.url);

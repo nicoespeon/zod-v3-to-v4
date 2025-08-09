@@ -251,7 +251,10 @@ function convertNameToTopLevelApi(
         const parent = expression.getFirstAncestorByKind(
           SyntaxKind.CallExpression,
         );
-        parent?.replaceWithText(expression.getExpression().getText());
+        if (parent?.getExpression() !== expression) {
+          return;
+        }
+        parent.replaceWithText(expression.getExpression().getText());
       });
 
     // Replace old name with top-level API

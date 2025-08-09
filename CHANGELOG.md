@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Don't fail migration when matching nested arguments that are not related Zod. E.g. `z.string().url().safeParse(stripeSession.url)` won't attempt to transform `stripeSession.url` anymore ([#14](https://github.com/nicoespeon/zod-v3-to-v4/pull/14)).
+
 ## [1.1.4] - 2025-08-03
 
 ### Fixed
