@@ -6,6 +6,7 @@ import {
   PropertyAccessExpression,
   SyntaxKind,
 } from "ts-morph";
+import { findRootQualifiedName } from "./ast.ts";
 
 export type ZodNode =
   | CallExpression
@@ -43,4 +44,31 @@ export function getDirectDescendantsOfKind<T extends SyntaxKind>(
 
       return getDirectDescendantsOfKind(child, kind);
     });
+}
+
+/**
+ * Returns true if the given expression binds to `Z.X` where `Z` is zod name
+ * and `X` is one of the expected types.
+ *
+ * @example
+ * isZodReference("z", ["ZodJSONSchema", "ZodError"], expression)
+ * // => true if expression is `z.ZodJSONSchema` or `z.ZodError`
+ */
+export function isZodReference(
+  zodName: string,
+  expectedTypes: string[],
+  expression: CallExpression | PropertyAccessExpression,
+) {
+  const qualifiedName = findRootQualifiedName(expression);
+
+  const left = qualifiedName?.getLeft();
+  const belongsToZod =
+    left?.isKind(SyntaxKind.Identifier) && left.getText() === zodName;
+
+  const right = qualifiedName?.getRight();
+  const isExpectedType =
+    right?.isKind(SyntaxKind.Identifier) &&
+    expectedTypes.includes(right.getText());
+
+  return belongsToZod && isExpectedType;
 }

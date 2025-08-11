@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- The codemod used to migrate the following methods that were looking like Zod API, although they didn't belong to Zod: `.addIssue()`, `.addIssues()`, `.format()`, `.flatten()`, and `.formErrors`. This has been fixed ([#13](https://github.com/nicoespeon/zod-v3-to-v4/pull/13)). It may result in the codemod missing some transformations now, but at least it won't break your code. Please [report any missing transformation as an enhancement](https://github.com/nicoespeon/zod-v3-to-v4/issues/new?assignees=&labels=enhancement&template=enhancement.md&title=) for the codemod.
 - Don't fail migration when matching nested arguments that are not related Zod. E.g. `z.string().url().safeParse(stripeSession.url)` won't attempt to transform `stripeSession.url` anymore ([#14](https://github.com/nicoespeon/zod-v3-to-v4/pull/14)).
 
 ## [1.1.4] - 2025-08-03

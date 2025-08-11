@@ -58,7 +58,7 @@ export function migrateZodV3ToV4(sourceFile: SourceFile): string | undefined {
   });
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
-  convertZodErrorAddIssueToDirectPushes(sourceFile);
+  convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
 
   return sourceFile.getFullText();
 }

@@ -15,3 +15,20 @@ export function parseAndReport(schema: z.ZodSchema, input: unknown) {
 
   return result;
 }
+
+export function format(error: z.ZodError) {
+  return error.format();
+}
+
+// Should not match
+export class ShouldNotTransform {
+  format() {}
+  formErrors() {}
+
+  formatQuantity(unknownQuantity: any) {
+    const errors = this.formErrors();
+    this.format();
+    unknownQuantity.formErrors.invalidPassword = true;
+    return unknownQuantity.format();
+  }
+}

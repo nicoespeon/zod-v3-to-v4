@@ -4,7 +4,11 @@ import {
   type SourceFile,
   SyntaxKind,
 } from "ts-morph";
-import { getDirectDescendantsOfKind, type ZodNode } from "./zod-node.ts";
+import {
+  getDirectDescendantsOfKind,
+  isZodReference,
+  type ZodNode,
+} from "./zod-node.ts";
 
 export function convertErrorMapToErrorFunction(node: ZodNode) {
   // Find all errorMap properties
@@ -188,15 +192,17 @@ export function convertZodErrorToTreeifyError(
 ) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((expression) =>
+      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+    )
     .filter((expression) => {
       const argsCount = expression.getArguments().length;
       const methodCalled = expression.getExpression().getLastChild();
+
       const looksLikeZodErrorFormat =
         methodCalled?.getText() === "format" && argsCount === 0;
       const looksLikeZodErrorFlatten =
         methodCalled?.getText() === "flatten" && argsCount === 0;
-
-      // TODO: prevent matches that don't belong to Zod
 
       return looksLikeZodErrorFormat || looksLikeZodErrorFlatten;
     })
@@ -208,10 +214,11 @@ export function convertZodErrorToTreeifyError(
 
   sourceFile
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((expression) =>
+      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+    )
     .filter((expression) => {
       const looksLikeZodErrorFormErrors = expression.getName() === "formErrors";
-
-      // TODO: prevent matches that don't belong to Zod
 
       return looksLikeZodErrorFormErrors;
     })
@@ -221,18 +228,23 @@ export function convertZodErrorToTreeifyError(
     });
 }
 
-export function convertZodErrorAddIssueToDirectPushes(sourceFile: SourceFile) {
+export function convertZodErrorAddIssueToDirectPushes(
+  sourceFile: SourceFile,
+  zodName: string,
+) {
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((expression) =>
+      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+    )
     .filter((expression) => {
       const argsCount = expression.getArguments().length;
       const methodCalled = expression.getExpression().getLastChild();
+
       const looksLikeZodErrorAddIssue =
         methodCalled?.getText() === "addIssue" && argsCount === 1;
       const looksLikeZodErrorAddIssues =
         methodCalled?.getText() === "addIssues" && argsCount === 1;
-
-      // TODO: prevent matches that don't belong to Zod
 
       return looksLikeZodErrorAddIssue || looksLikeZodErrorAddIssues;
     })

@@ -32,3 +32,17 @@ export function parseAndReport(schema: z.ZodSchema, input: unknown) {
 
   return result;
 }
+
+// Should not match
+export class ShouldNotTransform {
+  addIssue(issue: any) {}
+  addIssues(issues: any[]) {}
+
+  addQuantityIssue(issue: any, unknownQuantity: any) {
+    this.addIssues([issue]);
+    this.addIssue(issue);
+
+    unknownQuantity.addIssues.invalidPassword = true;
+    return unknownQuantity.addIssue();
+  }
+}
