@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.1.5] - 2025-08-11
+
 ### Fixed
 
 - The codemod used to migrate the following methods that were looking like Zod API, although they didn't belong to Zod: `.addIssue()`, `.addIssues()`, `.format()`, `.flatten()`, and `.formErrors`. This has been fixed ([#13](https://github.com/nicoespeon/zod-v3-to-v4/pull/13)). It may result in the codemod missing some transformations now, but at least it won't break your code. Please [report any missing transformation as an enhancement](https://github.com/nicoespeon/zod-v3-to-v4/issues/new?assignees=&labels=enhancement&template=enhancement.md&title=) for the codemod.
@@ -156,6 +158,7 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[1.1.5]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.1...1.1.2
