@@ -21,13 +21,24 @@ import {
 } from "./convert-zod-errors.ts";
 import { isZodNode, type ZodNode } from "./zod-node.ts";
 
-export function migrateZodV3ToV4(sourceFile: SourceFile): string | undefined {
+interface Options {
+  migrateImportDeclarations?: boolean;
+}
+
+export function migrateZodV3ToV4(
+  sourceFile: SourceFile,
+  options: Options = {},
+): string | undefined {
   const importDeclarations = collectZodImportDeclarations(sourceFile);
   const zodName = getZodName(importDeclarations);
 
-  importDeclarations.forEach((declaration) => {
-    declaration.setModuleSpecifier("zod/v4");
-  });
+  // Not needed in the context of an actual migration
+  // Useful for testing, so we can have v3.25 and typecheck both v3 and v4
+  if (options.migrateImportDeclarations) {
+    importDeclarations.forEach((declaration) => {
+      declaration.setModuleSpecifier("zod/v4");
+    });
+  }
 
   collectZodReferences(importDeclarations).forEach((node) => {
     if (node.wasForgotten()) {

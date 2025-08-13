@@ -163,7 +163,9 @@ async function transform(
   });
 
   const actualSourceFile = project.createSourceFile(path, beforeText);
-  let actual = migrateZodV3ToV4(actualSourceFile) ?? "";
+  let actual =
+    migrateZodV3ToV4(actualSourceFile, { migrateImportDeclarations: true }) ??
+    "";
 
   let expected = project
     .createSourceFile(`expected${extname(path)}`, afterText)

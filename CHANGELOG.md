@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## Changed
+
+- Stop migrating zod imports to `zod/v4`. It's a valid transformation, but it's only useful if you plan on staying on v3.25, which is probably not your intention when using this codemod. It's only helpful for testing purposes, so we can typecheck both v3 (before) and v4 (after). But it's not useful for users. ([#15](https://github.com/nicoespeon/zod-v3-to-v4/pull/15))
+
 ## [1.1.5] - 2025-08-11
 
 ### Fixed
