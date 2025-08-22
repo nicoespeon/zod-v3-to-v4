@@ -15,3 +15,6 @@ const Device = z.union([Phone, Tablet]);
 
 const DeviceList = z.record(Device);
 type DeviceList = z.infer<typeof DeviceList>;
+
+// Should not change
+const schema = z.array(z.record(z.string(), z.unknown().optional()));

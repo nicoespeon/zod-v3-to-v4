@@ -180,12 +180,7 @@ export function convertZRecordPatternsToTopLevelApi(
   node
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .filter((e) => e.getName() === "record")
-    // Get the full call chain
-    .map((expression) =>
-      expression.getParentWhile((parent) =>
-        parent.isKind(SyntaxKind.CallExpression),
-      ),
-    )
+    .map((expression) => expression.getParent())
     .filter((e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression))
     .forEach((e) => {
       const [firstArg, ...otherArgs] = e.getArguments();
