@@ -62,6 +62,7 @@ export function convertZObjectPatternsToTopLevelApi(
       { name: "strip", newName: "object" },
       { name: "nonstrict", newName: "object" },
     ],
+    omitArgs: true,
   });
 
   convertZObjectMergeToExtend(node);
@@ -242,6 +243,7 @@ function convertNameToTopLevelApi(
     }
 
     const newName = match.newName ?? match.name;
+    let argsText = "";
 
     // Remove deprecated names from the chain
     callExpression
@@ -254,6 +256,13 @@ function convertNameToTopLevelApi(
         if (parent?.getExpression() !== expression) {
           return;
         }
+
+        // Collect existing args to move them to top-level API
+        argsText = parent
+          .getArguments()
+          .map((arg) => arg.getText())
+          .join(", ");
+
         parent.replaceWithText(expression.getExpression().getText());
       });
 
@@ -262,7 +271,11 @@ function convertNameToTopLevelApi(
       .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
       .filter((e) => e.getName() === oldName)
       .forEach((e) => {
-        e.replaceWithText(`${zodName}.${newName}`);
+        if (options.omitArgs) {
+          e.replaceWithText(`${zodName}.${newName}`);
+        } else {
+          e.getParent()?.replaceWithText(`${zodName}.${newName}(${argsText})`);
+        }
       });
   });
 }
@@ -271,6 +284,7 @@ type ConvertNameOptions = {
   zodName: string;
   oldName: string;
   renames: { name: string; newName?: string }[];
+  omitArgs?: boolean;
 };
 
 function convertNameToTopLevelApiAndWrapInUnion(

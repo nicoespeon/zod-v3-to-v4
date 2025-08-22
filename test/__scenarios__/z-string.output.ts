@@ -19,5 +19,13 @@ z.email()
   .min(23)
   .max(100);
 
+// With args
+export const urlSchema = z.object({
+  url: z
+    .url("Please enter a valid URL")
+    .min(1, "URL is required")
+    .transform((url) => (url.endsWith("/") ? url.slice(0, -1) : url)),
+});
+
 // @ts-expect-error
 z.url().safeParse(stripeSession.url);

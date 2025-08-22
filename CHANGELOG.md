@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Codemod now replaces top-level API when they have args, such as `z.string().url("Please enter a valid URL")` => `z.url("Please enter a valid URL")`. ([#18](https://github.com/nicoespeon/zod-v3-to-v4/pull/18))
+
 ## [1.2.0] - 2025-08-13
 
 ## Changed
