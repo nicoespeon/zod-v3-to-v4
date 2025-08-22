@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- The codemod was a bit too greedy when migrating `z.record()` patterns and would sometimes add incorrect `z.string()` params to it's parent call expression (e.g., `z.array(z.record(…))` -> `z.array(z.string(), z.record(…))`). Not anymore! ([#17](https://github.com/nicoespeon/zod-v3-to-v4/pull/17))
+- The codemod was a bit too greedy when migrating `z.record()` patterns and would sometimes add incorrect `z.string()` params to its parent call expression (e.g., `z.array(z.record(…))` -> `z.array(z.string(), z.record(…))`). Not anymore! ([#17](https://github.com/nicoespeon/zod-v3-to-v4/pull/17))
 
 ## [1.2.0] - 2025-08-13
 
