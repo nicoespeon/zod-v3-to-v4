@@ -30,6 +30,10 @@ describe("Zod v3 to v4", () => {
     it("replaces deprecated `.addIssue()` and `.addIssues()` with direct pushes to `.issues`", async () => {
       await runScenario("zod-error.push-to-issues");
     });
+
+    it("replaces deprecated `ZodIssueError` with literal strings", async () => {
+      await runScenario("zod-error.zod-issue-code");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=znumber

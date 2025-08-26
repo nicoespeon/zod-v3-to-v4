@@ -1,4 +1,5 @@
 import { type SourceFile, SyntaxKind } from "ts-morph";
+import { ZodIssueCode } from "zod/v3";
 import {
   collectZodImportDeclarations,
   collectZodReferences,
@@ -66,6 +67,7 @@ export function migrateZodV3ToV4(
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);
+    replaceZodIssueCodeWithLiteralStrings(parentStatement);
   });
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
@@ -97,5 +99,38 @@ function renameZNativeEnumToZEnum(node: ZodNode) {
     )
     .forEach((identifier) => {
       identifier.replaceWithText("enum");
+    });
+}
+
+const ZodIssueCodeToLiteralString: Record<string, string> = {
+  custom: "custom",
+  invalid_type: "invalid_type",
+  unrecognized_keys: "unrecognized_keys",
+  too_big: "too_big",
+  too_small: "too_small",
+  not_multiple_of: "not_multiple_of",
+  invalid_union: "invalid_union",
+  invalid_literal: "invalid_type",
+  invalid_union_discriminator: "invalid_union",
+  invalid_enum_value: "invalid_type",
+  invalid_arguments: "invalid_type",
+  invalid_return_type: "invalid_type",
+  invalid_date: "invalid_type",
+  invalid_string: "invalid_type",
+  invalid_intersection_types: "invalid_type",
+  not_finite: "invalid_type",
+  // Use satisfies to make sure we cover all cases, without hijacking the type
+} satisfies Record<ZodIssueCode, string>;
+
+function replaceZodIssueCodeWithLiteralStrings(node: ZodNode) {
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((e) => e.getName() === "ZodIssueCode")
+    .flatMap((e) => e.getParentIfKind(SyntaxKind.PropertyAccessExpression))
+    .filter((e) => e !== undefined)
+    .forEach((e) => {
+      const literalString =
+        ZodIssueCodeToLiteralString[e.getName()] ?? "invalid_type";
+      e.replaceWithText(`"${literalString}"`);
     });
 }

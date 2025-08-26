@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Migrate the deprecated `ZodIssueCode` into literal strings, as recommended. ([#8](https://github.com/nicoespeon/zod-v3-to-v4/pull/8)). Some codes where removed, so they are mapped to a valid literal strings that seems the most appropriate:
+
+```
+| ZodIssueCode (v3)           | Literal string (v4) |
+| --------------------------- | ------------------- |
+| custom                      | "custom"            |
+| invalid_type                | "invalid_type"      |
+| unrecognized_keys           | "unrecognized_keys" |
+| too_big                     | "too_big"           |
+| too_small                   | "too_small"         |
+| not_multiple_of             | "not_multiple_of"   |
+| invalid_union               | "invalid_union"     |
+| invalid_literal             | "invalid_type"      |
+| invalid_union_discriminator | "invalid_union"     |
+| invalid_enum_value          | "invalid_type"      |
+| invalid_arguments           | "invalid_type"      |
+| invalid_return_type         | "invalid_type"      |
+| invalid_date                | "invalid_type"      |
+| invalid_string              | "invalid_type"      |
+| invalid_intersection_types  | "invalid_type"      |
+| not_finite                  | "invalid_type"      |
+```
+
 ## [1.3.0] - 2025-08-22
 
 ### Changed
