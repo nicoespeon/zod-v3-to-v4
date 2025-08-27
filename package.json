@@ -1,6 +1,6 @@
 {
   "name": "zod-v3-to-v4",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Migrate Zod from v3 to v4",
   "keywords": [
     "zod",
