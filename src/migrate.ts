@@ -1,5 +1,6 @@
 import { type SourceFile, SyntaxKind } from "ts-morph";
 import { ZodIssueCode } from "zod/v3";
+import { findRootNode } from "./ast.ts";
 import {
   collectZodImportDeclarations,
   collectZodReferences,
@@ -72,6 +73,7 @@ export function migrateZodV3ToV4(
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
+  renameZSchemaEnumToLowercase(sourceFile, zodName);
 
   return sourceFile.getFullText();
 }
@@ -99,6 +101,26 @@ function renameZNativeEnumToZEnum(node: ZodNode) {
     )
     .forEach((identifier) => {
       identifier.replaceWithText("enum");
+    });
+}
+
+function renameZSchemaEnumToLowercase(sourceFile: SourceFile, zodName: string) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((node) => node.getName() === "Enum")
+    .filter((node) => {
+      const rootNode = findRootNode(node);
+      const expression = rootNode?.getExpression();
+
+      const isFromZodEnum =
+        expression?.isKind(SyntaxKind.PropertyAccessExpression) &&
+        expression.getName() === "enum" &&
+        expression.getExpression().getText() === zodName;
+
+      return isFromZodEnum;
+    })
+    .forEach((node) => {
+      node.getNameNode().replaceWithText("enum");
     });
 }
 

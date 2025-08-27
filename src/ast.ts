@@ -33,6 +33,30 @@ export function findRootQualifiedName(
   return undefined;
 }
 
+export function findRootNode(
+  node: CallExpression | PropertyAccessExpression | undefined,
+): CallExpression | PropertyAccessExpression | undefined {
+  const identifier = findRootIdentifier(node);
+  const [mainDeclaration] = identifier?.getSymbol()?.getDeclarations() ?? [];
+
+  if (mainDeclaration?.isKind(SyntaxKind.VariableDeclaration)) {
+    const initializer = mainDeclaration.getInitializer();
+    if (
+      initializer?.isKind(SyntaxKind.CallExpression) ||
+      initializer?.isKind(SyntaxKind.PropertyAccessExpression)
+    ) {
+      return findRootNode(initializer);
+    }
+    return undefined;
+  }
+
+  if (mainDeclaration?.isKind(SyntaxKind.ImportSpecifier)) {
+    return node;
+  }
+
+  return undefined;
+}
+
 function findRootIdentifier(
   node: CallExpression | PropertyAccessExpression | undefined,
 ): Identifier | undefined {

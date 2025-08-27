@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Rename `schema.Enum` into `schema.enum` if `schema` comes from `z.enum()`. ([#16](https://github.com/nicoespeon/zod-v3-to-v4/pull/16))
 - Migrate the deprecated `ZodIssueCode` into literal strings, as recommended. ([#8](https://github.com/nicoespeon/zod-v3-to-v4/pull/8)). Some codes where removed, so they are mapped to a valid literal strings that seems the most appropriate:
 
 ```

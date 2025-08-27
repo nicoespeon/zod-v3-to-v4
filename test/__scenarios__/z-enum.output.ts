@@ -7,3 +7,10 @@ enum Color {
 }
 
 const ColorSchema = z.enum(Color);
+
+// Rename Enum to enum
+const schema = z.enum(["id_token", "token", "code"]);
+schema.enum.token;
+
+let mySchema: any;
+console.log("should not change:", mySchema.Enum.token);
