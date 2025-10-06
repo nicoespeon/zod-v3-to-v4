@@ -127,6 +127,12 @@ describe("Zod v3 to v4", () => {
   it("handles import aliases", async () => {
     await runScenario("import-aliases");
   });
+
+  describe("coercion", () => {
+    it("replaces droppped `z.X({ coerce: true })` with `z.coerce.X()`", async () => {
+      await runScenario("z-coerce");
+    });
+  });
 });
 
 async function runScenario(fixturePath: string) {

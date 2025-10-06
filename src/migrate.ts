@@ -8,6 +8,7 @@ import {
 } from "./collect-imports.ts";
 import {
   convertZArrayPatternsToTopLevelApi,
+  convertZCoercePatternsToTopLevelApi,
   convertZFunctionPatternsToTopLevelApi,
   convertZNumberPatternsToZInt,
   convertZObjectPatternsToTopLevelApi,
@@ -62,6 +63,7 @@ export function migrateZodV3ToV4(
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
+    convertZCoercePatternsToTopLevelApi(parentStatement, zodName);
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
     convertZFunctionPatternsToTopLevelApi(parentStatement);

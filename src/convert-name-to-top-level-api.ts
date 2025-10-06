@@ -49,6 +49,68 @@ export function convertZStringPatternsToTopLevelApi(
   });
 }
 
+export function convertZCoercePatternsToTopLevelApi(
+  node: ZodNode,
+  zodName: string,
+) {
+  const names = ["bigint", "boolean", "date", "number", "string"];
+
+  node
+    .getDescendantsOfKind(SyntaxKind.CallExpression)
+    // Start from the deepest, otherwise we can't get info from removed nodes
+    .reverse()
+    .filter((e) => {
+      const expression = e.getExpression();
+      if (!expression.isKind(SyntaxKind.PropertyAccessExpression)) {
+        return false;
+      }
+
+      const [firstArgument, ...otherArgs] = e.getArguments();
+      if (
+        otherArgs.length > 0 ||
+        !firstArgument?.isKind(SyntaxKind.ObjectLiteralExpression)
+      ) {
+        return false;
+      }
+
+      const propertiesNames = firstArgument
+        .getProperties()
+        .map((p) => ("getName" in p ? p.getName() : ""));
+
+      return (
+        names.includes(expression.getName()) &&
+        propertiesNames.includes("coerce")
+      );
+    })
+    .forEach((e) => {
+      const expression = e.getExpression();
+      if (!expression.isKind(SyntaxKind.PropertyAccessExpression)) {
+        return;
+      }
+
+      const [firstArgument, ...otherArgs] = e.getArguments();
+      if (
+        otherArgs.length > 0 ||
+        !firstArgument?.isKind(SyntaxKind.ObjectLiteralExpression)
+      ) {
+        return;
+      }
+
+      // Delete `coerce` property
+      firstArgument
+        .getProperties()
+        .filter((p) => "getName" in p && p.getName() === "coerce")
+        .forEach((p) => p.remove());
+
+      // If only `{}` is left, remove it
+      if (firstArgument.getProperties().length === 0) {
+        e.removeArgument(firstArgument);
+      }
+
+      expression.replaceWithText(`${zodName}.coerce.${expression.getName()}`);
+    });
+}
+
 export function convertZObjectPatternsToTopLevelApi(
   node: ZodNode,
   zodName: string,

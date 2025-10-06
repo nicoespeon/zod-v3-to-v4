@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Converts `z.X({ coerce: true })` to `z.coerce.X()` where `X` is one of `bigint`, `boolean`, `date`, `number`, or `string`. ([#22](https://github.com/nicoespeon/zod-v3-to-v4/pull/22))
+
 ## [1.4.0] - 2025-08-22
 
 ### Added
