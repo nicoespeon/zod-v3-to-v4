@@ -1,6 +1,6 @@
 import { type SourceFile, SyntaxKind } from "ts-morph";
 import { ZodIssueCode } from "zod/v3";
-import { findRootNode } from "./ast.ts";
+import { findRootExpression } from "./ast.ts";
 import {
   collectZodImportDeclarations,
   collectZodReferences,
@@ -111,7 +111,7 @@ function renameZSchemaEnumToLowercase(sourceFile: SourceFile, zodName: string) {
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .filter((node) => node.getName() === "Enum")
     .filter((node) => {
-      const rootNode = findRootNode(node);
+      const rootNode = findRootExpression(node);
       const expression = rootNode?.getExpression();
 
       const isFromZodEnum =

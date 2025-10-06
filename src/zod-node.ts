@@ -6,7 +6,7 @@ import {
   PropertyAccessExpression,
   SyntaxKind,
 } from "ts-morph";
-import { findRootQualifiedName } from "./ast.ts";
+import { findRootNode } from "./ast.ts";
 
 export type ZodNode =
   | CallExpression
@@ -59,16 +59,32 @@ export function isZodReference(
   expectedTypes: string[],
   expression: CallExpression | PropertyAccessExpression,
 ) {
-  const qualifiedName = findRootQualifiedName(expression);
+  const result = findRootNode(expression);
 
-  const left = qualifiedName?.getLeft();
-  const belongsToZod =
-    left?.isKind(SyntaxKind.Identifier) && left.getText() === zodName;
+  if (result.type === "qualified name") {
+    const left = result.value.getLeft();
+    const belongsToZod =
+      left?.isKind(SyntaxKind.Identifier) && left.getText() === zodName;
 
-  const right = qualifiedName?.getRight();
-  const isExpectedType =
-    right?.isKind(SyntaxKind.Identifier) &&
-    expectedTypes.includes(right.getText());
+    const right = result.value.getRight();
+    const isExpectedType =
+      right?.isKind(SyntaxKind.Identifier) &&
+      expectedTypes.includes(right.getText());
 
-  return belongsToZod && isExpectedType;
+    return belongsToZod && isExpectedType;
+  }
+
+  if (result.type === "import declaration") {
+    const hasZodImport = result.value
+      .getImportClause()
+      ?.getNamedImports()
+      ?.some((i) => i.getName() === zodName);
+    const isFromZod = ["zod", "zod/v4"].includes(
+      result.value.getModuleSpecifierValue(),
+    );
+
+    return hasZodImport && isFromZod;
+  }
+
+  return false;
 }

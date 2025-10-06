@@ -20,6 +20,30 @@ export function format(error: z.ZodError) {
   return z.treeifyError(error);
 }
 
+// From Next.js tutorial https://nextjs.org/learn/dashboard-app/improving-accessibility
+const CreateInvoice = z.object({
+  customerId: z.string(),
+  amount: z.number(),
+  status: z.enum(["pending", "paid", "cancelled"]),
+});
+
+export async function createInvoice(formData: FormData) {
+  const validatedFields = CreateInvoice.safeParse({
+    customerId: formData.get("customerId"),
+    amount: formData.get("amount"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: z.treeifyError(validatedFields.error),
+      message: "Missing Fields. Failed to Create Invoice.",
+    };
+  }
+
+  // ...
+}
+
 // Should not match
 export class ShouldNotTransform {
   format() {}

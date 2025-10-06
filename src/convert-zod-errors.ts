@@ -210,6 +210,17 @@ export function convertZodErrorToTreeifyError(
       const caller =
         expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
       expression.replaceWithText(`${zodName}.treeifyError(${caller})`);
+
+      // Get rid of `.formErrors` or `.fieldErrors` on `z.treeifyError()`
+      const parentObject = expression.getParentIfKind(
+        SyntaxKind.PropertyAccessExpression,
+      );
+      if (
+        parentObject &&
+        ["formErrors", "fieldErrors"].includes(parentObject.getName())
+      ) {
+        parentObject.replaceWithText(expression.getText());
+      }
     });
 
   sourceFile
@@ -219,8 +230,10 @@ export function convertZodErrorToTreeifyError(
     )
     .filter((expression) => {
       const looksLikeZodErrorFormErrors = expression.getName() === "formErrors";
+      const looksLikeZodErrorFieldErrors =
+        expression.getName() === "fieldErrors";
 
-      return looksLikeZodErrorFormErrors;
+      return looksLikeZodErrorFormErrors || looksLikeZodErrorFieldErrors;
     })
     .forEach((expression) => {
       const caller = expression.getFirstChild()?.getText() ?? "";

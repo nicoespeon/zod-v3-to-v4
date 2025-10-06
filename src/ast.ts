@@ -1,42 +1,20 @@
 import {
   CallExpression,
   Identifier,
+  ImportDeclaration,
   PropertyAccessExpression,
   QualifiedName,
   SyntaxKind,
   ts,
 } from "ts-morph";
 
-export function findRootQualifiedName(
-  node: CallExpression | PropertyAccessExpression | undefined,
-): QualifiedName | undefined {
-  const identifier = findRootIdentifier(node);
-  const [mainDeclaration] = identifier?.getSymbol()?.getDeclarations() ?? [];
-
-  if (mainDeclaration?.isKind(SyntaxKind.VariableDeclaration)) {
-    const initializer = mainDeclaration.getInitializer();
-    if (
-      initializer?.isKind(SyntaxKind.CallExpression) ||
-      initializer?.isKind(SyntaxKind.PropertyAccessExpression)
-    ) {
-      return findRootQualifiedName(initializer);
-    }
-    return undefined;
-  }
-
-  if (mainDeclaration?.isKind(SyntaxKind.Parameter)) {
-    return mainDeclaration
-      ?.getFirstChildByKind(ts.SyntaxKind.TypeReference)
-      ?.getFirstChildByKind(ts.SyntaxKind.QualifiedName);
-  }
-
-  return undefined;
-}
-
 export function findRootNode(
   node: CallExpression | PropertyAccessExpression | undefined,
-): CallExpression | PropertyAccessExpression | undefined {
-  const identifier = findRootIdentifier(node);
+):
+  | { type: "qualified name"; value: QualifiedName }
+  | { type: "import declaration"; value: ImportDeclaration }
+  | { type: "not found" } {
+  const identifier = findFirstIdentifier(node);
   const [mainDeclaration] = identifier?.getSymbol()?.getDeclarations() ?? [];
 
   if (mainDeclaration?.isKind(SyntaxKind.VariableDeclaration)) {
@@ -46,6 +24,44 @@ export function findRootNode(
       initializer?.isKind(SyntaxKind.PropertyAccessExpression)
     ) {
       return findRootNode(initializer);
+    }
+    return { type: "not found" };
+  }
+
+  if (mainDeclaration?.isKind(SyntaxKind.Parameter)) {
+    const qualifiedName = mainDeclaration
+      ?.getFirstChildByKind(ts.SyntaxKind.TypeReference)
+      ?.getFirstChildByKind(ts.SyntaxKind.QualifiedName);
+    return qualifiedName
+      ? { type: "qualified name", value: qualifiedName }
+      : { type: "not found" };
+  }
+
+  if (mainDeclaration?.isKind(SyntaxKind.ImportSpecifier)) {
+    const importDeclaration = mainDeclaration.getFirstAncestorByKind(
+      SyntaxKind.ImportDeclaration,
+    );
+    return importDeclaration
+      ? { type: "import declaration", value: importDeclaration }
+      : { type: "not found" };
+  }
+
+  return { type: "not found" };
+}
+
+export function findRootExpression(
+  node: CallExpression | PropertyAccessExpression | undefined,
+): CallExpression | PropertyAccessExpression | undefined {
+  const identifier = findFirstIdentifier(node);
+  const [mainDeclaration] = identifier?.getSymbol()?.getDeclarations() ?? [];
+
+  if (mainDeclaration?.isKind(SyntaxKind.VariableDeclaration)) {
+    const initializer = mainDeclaration.getInitializer();
+    if (
+      initializer?.isKind(SyntaxKind.CallExpression) ||
+      initializer?.isKind(SyntaxKind.PropertyAccessExpression)
+    ) {
+      return findRootExpression(initializer);
     }
     return undefined;
   }
@@ -57,13 +73,13 @@ export function findRootNode(
   return undefined;
 }
 
-function findRootIdentifier(
+function findFirstIdentifier(
   node: CallExpression | PropertyAccessExpression | undefined,
 ): Identifier | undefined {
   const nestedExpression = node?.getExpression();
 
   if (nestedExpression?.isKind(SyntaxKind.PropertyAccessExpression)) {
-    return findRootIdentifier(nestedExpression);
+    return findFirstIdentifier(nestedExpression);
   }
 
   if (nestedExpression?.isKind(SyntaxKind.Identifier)) {
