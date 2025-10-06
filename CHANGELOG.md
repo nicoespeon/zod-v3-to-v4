@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.5.0] - 2025-10-06
+
 ### Added
 
 - The codemod now resolves indirect references to Zod than before. For example, `validatedFields.error.flatten()` will now be correctly transformed into `z.treeifyError(validatedFields.error)` by following the definition of `validatedFields` up until the first Zod reference or import. [#19](https://github.com/nicoespeon/zod-v3-to-v4/pull/19)
@@ -207,6 +209,7 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[1.5.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.2.0...1.3.0
 [1.2.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.1.5...1.2.0
