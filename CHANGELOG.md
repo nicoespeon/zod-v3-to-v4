@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.6.0] - 2025-10-06
+
 ### Added
 
 - The codemod now migrates code that imports from `zod/v3` explicitly. It will migrate the patterns and update the import to be `zod` directly, as it assumes you have migrated the dependency to v4 already. ([#24](https://github.com/nicoespeon/zod-v3-to-v4/pull/24))
@@ -213,6 +215,7 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[1.6.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.2.0...1.3.0
