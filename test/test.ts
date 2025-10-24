@@ -128,6 +128,10 @@ describe("Zod v3 to v4", () => {
     await runScenario("import-aliases");
   });
 
+  it("handles zod/v3 migrateImportDeclarations", async () => {
+    await runScenario("zod-v3-import");
+  });
+
   describe("coercion", () => {
     it("replaces droppped `z.X({ coerce: true })` with `z.coerce.X()`", async () => {
       await runScenario("z-coerce");

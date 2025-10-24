@@ -4,7 +4,7 @@ export function collectZodImportDeclarations(sourceFile: SourceFile) {
   return sourceFile
     .getImportDeclarations()
     .filter((importDeclaration) =>
-      ["zod", "zod/v4"].includes(importDeclaration.getModuleSpecifierValue()),
+      ["zod", "zod/v3"].includes(importDeclaration.getModuleSpecifierValue()),
     );
 }
 

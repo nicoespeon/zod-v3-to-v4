@@ -35,13 +35,17 @@ export function migrateZodV3ToV4(
   const importDeclarations = collectZodImportDeclarations(sourceFile);
   const zodName = getZodName(importDeclarations);
 
-  // Not needed in the context of an actual migration
-  // Useful for testing, so we can have v3.25 and typecheck both v3 and v4
-  if (options.migrateImportDeclarations) {
-    importDeclarations.forEach((declaration) => {
+  importDeclarations.forEach((declaration) => {
+    if (declaration.getModuleSpecifier().getText() === "zod/v3") {
+      declaration.setModuleSpecifier("zod");
+    }
+
+    if (options.migrateImportDeclarations) {
+      // Use `zod/v4` explicit import. Not needed for an actual migration.
+      // Useful for testing, so we can have v3.25 and typecheck both v3 and v4
       declaration.setModuleSpecifier("zod/v4");
-    });
-  }
+    }
+  });
 
   collectZodReferences(importDeclarations).forEach((node) => {
     if (node.wasForgotten()) {
