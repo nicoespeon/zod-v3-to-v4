@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Fixed an issue where `z.string().ip()` and `z.string().cidr()` would incorrectly migrate `safeParse()` (and others) as part of the union when migrating to `z.union([z.ipv4(), z.ipv6()])` and `z.union([z.cidrv4(), z.cidrv6()])` respectively. ([#25](https://github.com/nicoespeon/zod-v3-to-v4/pull/25))
+
 ## [1.6.0] - 2025-10-06
 
 ### Added

@@ -355,7 +355,6 @@ function convertNameToTopLevelApiAndWrapInUnion(
 
   getCallExpressionsToConvert(node, { oldName: nameToWrap, names }).forEach(
     (callExpression) => {
-      // Remove deprecated names from the chain
       callExpression
         .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
         .filter((expression) => names.includes(expression.getName()))
@@ -363,15 +362,12 @@ function convertNameToTopLevelApiAndWrapInUnion(
           const parent = expression.getFirstAncestorByKind(
             SyntaxKind.CallExpression,
           );
-          parent?.replaceWithText(expression.getExpression().getText());
+          const text = expression.getExpression().getText();
+          const unionText = renames
+            .map(({ name }) => `${text}.${name}()`)
+            .join(", ");
+          parent?.replaceWithText(`${zodName}.union([${unionText}])`);
         });
-
-      // Nest the whole expression inside a union for ipv4() & ipv6()
-      const text = callExpression.getText();
-      const unionText = renames
-        .map(({ name }) => `${text}.${name}()`)
-        .join(", ");
-      callExpression?.replaceWithText(`${zodName}.union([${unionText}])`);
 
       convertNameToTopLevelApi(callExpression, {
         zodName,
