@@ -362,11 +362,53 @@ function convertNameToTopLevelApiAndWrapInUnion(
           const parent = expression.getFirstAncestorByKind(
             SyntaxKind.CallExpression,
           );
+          if (!parent) {
+            return;
+          }
+
           const text = expression.getExpression().getText();
+
+          // Check if the method call has arguments (e.g., .ip({ version: "v4" }))
+          const args = parent.getArguments();
+          if (args.length > 0) {
+            // Try to extract version from the arguments
+            const firstArg = args[0];
+            if (firstArg?.isKind(SyntaxKind.ObjectLiteralExpression)) {
+              const versionProperty = firstArg.getProperties().find((prop) => {
+                if (prop.isKind(SyntaxKind.PropertyAssignment)) {
+                  const name = prop.getName();
+                  return name === "version" || name === '"version"';
+                }
+                return false;
+              });
+
+              if (versionProperty?.isKind(SyntaxKind.PropertyAssignment)) {
+                const initializer = versionProperty.getInitializer();
+                if (initializer?.isKind(SyntaxKind.StringLiteral)) {
+                  const version = initializer.getLiteralValue();
+                  if (version === "v4" && nameToWrap === "ip") {
+                    parent.replaceWithText(`${text}.ipv4()`);
+                    return;
+                  } else if (version === "v6" && nameToWrap === "ip") {
+                    parent.replaceWithText(`${text}.ipv6()`);
+                    return;
+                  } else if (version === "v4" && nameToWrap === "cidr") {
+                    parent.replaceWithText(`${text}.cidrv4()`);
+                    return;
+                  } else if (version === "v6" && nameToWrap === "cidr") {
+                    parent.replaceWithText(`${text}.cidrv6()`);
+                    return;
+                  }
+                }
+              }
+            }
+          }
+
+          // Default behavior: create union
           const unionText = renames
             .map(({ name }) => `${text}.${name}()`)
             .join(", ");
-          parent?.replaceWithText(`${zodName}.union([${unionText}])`);
+          parent.replaceWithText(`${zodName}.union([${unionText}])`);
         });
 
       convertNameToTopLevelApi(callExpression, {
