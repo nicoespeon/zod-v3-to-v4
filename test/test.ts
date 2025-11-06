@@ -57,8 +57,16 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-string.convert-ip");
     });
 
+    it("replaces `z.string().ip({ version })` with specific version when provided", async () => {
+      await runScenario("z-string.convert-ip-with-version");
+    });
+
     it("replaces dropped `z.string().cidr()` with `z.union([z.cidrv4(), z.cidrv6()])`", async () => {
       await runScenario("z-string.convert-cidr");
+    });
+
+    it("replaces `z.string().cidr({ version })` with specific version when provided", async () => {
+      await runScenario("z-string.convert-cidr-with-version");
     });
   });
 
