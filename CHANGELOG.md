@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.7.0] - 2025-11-05
+
 ### Added
 
 - Supports `z.string().ip/cidr({ version })` patterns to directly migrate to the appropriate method instead of the union. E.g., `z.string().ip({ version: "v4" })` => `z.ipv4()`. Thanks [@Schrubitteflau](https://github.com/Schrubitteflau) for reporting and implementing! ([#26](https://github.com/nicoespeon/zod-v3-to-v4/pull/26))
@@ -225,6 +227,7 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[1.7.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.4.0...1.5.0
