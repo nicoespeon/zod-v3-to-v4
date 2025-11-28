@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.7.1] - 2025-11-28
+
 ### Fixed
 
 - Converts `ZodSchema` into `ZodType` instead of `ZodJSONSchema`, which was a mistake ([#28](https://github.com/nicoespeon/zod-v3-to-v4/pull/28))
@@ -231,6 +233,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.1...HEAD
+[1.7.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.5.0...1.6.0
