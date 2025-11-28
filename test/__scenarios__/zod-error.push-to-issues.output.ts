@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 
-export function parseAndReport(schema: z.ZodJSONSchema, input: unknown) {
+export function parseAndReport<T>(schema: z.ZodType<T>, input: unknown) {
   const result = schema.safeParse(input);
 
   if (!result.success) {

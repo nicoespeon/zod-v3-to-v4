@@ -193,7 +193,7 @@ export function convertZodErrorToTreeifyError(
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((expression) =>
-      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+      isZodReference(zodName, ["ZodType", "ZodError"], expression),
     )
     .filter((expression) => {
       const argsCount = expression.getArguments().length;
@@ -226,7 +226,7 @@ export function convertZodErrorToTreeifyError(
   sourceFile
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .filter((expression) =>
-      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+      isZodReference(zodName, ["ZodType", "ZodError"], expression),
     )
     .filter((expression) => {
       const looksLikeZodErrorFormErrors = expression.getName() === "formErrors";
@@ -248,7 +248,7 @@ export function convertZodErrorAddIssueToDirectPushes(
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((expression) =>
-      isZodReference(zodName, ["ZodJSONSchema", "ZodError"], expression),
+      isZodReference(zodName, ["ZodType", "ZodError"], expression),
     )
     .filter((expression) => {
       const argsCount = expression.getArguments().length;
