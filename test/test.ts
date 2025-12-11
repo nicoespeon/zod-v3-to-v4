@@ -128,6 +128,10 @@ describe("Zod v3 to v4", () => {
     it("removes deleted types", async () => {
       await runScenario("zod-types.deleted");
     });
+
+    it("removes deleted types without importing them if prefixed", async () => {
+      await runScenario("zod-types.deleted-prefixed");
+    });
   });
 
   it("handles import aliases", async () => {

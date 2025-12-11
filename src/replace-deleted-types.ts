@@ -60,13 +60,31 @@ export function replaceDeletedTypes(
       return;
     }
 
-    for (const { name, getReplacement } of DELETED_TYPES) {
+    for (const { name, importName, getReplacement } of DELETED_TYPES) {
+      // Handle direct imports (e.g., `import { AnyZodObject }`)
       if (node.getText() === name) {
         const typeRef = node.getFirstAncestorByKind(SyntaxKind.TypeReference);
         if (typeRef) {
           typeRef.replaceWithText(getReplacement(node));
         } else {
           node.replaceWithText(getReplacement(node));
+        }
+        return;
+      }
+
+      // Handle prefixed access (e.g., `z.AnyZodObject`)
+      const qualifiedName = node.getFirstAncestorByKind(
+        SyntaxKind.QualifiedName,
+      );
+      if (qualifiedName?.getText().endsWith(`.${name}`)) {
+        const typeRef = qualifiedName.getFirstAncestorByKind(
+          SyntaxKind.TypeReference,
+        );
+        const zodPrefix = node.getText();
+        if (typeRef) {
+          typeRef.replaceWithText(`${zodPrefix}.${getReplacement(node)}`);
+        } else {
+          qualifiedName.replaceWithText(`${zodPrefix}.${importName}`);
         }
         return;
       }
