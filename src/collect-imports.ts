@@ -1,10 +1,18 @@
 import { SyntaxKind, type ImportDeclaration, type SourceFile } from "ts-morph";
 
+export const AstroZodModuleSpecifiers = [
+  "astro:content",
+  "astro:schema",
+  "astro/zod",
+];
+
+const zodModuleSpecifiers = ["zod", "zod/v3", ...AstroZodModuleSpecifiers];
+
 export function collectZodImportDeclarations(sourceFile: SourceFile) {
   return sourceFile
     .getImportDeclarations()
     .filter((importDeclaration) =>
-      ["zod", "zod/v3"].includes(importDeclaration.getModuleSpecifierValue()),
+      zodModuleSpecifiers.includes(importDeclaration.getModuleSpecifierValue()),
     );
 }
 
