@@ -124,6 +124,12 @@ describe("Zod v3 to v4", () => {
     });
   });
 
+  describe("Zod types", () => {
+    it("removes deleted types", async () => {
+      await runScenario("zod-types.deleted");
+    });
+  });
+
   it("handles import aliases", async () => {
     await runScenario("import-aliases");
   });
