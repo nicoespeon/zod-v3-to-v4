@@ -1,4 +1,9 @@
-import { type SourceFile, SyntaxKind } from "ts-morph";
+import {
+  type ImportDeclaration,
+  type Node,
+  type SourceFile,
+  SyntaxKind,
+} from "ts-morph";
 import { ZodIssueCode } from "zod/v3";
 import { findRootExpression } from "./ast.ts";
 import {
@@ -47,7 +52,12 @@ export function migrateZodV3ToV4(
     }
   });
 
-  collectZodReferences(importDeclarations).forEach((node) => {
+  // Collect references before modifying imports
+  const zodReferences = collectZodReferences(importDeclarations);
+
+  replaceDeletedTypes(importDeclarations, zodReferences);
+
+  zodReferences.forEach((node) => {
     if (node.wasForgotten()) {
       return;
     }
@@ -161,4 +171,47 @@ function replaceZodIssueCodeWithLiteralStrings(node: ZodNode) {
         ZodIssueCodeToLiteralString[e.getName()] ?? "invalid_type";
       e.replaceWithText(`"${literalString}"`);
     });
+}
+
+const DELETED_TYPES = [
+  {
+    name: "AnyZodObject",
+    replacement: "ZodRecord<any, any>",
+    importName: "ZodRecord",
+  },
+] as const;
+
+function replaceDeletedTypes(
+  importDeclarations: ImportDeclaration[],
+  zodReferences: Node[],
+) {
+  // Update imports: remove deleted types and add replacements
+  importDeclarations.forEach((declaration) => {
+    const namedImports = declaration.getNamedImports();
+    for (const { name, importName } of DELETED_TYPES) {
+      const deletedImport = namedImports.find((i) => i.getName() === name);
+      if (deletedImport) {
+        const hasReplacementImport = namedImports.some(
+          (i) => i.getName() === importName,
+        );
+        deletedImport.remove();
+        if (!hasReplacementImport) {
+          declaration.addNamedImport(importName);
+        }
+      }
+    }
+  });
+
+  // Replace references in code
+  zodReferences.forEach((node) => {
+    if (node.wasForgotten()) {
+      return;
+    }
+    for (const { name, replacement } of DELETED_TYPES) {
+      if (node.getText() === name) {
+        node.replaceWithText(replacement);
+        return;
+      }
+    }
+  });
 }
