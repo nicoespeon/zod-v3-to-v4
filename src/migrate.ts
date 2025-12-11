@@ -22,6 +22,7 @@ import {
   convertZodErrorAddIssueToDirectPushes,
   convertZodErrorToTreeifyError,
 } from "./convert-zod-errors.ts";
+import { replaceDeletedTypes } from "./replace-deleted-types.ts";
 import { isZodNode, type ZodNode } from "./zod-node.ts";
 
 interface Options {
@@ -47,7 +48,12 @@ export function migrateZodV3ToV4(
     }
   });
 
-  collectZodReferences(importDeclarations).forEach((node) => {
+  // Collect references before modifying imports
+  const zodReferences = collectZodReferences(importDeclarations);
+
+  replaceDeletedTypes(importDeclarations, zodReferences);
+
+  zodReferences.forEach((node) => {
     if (node.wasForgotten()) {
       return;
     }
