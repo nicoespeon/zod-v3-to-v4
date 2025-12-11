@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Migrates deleted Zod types to their v4 replacements. Thanks [@gajus](https://github.com/gajus) for reporting them:
+  - `SafeParseReturnType<I, O>` → `ZodSafeParseResult<O>` (keeps only the output type) ([#30](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
+  - `ZodTypeAny` → `ZodType` ([#31](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
+  - `AnyZodObject` → `ZodRecord<any, any>` ([#32](https://github.com/nicoespeon/zod-v3-to-v4/issue/32))
+
 ## [1.7.1] - 2025-11-28
 
 ### Fixed
