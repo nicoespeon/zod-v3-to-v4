@@ -13,7 +13,7 @@ The migration guide can be found at <https://zod.dev/v4/changelog>
 
 > This assumes you have [Node.js](https://nodejs.org/) installed.
 
-The first step for you is to upgrade your Zod version to v4. In doubt, check your `package.json`.
+The first step for you is to upgrade your Zod version to v4. In doubt, check your `package.json`. Note that if you're using Zod through Astro v6, you don't need to upgrade Zod manually.
 
 Then, you can use this codemod to automatically migrate your code from Zod v3 to v4 syntax.
 
