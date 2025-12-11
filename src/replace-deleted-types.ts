@@ -26,6 +26,11 @@ const DELETED_TYPES: DeletedType[] = [
         : "ZodSafeParseResult<unknown>";
     },
   },
+  {
+    name: "ZodTypeAny",
+    importName: "ZodType",
+    getReplacement: () => "ZodType",
+  },
 ];
 
 export function replaceDeletedTypes(

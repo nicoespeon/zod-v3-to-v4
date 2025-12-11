@@ -1,4 +1,4 @@
-import { AnyZodObject, SafeParseReturnType, z } from "zod";
+import { AnyZodObject, SafeParseReturnType, z, ZodTypeAny } from "zod";
 
 export function promptCallback(input: z.infer<AnyZodObject>) {
   return `${input.greeting ?? "Hello"} ${input.user.firstName}! You are from ${input.user.location.city}, ${input.user.location.country}.`;
@@ -10,3 +10,5 @@ export function safeParseResult<
   // See https://github.com/colinhacks/zod/issues/5195
   DifferentIAndO extends SafeParseReturnType<number, string>,
 >(_: SameIAndO, __: DifferentIAndO) {}
+
+export function zodTypeAny(_: ZodTypeAny) {}
