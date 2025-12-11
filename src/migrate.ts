@@ -173,13 +173,33 @@ function replaceZodIssueCodeWithLiteralStrings(node: ZodNode) {
     });
 }
 
-const DELETED_TYPES = [
+interface DeletedType {
+  name: string;
+  importName: string;
+  getReplacement: (node: Node) => string;
+}
+
+const DELETED_TYPES: DeletedType[] = [
   {
     name: "AnyZodObject",
-    replacement: "ZodRecord<any, any>",
     importName: "ZodRecord",
+    getReplacement: () => "ZodRecord<any, any>",
   },
-] as const;
+  {
+    name: "SafeParseReturnType",
+    importName: "ZodSafeParseResult",
+    getReplacement: (node) => {
+      // SafeParseReturnType<I, O> -> ZodSafeParseResult<O>
+      // Keep only the second type argument for consistency
+      // See https://github.com/colinhacks/zod/issues/5195
+      const typeRef = node.getFirstAncestorByKind(SyntaxKind.TypeReference);
+      const secondArg = typeRef?.getTypeArguments()?.[1];
+      return secondArg
+        ? `ZodSafeParseResult<${secondArg.getText()}>`
+        : "ZodSafeParseResult<unknown>";
+    },
+  },
+];
 
 function replaceDeletedTypes(
   importDeclarations: ImportDeclaration[],
@@ -187,8 +207,8 @@ function replaceDeletedTypes(
 ) {
   // Update imports: remove deleted types and add replacements
   importDeclarations.forEach((declaration) => {
-    const namedImports = declaration.getNamedImports();
     for (const { name, importName } of DELETED_TYPES) {
+      const namedImports = declaration.getNamedImports();
       const deletedImport = namedImports.find((i) => i.getName() === name);
       if (deletedImport) {
         const hasReplacementImport = namedImports.some(
@@ -207,9 +227,15 @@ function replaceDeletedTypes(
     if (node.wasForgotten()) {
       return;
     }
-    for (const { name, replacement } of DELETED_TYPES) {
+
+    for (const { name, getReplacement } of DELETED_TYPES) {
       if (node.getText() === name) {
-        node.replaceWithText(replacement);
+        const typeRef = node.getFirstAncestorByKind(SyntaxKind.TypeReference);
+        if (typeRef) {
+          typeRef.replaceWithText(getReplacement(node));
+        } else {
+          node.replaceWithText(getReplacement(node));
+        }
         return;
       }
     }
