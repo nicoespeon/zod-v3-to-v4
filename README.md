@@ -107,6 +107,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://contra.com"><img src="https://avatars.githubusercontent.com/u/973543?v=4?s=100" width="100px;" alt="Gajus Kuizinas"/><br /><sub><b>Gajus Kuizinas</b></sub></a><br /><a href="#ideas-gajus" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Loskir"><img src="https://avatars.githubusercontent.com/u/21295738?v=4?s=100" width="100px;" alt="Kirill Loskutov"/><br /><sub><b>Kirill Loskutov</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3ALoskir" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Schrubitteflau"><img src="https://avatars.githubusercontent.com/u/45637360?v=4?s=100" width="100px;" alt="Schrubitteflau"/><br /><sub><b>Schrubitteflau</b></sub></a><br /><a href="#ideas-Schrubitteflau" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/umbrellasalesman02"><img src="https://avatars.githubusercontent.com/u/10819467?v=4?s=100" width="100px;" alt="Erik"/><br /><sub><b>Erik</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aumbrellasalesman02" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
