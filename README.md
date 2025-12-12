@@ -125,6 +125,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/affeldt28"><img src="https://avatars.githubusercontent.com/u/45835050?v=4?s=100" width="100px;" alt="Marvin Affeldt"/><br /><sub><b>Marvin Affeldt</b></sub></a><br /><a href="#ideas-affeldt28" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://aqeelat.com"><img src="https://avatars.githubusercontent.com/u/5212744?v=4?s=100" width="100px;" alt="Abdullah Alaqeel"/><br /><sub><b>Abdullah Alaqeel</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aaqeelat" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/wonderWoman1408"><img src="https://avatars.githubusercontent.com/u/5628562?v=4?s=100" width="100px;" alt="Wonder Woman"/><br /><sub><b>Wonder Woman</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3AwonderWoman1408" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nzhiti"><img src="https://avatars.githubusercontent.com/u/57987532?v=4?s=100" width="100px;" alt="nzhiti"/><br /><sub><b>nzhiti</b></sub></a><br /><a href="#ideas-nzhiti" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
   <tfoot>
