@@ -134,6 +134,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "nikmaxott",
+      "name": "Nikolaus Z",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8322965?v=4",
+      "profile": "http://nikmaxott.org",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
