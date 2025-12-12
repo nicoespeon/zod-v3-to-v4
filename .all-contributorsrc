@@ -179,6 +179,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "wonderWoman1408",
+      "name": "Wonder Woman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5628562?v=4",
+      "profile": "https://github.com/wonderWoman1408",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
