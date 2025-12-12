@@ -34,6 +34,15 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "gajus",
+      "name": "Gajus Kuizinas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/973543?v=4",
+      "profile": "https://contra.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
