@@ -119,6 +119,9 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/aelligsen"><img src="https://avatars.githubusercontent.com/u/210378474?v=4?s=100" width="100px;" alt="aelligsen"/><br /><sub><b>aelligsen</b></sub></a><br /><a href="#ideas-aelligsen" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://nikmaxott.org"><img src="https://avatars.githubusercontent.com/u/8322965?v=4?s=100" width="100px;" alt="Nikolaus Z"/><br /><sub><b>Nikolaus Z</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Anikmaxott" title="Bug reports">🐛</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bj0rge"><img src="https://avatars.githubusercontent.com/u/3996102?v=4?s=100" width="100px;" alt="Bastien Jorge"/><br /><sub><b>Bastien Jorge</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Abj0rge" title="Bug reports">🐛</a></td>
+    </tr>
   </tbody>
   <tfoot>
     <tr>
