@@ -98,6 +98,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "PowerSupply",
+      "name": "PowerSupply",
+      "avatar_url": "https://avatars.githubusercontent.com/u/622851?v=4",
+      "profile": "https://github.com/PowerSupply",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
