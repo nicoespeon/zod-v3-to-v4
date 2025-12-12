@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.8.0] - 2025-12-11
+
+### Added
+
+- Migrates deleted Zod types to their v4 replacements. Thanks [@gajus](https://github.com/gajus) for reporting them:
+  - `SafeParseReturnType<I, O>` → `ZodSafeParseResult<O>` (keeps only the output type) ([#30](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
+  - `ZodTypeAny` → `ZodType` ([#31](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
+  - `AnyZodObject` → `ZodRecord<any, any>` ([#32](https://github.com/nicoespeon/zod-v3-to-v4/issue/32))
+
 ## [1.7.1] - 2025-11-28
 
 ### Fixed
@@ -233,7 +242,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.1...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.8.0...HEAD
+[1.8.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.1...1.7.0
 [1.6.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.0...1.6.1
