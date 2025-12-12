@@ -116,6 +116,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/greg-sims"><img src="https://avatars.githubusercontent.com/u/110814147?v=4?s=100" width="100px;" alt="Greg Sims"/><br /><sub><b>Greg Sims</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Agreg-sims" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/PowerSupply"><img src="https://avatars.githubusercontent.com/u/622851?v=4?s=100" width="100px;" alt="PowerSupply"/><br /><sub><b>PowerSupply</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3APowerSupply" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/cfrerebeau"><img src="https://avatars.githubusercontent.com/u/768210?v=4?s=100" width="100px;" alt="Christophe Frèrebeau"/><br /><sub><b>Christophe Frèrebeau</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Acfrerebeau" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/aelligsen"><img src="https://avatars.githubusercontent.com/u/210378474?v=4?s=100" width="100px;" alt="aelligsen"/><br /><sub><b>aelligsen</b></sub></a><br /><a href="#ideas-aelligsen" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
   <tfoot>
