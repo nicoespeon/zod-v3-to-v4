@@ -149,6 +149,33 @@ describe("Zod v3 to v4", () => {
   });
 });
 
+describe("Astro", () => {
+  // https://v6.docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod
+  describe("runs for Astro", () => {
+    it("runs for `astro/zod`", async () => {
+      await runScenario("astro.astro-zod");
+    });
+
+    it("runs for `astro:schema` and converts import to `astro/zod`", async () => {
+      await runScenario("astro.astro-schema");
+    });
+
+    it("runs for `astro:content` and converts import to `astro/zod`", async () => {
+      await runScenario("astro.astro-content");
+    });
+  });
+
+  describe("converts deprecated imports", () => {
+    it("converts deprecated import and preserves type import", async () => {
+      await runScenario("astro.preserve-type-import");
+    });
+
+    it("converts deprecated import and preserves alias", async () => {
+      await runScenario("astro.preserve-alias");
+    });
+  });
+});
+
 async function runScenario(fixturePath: string) {
   const { input, output } = await readFixtures(fixturePath);
 

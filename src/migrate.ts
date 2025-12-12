@@ -2,10 +2,12 @@ import { type SourceFile, SyntaxKind } from "ts-morph";
 import { ZodIssueCode } from "zod/v3";
 import { findRootExpression } from "./ast.ts";
 import {
+  AstroZodModuleSpecifiers,
   collectZodImportDeclarations,
   collectZodReferences,
   getZodName,
 } from "./collect-imports.ts";
+import { convertAstroDeprecatedZodImports } from "./convert-astro-imports.ts";
 import {
   convertZArrayPatternsToTopLevelApi,
   convertZCoercePatternsToTopLevelApi,
@@ -37,14 +39,20 @@ export function migrateZodV3ToV4(
   const zodName = getZodName(importDeclarations);
 
   importDeclarations.forEach((declaration) => {
-    if (declaration.getModuleSpecifier().getText() === "zod/v3") {
+    const specifier = declaration.getModuleSpecifierValue();
+
+    if (specifier === "zod/v3") {
       declaration.setModuleSpecifier("zod");
     }
 
     if (options.migrateImportDeclarations) {
       // Use `zod/v4` explicit import. Not needed for an actual migration.
       // Useful for testing, so we can have v3.25 and typecheck both v3 and v4
-      declaration.setModuleSpecifier("zod/v4");
+      // Astro re-exports don't need to be updated and don't have a v4
+      // dedicated export.
+      if (!AstroZodModuleSpecifiers.includes(specifier)) {
+        declaration.setModuleSpecifier("zod/v4");
+      }
     }
   });
 
@@ -86,6 +94,8 @@ export function migrateZodV3ToV4(
   convertZodErrorToTreeifyError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
   renameZSchemaEnumToLowercase(sourceFile, zodName);
+
+  convertAstroDeprecatedZodImports(importDeclarations);
 
   return sourceFile.getFullText();
 }
