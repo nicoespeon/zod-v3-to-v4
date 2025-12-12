@@ -3,7 +3,9 @@
   "projectOwner": "nicoespeon",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "imageSize": 100,
   "commit": false,
   "commitConvention": "none",
@@ -22,7 +24,18 @@
         "review",
         "question"
       ]
+    },
+    {
+      "login": "HiDeoo",
+      "name": "HiDeoo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/494699?v=4",
+      "profile": "https://hideoo.dev",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "commitType": "docs"
 }
