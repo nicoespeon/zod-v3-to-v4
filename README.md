@@ -130,6 +130,7 @@ pnpm playground:interactive
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yann-combarnous"><img src="https://avatars.githubusercontent.com/u/39089766?v=4?s=100" width="100px;" alt="yann-combarnous"/><br /><sub><b>yann-combarnous</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Ayann-combarnous" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://adam.doussan.info"><img src="https://avatars.githubusercontent.com/u/26745150?v=4?s=100" width="100px;" alt="acdoussan"/><br /><sub><b>acdoussan</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aacdoussan" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
