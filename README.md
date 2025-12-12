@@ -110,6 +110,9 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/umbrellasalesman02"><img src="https://avatars.githubusercontent.com/u/10819467?v=4?s=100" width="100px;" alt="Erik"/><br /><sub><b>Erik</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aumbrellasalesman02" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://www.einargudni.com"><img src="https://avatars.githubusercontent.com/u/17381009?v=4?s=100" width="100px;" alt="Einar Guðni Guðjónsson"/><br /><sub><b>Einar Guðni Guðjónsson</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aeinargudnig" title="Bug reports">🐛</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/DanUgbeye"><img src="https://avatars.githubusercontent.com/u/82518175?v=4?s=100" width="100px;" alt="Daniel Ugbeye"/><br /><sub><b>Daniel Ugbeye</b></sub></a><br /><a href="#ideas-DanUgbeye" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
   </tbody>
   <tfoot>
     <tr>
