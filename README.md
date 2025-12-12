@@ -103,6 +103,7 @@ pnpm playground:interactive
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://nicoespeon.com/"><img src="https://avatars0.githubusercontent.com/u/1094774?v=4?s=100" width="100px;" alt="Nicolas Carlo"/><br /><sub><b>Nicolas Carlo</b></sub></a><br /><a href="#ideas-nicoespeon" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=nicoespeon" title="Code">💻</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=nicoespeon" title="Documentation">📖</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/pulls?q=is%3Apr+reviewed-by%3Anicoespeon" title="Reviewed Pull Requests">👀</a> <a href="#question-nicoespeon" title="Answering Questions">💬</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://hideoo.dev"><img src="https://avatars.githubusercontent.com/u/494699?v=4?s=100" width="100px;" alt="HiDeoo"/><br /><sub><b>HiDeoo</b></sub></a><br /><a href="#ideas-HiDeoo" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=HiDeoo" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
