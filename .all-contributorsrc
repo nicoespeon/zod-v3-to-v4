@@ -1,0 +1,28 @@
+{
+  "projectName": "zod-v3-to-v4",
+  "projectOwner": "nicoespeon",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["README.md"],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "badgeTemplate": "[![All Contributors](https://img.shields.io/github/all-contributors/nicoespeon/zod-v3-to-v4?color=ee8449&style=for-the-badge)](#contributors)",
+  "linkToUsage": true,
+  "contributors": [
+    {
+      "login": "nicoespeon",
+      "name": "Nicolas Carlo",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1094774?v=4",
+      "profile": "https://nicoespeon.com/",
+      "contributions": [
+        "ideas",
+        "code",
+        "doc",
+        "review",
+        "question"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

@@ -1,3 +1,4 @@
 /dist
 /.husky
 /pnpm-lock.yaml
+.all-contributorsrc
