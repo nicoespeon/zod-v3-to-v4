@@ -3,6 +3,7 @@
   "overrides": [{ "files": ".nvmrc", "options": { "parser": "yaml" } }],
   "plugins": [
     "prettier-plugin-curly",
+    "prettier-plugin-organize-imports",
     "prettier-plugin-packagejson",
     "prettier-plugin-sh"
   ],

@@ -2,3 +2,5 @@
 /.husky
 /pnpm-lock.yaml
 .all-contributorsrc
+/test/__scenarios__
+/playground

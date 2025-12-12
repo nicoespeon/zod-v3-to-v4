@@ -30,6 +30,9 @@ importers:
       prettier-plugin-curly:
         specifier: 0.3.1
         version: 0.3.1(prettier@3.5.3)
+      prettier-plugin-organize-imports:
+        specifier: 4.3.0
+        version: 4.3.0(prettier@3.5.3)(typescript@5.8.3)
       prettier-plugin-packagejson:
         specifier: 2.5.10
         version: 2.5.10(prettier@3.5.3)
@@ -763,6 +766,16 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       prettier: ^2 || ^3
+
+  prettier-plugin-organize-imports@4.3.0:
+    resolution: {integrity: sha512-FxFz0qFhyBsGdIsb697f/EkvHzi5SZOhWAjxcx2dLt+Q532bAlhswcXGYB1yzjZ69kW8UoadFBw7TyNwlq96Iw==}
+    peerDependencies:
+      prettier: '>=2.0'
+      typescript: '>=2.9'
+      vue-tsc: ^2.1.0 || 3
+    peerDependenciesMeta:
+      vue-tsc:
+        optional: true
 
   prettier-plugin-packagejson@2.5.10:
     resolution: {integrity: sha512-LUxATI5YsImIVSaaLJlJ3aE6wTD+nvots18U3GuQMJpUyClChaZlQrqx3dBnbhF20OnKWZyx8EgyZypQtBDtgQ==}
@@ -1621,6 +1634,11 @@ snapshots:
       prettier: 3.5.3
     transitivePeerDependencies:
       - supports-color
+
+  prettier-plugin-organize-imports@4.3.0(prettier@3.5.3)(typescript@5.8.3):
+    dependencies:
+      prettier: 3.5.3
+      typescript: 5.8.3
 
   prettier-plugin-packagejson@2.5.10(prettier@3.5.3):
     dependencies:
