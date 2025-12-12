@@ -11,16 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Support Astro v6 migration. They are upgrading from Zod 3 to Zod 4. The codemod will take care of updating the imports to the new `astro/zod`. Thanks [@HiDeoo](https://github.com/HiDeoo) for this one! ([#33](https://github.com/nicoespeon/zod-v3-to-v4/issue/33))
+- Support Astro v6 migration. They are upgrading from Zod 3 to Zod 4. The codemod will take care of updating the imports to the new `astro/zod`. Thanks [@HiDeoo](https://github.com/HiDeoo) for this one! ([#33](https://github.com/nicoespeon/zod-v3-to-v4/issues/33))
 
 ## [1.8.0] - 2025-12-11
 
 ### Added
 
 - Migrates deleted Zod types to their v4 replacements. Thanks [@gajus](https://github.com/gajus) for reporting them:
-  - `SafeParseReturnType<I, O>` → `ZodSafeParseResult<O>` (keeps only the output type) ([#30](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
-  - `ZodTypeAny` → `ZodType` ([#31](https://github.com/nicoespeon/zod-v3-to-v4/issue/31))
-  - `AnyZodObject` → `ZodRecord<any, any>` ([#32](https://github.com/nicoespeon/zod-v3-to-v4/issue/32))
+  - `SafeParseReturnType<I, O>` → `ZodSafeParseResult<O>` (keeps only the output type) ([#30](https://github.com/nicoespeon/zod-v3-to-v4/issues/31))
+  - `ZodTypeAny` → `ZodType` ([#31](https://github.com/nicoespeon/zod-v3-to-v4/issues/31))
+  - `AnyZodObject` → `ZodRecord<any, any>` ([#32](https://github.com/nicoespeon/zod-v3-to-v4/issues/32))
 
 ## [1.7.1] - 2025-11-28
 
