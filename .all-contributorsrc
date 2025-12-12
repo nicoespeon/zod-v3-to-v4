@@ -70,6 +70,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "einargudnig",
+      "name": "Einar Guðni Guðjónsson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17381009?v=4",
+      "profile": "http://www.einargudni.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
