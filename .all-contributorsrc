@@ -89,6 +89,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "firxworx",
+      "name": "Kevin Firko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/24518234?v=4",
+      "profile": "https://firxworx.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
