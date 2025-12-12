@@ -170,6 +170,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "aqeelat",
+      "name": "Abdullah Alaqeel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5212744?v=4",
+      "profile": "http://aqeelat.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
