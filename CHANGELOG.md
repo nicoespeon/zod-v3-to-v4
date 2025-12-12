@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.9.0] - 2025-12-12
+
 ### Added
 
 - Support Astro v6 migration. They are upgrading from Zod 3 to Zod 4. The codemod will take care of updating the imports to the new `astro/zod`. Thanks [@HiDeoo](https://github.com/HiDeoo) for this one! ([#33](https://github.com/nicoespeon/zod-v3-to-v4/issue/33))
@@ -246,7 +248,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.8.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.9.0...HEAD
+[1.9.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.8.0...1.9.0
 [1.8.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.1...1.8.0
 [1.7.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.6.1...1.7.0
