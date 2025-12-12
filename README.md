@@ -122,6 +122,7 @@ pnpm playground:interactive
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/bj0rge"><img src="https://avatars.githubusercontent.com/u/3996102?v=4?s=100" width="100px;" alt="Bastien Jorge"/><br /><sub><b>Bastien Jorge</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Abj0rge" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://danf.ca/"><img src="https://avatars.githubusercontent.com/u/53399?v=4?s=100" width="100px;" alt="Daniel Friesen"/><br /><sub><b>Daniel Friesen</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Adantman" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/affeldt28"><img src="https://avatars.githubusercontent.com/u/45835050?v=4?s=100" width="100px;" alt="Marvin Affeldt"/><br /><sub><b>Marvin Affeldt</b></sub></a><br /><a href="#ideas-affeldt28" title="Ideas, Planning, & Feedback">🤔</a></td>
     </tr>
   </tbody>
   <tfoot>
