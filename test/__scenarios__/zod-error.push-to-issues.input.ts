@@ -28,6 +28,11 @@ export function parseAndReport<T>(schema: z.ZodSchema<T>, input: unknown) {
         type: "number",
       },
     ]);
+
+    console.error({
+      message: "Invalid parameters",
+      errors: result.error.errors,
+    });
   }
 
   return result;

@@ -280,6 +280,16 @@ export function convertZodErrorAddIssueToDirectPushes(
 
       expression.replaceWithText(`${caller}.issues.push(${newArgument})`);
     });
+
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .filter((expression) =>
+      isZodReference(zodName, ["ZodType", "ZodError"], expression),
+    )
+    .filter((expression) => expression.getName() === "errors")
+    .forEach((expression) => {
+      expression.getNameNode().replaceWithText("issues");
+    });
 }
 
 function convertZodIssueToV4(node: Node) {

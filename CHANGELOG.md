@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Migrate `result.error.errors` to `result.error.issues`. Thanks @matsjfunke for the suggestion ([#60](https://github.com/nicoespeon/zod-v3-to-v4/issues/60))
+
 ## [1.9.0] - 2025-12-12
 
 ### Added
