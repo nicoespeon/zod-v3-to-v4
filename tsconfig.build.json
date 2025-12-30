@@ -1,5 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "include": ["./src/**/*.ts", "./src/**/*.js"],
-  "exclude": ["node_modules", "./dist/**/*", "./test/**/*", "./playground/**/*"]
+  "exclude": [
+    "node_modules",
+    "./dist/**/*",
+    "./test/**/*",
+    "./playground/**/*",
+    "./playground-monorepo/**/*"
+  ]
 }
