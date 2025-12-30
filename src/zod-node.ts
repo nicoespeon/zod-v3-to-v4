@@ -1,7 +1,7 @@
 import {
   CallExpression,
   ExpressionStatement,
-  KindToNodeMappings,
+  type KindToNodeMappings,
   Node,
   PropertyAccessExpression,
   SyntaxKind,

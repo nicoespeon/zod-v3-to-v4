@@ -33,6 +33,7 @@
     "format-check": "prettier . --list-different",
     "playground": "pnpm playground:interactive playground/tsconfig.json",
     "playground:interactive": "node --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts",
+    "playground:monorepo": "pnpm playground:interactive playground-monorepo/tsconfig.json",
     "prepare": "husky",
     "prepublishOnly": "pnpm typecheck && pnpm test && pnpm build",
     "test": "vitest run",

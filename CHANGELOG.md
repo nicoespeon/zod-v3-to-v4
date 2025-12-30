@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- The codemod now supports classic monorepo structures with a top-level `tsconfig.json` that [has references to others](https://www.typescriptlang.org/docs/handbook/project-references.html). [#62](https://github.com/nicoespeon/zod-v3-to-v4/issues/62)
+
 ### Fixed
 
 - Nested `z.array().nonempty()` failed to migrate. They are properly handled now. [#63](https://github.com/nicoespeon/zod-v3-to-v4/issues/63)
