@@ -26,11 +26,8 @@ pnpm playground:interactive
 
 ## Resetting
 
-To reset the playground files to their original state (before migration), you can:
+To reset the playground files to their original state (before migration):
 
-1. Use git to restore the files: `git checkout -- playground/`
-2. Or manually copy the original content back
-
-## Adding More Examples
-
-Feel free to add more TypeScript files with Zod v3 code to test different migration scenarios.
+```bash
+git checkout -- playground/
+```
