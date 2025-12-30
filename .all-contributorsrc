@@ -233,6 +233,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "popfendi",
+      "name": "popfendi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/84185235?v=4",
+      "profile": "https://github.com/popfendi",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
