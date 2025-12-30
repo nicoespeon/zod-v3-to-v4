@@ -162,39 +162,42 @@ export function convertZArrayPatternsToTopLevelApi(
   getCallExpressionsToConvert(node, {
     oldName,
     names,
-  }).forEach((callExpression) => {
-    // Remove deprecated names from the chain
-    callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-      .filter((expression) => names.includes(expression.getName()))
-      .forEach((expression) => {
-        const parent = expression.getFirstAncestorByKind(
-          SyntaxKind.CallExpression,
-        );
-        parent?.replaceWithText(expression.getExpression().getText());
-      });
+  })
+    // Start from the deepest, otherwise we can't get info from removed nodes
+    .reverse()
+    .forEach((callExpression) => {
+      // Remove deprecated names from the chain
+      callExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        .filter((expression) => names.includes(expression.getName()))
+        .forEach((expression) => {
+          const parent = expression.getFirstAncestorByKind(
+            SyntaxKind.CallExpression,
+          );
+          parent?.replaceWithText(expression.getExpression().getText());
+        });
 
-    // Replace old name with top-level API
-    callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-      .filter((e) => e.getName() === oldName)
-      .forEach((e) => {
-        const parent = e.getParentIfKind(SyntaxKind.CallExpression);
-        if (!parent) {
-          return;
-        }
+      // Replace old name with top-level API
+      callExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        .filter((e) => e.getName() === oldName)
+        .forEach((e) => {
+          const parent = e.getParentIfKind(SyntaxKind.CallExpression);
+          if (!parent) {
+            return;
+          }
 
-        const arraySchemaArg = parent.getArguments()[0];
-        if (!arraySchemaArg) {
-          return;
-        }
+          const arraySchemaArg = parent.getArguments()[0];
+          if (!arraySchemaArg) {
+            return;
+          }
 
-        const arraySchemaArgText = arraySchemaArg.getText();
-        parent.removeArgument(arraySchemaArg);
-        parent.addArgument(`[${arraySchemaArgText}], ${arraySchemaArgText}`);
-        e.replaceWithText(`${zodName}.tuple`);
-      });
-  });
+          const arraySchemaArgText = arraySchemaArg.getText();
+          parent.removeArgument(arraySchemaArg);
+          parent.addArgument(`[${arraySchemaArgText}], ${arraySchemaArgText}`);
+          e.replaceWithText(`${zodName}.tuple`);
+        });
+    });
 }
 
 export function convertZFunctionPatternsToTopLevelApi(node: ZodNode) {
