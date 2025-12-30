@@ -38,3 +38,11 @@ z.string()
       console.error(error);
     }
   });
+
+export const baseSchema = z.string().refine(value => Number.isFinite(parseFloat(value)), {
+  error: 'Input must represent a finite number',
+});
+
+export const constrainedSchema = baseSchema.refine(value => parseFloat(value) > 0, {
+  error: 'Input must be greater than zero',
+});

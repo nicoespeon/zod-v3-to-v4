@@ -1,4 +1,10 @@
-import { SyntaxKind, type ImportDeclaration, type SourceFile } from "ts-morph";
+import {
+  Identifier,
+  Node,
+  SyntaxKind,
+  type ImportDeclaration,
+  type SourceFile,
+} from "ts-morph";
 
 export const AstroZodModuleSpecifier = "astro/zod";
 
@@ -48,4 +54,62 @@ export function collectZodReferences(importDeclarations: ImportDeclaration[]) {
         .filter((node) => node !== namedNode);
     }),
   );
+}
+
+/**
+ * Collect references to variables that are derived from Zod schemas.
+ *
+ * For example, given:
+ *
+ *     const baseSchema = z.string().refine(...);
+ *     const constrainedSchema = baseSchema.refine(...);
+ *
+ * This function will return references to `baseSchema` (like the one used
+ * in `constrainedSchema`), so we can also migrate those.
+ */
+export function collectDerivedZodSchemaReferences(
+  zodReferences: Node[],
+): Identifier[] {
+  const derivedReferences: Identifier[] = [];
+  const visited = new Set<string>();
+
+  function collectFromReferences(refs: Node[]) {
+    for (const ref of refs) {
+      // Find the variable declaration that contains this Zod reference
+      const variableDeclaration = ref.getFirstAncestorByKind(
+        SyntaxKind.VariableDeclaration,
+      );
+      if (!variableDeclaration) {
+        continue;
+      }
+
+      const variableName = variableDeclaration.getName();
+      if (visited.has(variableName)) {
+        continue;
+      }
+      visited.add(variableName);
+
+      // Get the identifier node for the variable name
+      const nameNode = variableDeclaration.getNameNode();
+      if (!nameNode.isKind(SyntaxKind.Identifier)) {
+        continue;
+      }
+
+      // Find all references to this variable (excluding the declaration itself)
+      const variableReferences = nameNode
+        .findReferencesAsNodes()
+        .filter((node) => node !== nameNode)
+        .filter((node): node is Identifier =>
+          node.isKind(SyntaxKind.Identifier),
+        );
+
+      derivedReferences.push(...variableReferences);
+
+      // Recursively collect references from these derived schemas
+      collectFromReferences(variableReferences);
+    }
+  }
+
+  collectFromReferences(zodReferences);
+  return derivedReferences;
 }

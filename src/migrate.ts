@@ -3,6 +3,7 @@ import { ZodIssueCode } from "zod/v3";
 import { findRootExpression } from "./ast.ts";
 import {
   AstroZodModuleSpecifiers,
+  collectDerivedZodSchemaReferences,
   collectZodImportDeclarations,
   collectZodReferences,
   getZodName,
@@ -58,10 +59,11 @@ export function migrateZodV3ToV4(
 
   // Collect references before modifying imports
   const zodReferences = collectZodReferences(importDeclarations);
+  const derivedReferences = collectDerivedZodSchemaReferences(zodReferences);
 
   replaceDeletedTypes(importDeclarations, zodReferences);
 
-  zodReferences.forEach((node) => {
+  [...zodReferences, ...derivedReferences].forEach((node) => {
     if (node.wasForgotten()) {
       return;
     }

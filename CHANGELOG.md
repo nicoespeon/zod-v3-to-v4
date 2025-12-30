@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - The codemod now supports classic monorepo structures with a top-level `tsconfig.json` that [has references to others](https://www.typescriptlang.org/docs/handbook/project-references.html). [#62](https://github.com/nicoespeon/zod-v3-to-v4/issues/62)
+- The codemod can now migrate more indirect Zod references, such as derived schemas that were missed before. [#64](https://github.com/nicoespeon/zod-v3-to-v4/issues/64). For instance:
+
+  ```ts
+  const baseSchema = z.number().int().min(3);
+
+  // 👇 Now, this one will be migrated too!
+  const derivedSchema = baseSchema.max(10).refine((value) => value % 2 === 0, {
+    message: "Value must be even",
+  });
+  ```
 
 ### Fixed
 
