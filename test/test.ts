@@ -34,6 +34,10 @@ describe("Zod v3 to v4", () => {
     it("replaces deprecated `ZodIssueError` with literal strings", async () => {
       await runScenario("zod-error.zod-issue-code");
     });
+
+    it("replaces deprecated `setErrorMap` and `ZodErrorMap`", async () => {
+      await runScenario("zod-error.error-map");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=znumber

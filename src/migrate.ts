@@ -22,7 +22,9 @@ import {
   convertDeprecatedErrorKeysToErrorFunction,
   convertErrorMapToErrorFunction,
   convertMessageKeyToError,
+  convertSetErrorMapToConfig,
   convertZodErrorAddIssueToDirectPushes,
+  convertZodErrorMapType,
   convertZodErrorToTreeifyError,
 } from "./convert-zod-errors.ts";
 import { replaceDeletedTypes } from "./replace-deleted-types.ts";
@@ -95,6 +97,8 @@ export function migrateZodV3ToV4(
 
   convertZodErrorToTreeifyError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
+  convertSetErrorMapToConfig(sourceFile, zodName);
+  convertZodErrorMapType(sourceFile, zodName);
   renameZSchemaEnumToLowercase(sourceFile, zodName);
 
   convertAstroDeprecatedZodImports(importDeclarations);

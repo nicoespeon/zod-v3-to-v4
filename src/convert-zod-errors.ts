@@ -10,6 +10,56 @@ import {
   type ZodNode,
 } from "./zod-node.ts";
 
+export function convertSetErrorMapToConfig(
+  sourceFile: SourceFile,
+  zodName: string,
+) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((expression) => {
+      const callee = expression.getExpression();
+      if (!callee.isKind(SyntaxKind.PropertyAccessExpression)) {
+        return false;
+      }
+
+      const objectName = callee.getExpression().getText();
+      const methodName = callee.getName();
+
+      return objectName === zodName && methodName === "setErrorMap";
+    })
+    .forEach((expression) => {
+      const argument = expression.getArguments()[0];
+      if (!argument) {
+        return;
+      }
+
+      expression.replaceWithText(
+        `${zodName}.config({ customError: ${argument.getText()} })`,
+      );
+    });
+}
+
+export function convertZodErrorMapType(
+  sourceFile: SourceFile,
+  zodName: string,
+) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.TypeReference)
+    .filter((typeRef) => {
+      const typeName = typeRef.getTypeName();
+      if (!typeName.isKind(SyntaxKind.QualifiedName)) {
+        return false;
+      }
+
+      const left = typeName.getLeft().getText();
+      const right = typeName.getRight().getText();
+      return left === zodName && right === "ZodErrorMap";
+    })
+    .forEach((typeRef) => {
+      typeRef.replaceWithText(`${zodName}.core.$ZodErrorMap`);
+    });
+}
+
 export function convertErrorMapToErrorFunction(node: ZodNode) {
   // Find all errorMap properties
   getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
