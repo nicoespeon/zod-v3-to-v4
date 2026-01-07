@@ -12,3 +12,13 @@ z.strictObject({
     zip: z.string(),
   }),
 });
+
+// With parent schema
+const UserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+})
+
+export const schema = z.object({
+  foo: z.strictObject(UserSchema.pick({ id: true }).shape)
+})

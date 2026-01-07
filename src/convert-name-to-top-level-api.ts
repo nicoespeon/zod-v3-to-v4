@@ -115,6 +115,9 @@ export function convertZObjectPatternsToTopLevelApi(
   node: ZodNode,
   zodName: string,
 ) {
+  // First, convert z.object() methods like .strict() or .passthrough()
+  convertObjectMethodOnSchemaReference(node, zodName);
+
   convertNameToTopLevelApi(node, {
     zodName,
     oldName: "object",
@@ -128,6 +131,71 @@ export function convertZObjectPatternsToTopLevelApi(
   });
 
   convertZObjectMergeToExtend(node);
+}
+
+/**
+ * @example
+ * UserSchema.pick({ id: true }).strict()
+ * // becomes
+ * z.strictObject(UserSchema.pick({ id: true }).shape)
+ */
+function convertObjectMethodOnSchemaReference(node: ZodNode, zodName: string) {
+  const methodMappings: Record<string, string> = {
+    strict: "strictObject",
+    passthrough: "looseObject",
+    strip: "object",
+    nonstrict: "object",
+  };
+  const methodNames = Object.keys(methodMappings);
+
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    // Start from the deepest to handle nested cases
+    .reverse()
+    .filter((e) => methodNames.includes(e.getName()))
+    .forEach((propertyAccess) => {
+      const methodName = propertyAccess.getName();
+      const parent = propertyAccess.getFirstAncestorByKind(
+        SyntaxKind.CallExpression,
+      );
+      if (!parent || parent.getExpression() !== propertyAccess) {
+        return;
+      }
+
+      const baseExpression = propertyAccess.getExpression();
+      const baseText = baseExpression.getText();
+
+      const hasZObjectInChain = baseExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        .some(
+          (e) =>
+            e.getName() === "object" && e.getExpression().getText() === zodName,
+        );
+      if (hasZObjectInChain) {
+        return;
+      }
+
+      if (
+        baseExpression.isKind(SyntaxKind.CallExpression) &&
+        baseExpression
+          .getExpression()
+          .isKind(SyntaxKind.PropertyAccessExpression)
+      ) {
+        const propAccess = baseExpression.getExpression();
+        if (
+          propAccess.isKind(SyntaxKind.PropertyAccessExpression) &&
+          propAccess.getName() === "object" &&
+          propAccess.getExpression().getText() === zodName
+        ) {
+          return;
+        }
+      }
+
+      // This is a schema reference with .strict(), etc.
+      // Transform it to `z.strictObject(schemaRef.shape)`
+      const newName = methodMappings[methodName];
+      parent.replaceWithText(`${zodName}.${newName}(${baseText}.shape)`);
+    });
 }
 
 function convertZObjectMergeToExtend(node: ZodNode) {
