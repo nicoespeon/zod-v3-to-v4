@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix `.strict()` (and similar) on schema references incorrectly transforming the parent `z.object()`. Now `UserSchema.pick({ id: true }).strict()` correctly becomes `z.strictObject(UserSchema.pick({ id: true }).shape)`.
+- Fix `.strict()` (and similar) on schema references incorrectly transforming the parent `z.object()`. Now `UserSchema.pick({ id: true }).strict()` correctly becomes `z.strictObject(UserSchema.pick({ id: true }).shape)`. ([#80](https://github.com/nicoespeon/zod-v3-to-v4/issues/80))
 
 ## [1.11.0] - 2025-12-30
 
