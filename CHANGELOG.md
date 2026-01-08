@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Migrate deprecated `z.setErrorMap()` to `z.config({ customError })` and `z.ZodErrorMap` to `z.core.$ZodErrorMap`. ([#65](https://github.com/nicoespeon/zod-v3-to-v4/issues/65))
 
+### Fixed
+
+- Fix `.strict()` (and similar) on schema references incorrectly transforming the parent `z.object()`. Now `UserSchema.pick({ id: true }).strict()` correctly becomes `z.strictObject(UserSchema.pick({ id: true }).shape)`.
+
 ## [1.11.0] - 2025-12-30
 
 ### Added
