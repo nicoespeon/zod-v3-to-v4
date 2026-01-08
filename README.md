@@ -134,6 +134,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="http://matsjfunke.com"><img src="https://avatars.githubusercontent.com/u/125814808?v=4?s=100" width="100px;" alt="Mats Julius Funke"/><br /><sub><b>Mats Julius Funke</b></sub></a><br /><a href="#ideas-matsjfunke" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/popfendi"><img src="https://avatars.githubusercontent.com/u/84185235?v=4?s=100" width="100px;" alt="popfendi"/><br /><sub><b>popfendi</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Apopfendi" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/luis-azevedo-visma"><img src="https://avatars.githubusercontent.com/u/149402066?v=4?s=100" width="100px;" alt="Luís Azevedo"/><br /><sub><b>Luís Azevedo</b></sub></a><br /><a href="#ideas-luis-azevedo-visma" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://florian-lefebvre.dev"><img src="https://avatars.githubusercontent.com/u/69633530?v=4?s=100" width="100px;" alt="Florian Lefebvre"/><br /><sub><b>Florian Lefebvre</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Aflorian-lefebvre" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
