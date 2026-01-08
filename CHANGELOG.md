@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.12.0] - 2026-01-07
+
 ### Added
 
 - Migrate deprecated `z.setErrorMap()` to `z.config({ customError })` and `z.ZodErrorMap` to `z.core.$ZodErrorMap`. ([#65](https://github.com/nicoespeon/zod-v3-to-v4/issues/65))
@@ -282,7 +284,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.11.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.0...HEAD
+[1.12.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.10.0...1.11.0
 [1.10.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.8.0...1.9.0
