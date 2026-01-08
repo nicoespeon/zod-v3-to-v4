@@ -251,6 +251,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "florian-lefebvre",
+      "name": "Florian Lefebvre",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69633530?v=4",
+      "profile": "https://florian-lefebvre.dev",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
