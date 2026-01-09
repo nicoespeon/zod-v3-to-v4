@@ -15,7 +15,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { promisify } from "node:util";
 import { Project } from "ts-morph";
-import z from "zod";
+import { z } from "zod";
 import { migrateZodV3ToV4 } from "./migrate.ts";
 
 const execAsync = promisify(exec);
