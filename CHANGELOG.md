@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.12.1] - 2026-01-09
+
 ### Fixed
 
 - Make `zod` an actual dependency instead of a dev dependency. This issue was introduced with v1.11.0 and could prevent the codemod from running correctly. [#83](https://github.com/nicoespeon/zod-v3-to-v4/issues/83)
@@ -288,7 +290,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.1...HEAD
+[1.12.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.0...1.12.1
 [1.12.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.10.0...1.11.0
 [1.10.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.9.0...1.10.0
