@@ -60,8 +60,14 @@ export function migrateZodV3ToV4(
   });
 
   // Collect references before modifying imports
-  const zodReferences = collectZodReferences(importDeclarations);
-  const derivedReferences = collectDerivedZodSchemaReferences(zodReferences);
+  const { zodReferences, identifierMap } = collectZodReferences(
+    sourceFile,
+    importDeclarations,
+  );
+  const derivedReferences = collectDerivedZodSchemaReferences(
+    zodReferences,
+    identifierMap,
+  );
 
   replaceDeletedTypes(importDeclarations, zodReferences);
 

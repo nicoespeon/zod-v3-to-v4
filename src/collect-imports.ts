@@ -41,19 +41,50 @@ export function getZodImport(importDeclaration?: ImportDeclaration) {
     .find((namedImport) => namedImport.getName() === "z");
 }
 
-export function collectZodReferences(importDeclarations: ImportDeclaration[]) {
-  return importDeclarations.flatMap((importDeclaration) =>
-    importDeclaration.getNamedImports().flatMap((namedImport) => {
-      const namedNode = namedImport.getAliasNode() ?? namedImport.getNameNode();
-      if (!namedNode.isKind(SyntaxKind.Identifier)) {
-        return [];
-      }
+export function collectZodReferences(
+  sourceFile: SourceFile,
+  importDeclarations: ImportDeclaration[],
+) {
+  const identifierMap = buildIdentifierMap(sourceFile);
 
-      return namedNode
-        .findReferencesAsNodes()
-        .filter((node) => node !== namedNode);
-    }),
-  );
+  return {
+    zodReferences: importDeclarations.flatMap((importDeclaration) =>
+      importDeclaration.getNamedImports().flatMap((namedImport) => {
+        const namedNode =
+          namedImport.getAliasNode() ?? namedImport.getNameNode();
+        if (!namedNode.isKind(SyntaxKind.Identifier)) {
+          return [];
+        }
+
+        const name = namedNode.getText();
+        const allReferences = identifierMap.get(name) ?? [];
+        return allReferences.filter((node) => node !== namedNode);
+      }),
+    ),
+    identifierMap,
+  };
+}
+
+/**
+ * Build a map of identifier name -> all nodes with that name.
+ * This allows O(1) lookups instead of expensive findReferencesAsNodes() calls.
+ */
+function buildIdentifierMap(sourceFile: SourceFile): Map<string, Identifier[]> {
+  const identifierMap = new Map<string, Identifier[]>();
+
+  for (const identifier of sourceFile.getDescendantsOfKind(
+    SyntaxKind.Identifier,
+  )) {
+    const name = identifier.getText();
+    const existing = identifierMap.get(name);
+    if (existing) {
+      existing.push(identifier);
+    } else {
+      identifierMap.set(name, [identifier]);
+    }
+  }
+
+  return identifierMap;
 }
 
 /**
@@ -69,6 +100,7 @@ export function collectZodReferences(importDeclarations: ImportDeclaration[]) {
  */
 export function collectDerivedZodSchemaReferences(
   zodReferences: Node[],
+  identifierMap: Map<string, Identifier[]>,
 ): Identifier[] {
   const derivedReferences: Identifier[] = [];
   const visited = new Set<string>();
@@ -95,13 +127,11 @@ export function collectDerivedZodSchemaReferences(
         continue;
       }
 
-      // Find all references to this variable (excluding the declaration itself)
-      const variableReferences = nameNode
-        .findReferencesAsNodes()
-        .filter((node) => node !== nameNode)
-        .filter((node): node is Identifier =>
-          node.isKind(SyntaxKind.Identifier),
-        );
+      // Find all references to this variable
+      const allReferences = identifierMap.get(variableName) ?? [];
+      const variableReferences = allReferences.filter(
+        (node) => node !== nameNode,
+      );
 
       derivedReferences.push(...variableReferences);
 
