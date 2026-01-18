@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Optimized how we collect indirect Zod references to improve performances.
+
 ## [1.12.1] - 2026-01-09
 
 ### Fixed
