@@ -40,6 +40,12 @@ describe("Zod v3 to v4", () => {
     });
   });
 
+  describe(".superRefine()", () => {
+    it("strips return values from superRefine callbacks", async () => {
+      await runScenario("super-refine.strip-return-value");
+    });
+  });
+
   // https://zod.dev/v4/changelog?id=znumber
   describe("z.number()", () => {
     it("replaces deprecated `z.number().safe()` and `z.number().int() with `z.int()`", async () => {
