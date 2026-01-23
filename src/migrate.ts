@@ -18,6 +18,7 @@ import {
   convertZRecordPatternsToTopLevelApi,
   convertZStringPatternsToTopLevelApi,
 } from "./convert-name-to-top-level-api.ts";
+import { stripSuperRefineReturnValues } from "./convert-super-refine.ts";
 import {
   convertDeprecatedErrorKeysToErrorFunction,
   convertErrorMapToErrorFunction,
@@ -98,6 +99,7 @@ export function migrateZodV3ToV4(
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);
+    stripSuperRefineReturnValues(parentStatement);
     replaceZodIssueCodeWithLiteralStrings(parentStatement);
   });
 
