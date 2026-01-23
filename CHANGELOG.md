@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Strip return values from `.superRefine()` callbacks. In Zod v4, `superRefine` must return `void`/`undefined`, but v3 allowed returning any value. The codemod now transforms `return <value>;` to `return;` within superRefine callbacks. [#86](https://github.com/nicoespeon/zod-v3-to-v4/issues/86)
+
 ## [1.13.0] - 2026-01-18
 
 ### Changed
