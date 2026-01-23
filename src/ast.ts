@@ -78,7 +78,10 @@ function findFirstIdentifier(
 ): Identifier | undefined {
   const nestedExpression = node?.getExpression();
 
-  if (nestedExpression?.isKind(SyntaxKind.PropertyAccessExpression)) {
+  if (
+    nestedExpression?.isKind(SyntaxKind.PropertyAccessExpression) ||
+    nestedExpression?.isKind(SyntaxKind.CallExpression)
+  ) {
     return findFirstIdentifier(nestedExpression);
   }
 

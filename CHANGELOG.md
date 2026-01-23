@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Strip return values from `.superRefine()` callbacks. In Zod v4, `superRefine` must return `void`/`undefined`, but v3 allowed returning any value. The codemod now transforms `return <value>;` to `return;` within superRefine callbacks. [#86](https://github.com/nicoespeon/zod-v3-to-v4/issues/86)
 
+### Fixed
+
+- Fix `.error.errors` → `.error.issues` transformation not working when the variable is initialized from a chained method call (e.g., `const result = z.string().safeParse(input)`). The AST traversal now correctly handles `CallExpression` nodes in method chains. [#67](https://github.com/nicoespeon/zod-v3-to-v4/issues/67)
+
 ## [1.13.0] - 2026-01-18
 
 ### Changed

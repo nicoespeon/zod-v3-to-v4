@@ -38,6 +38,21 @@ export function parseAndReport<T>(schema: z.ZodSchema<T>, input: unknown) {
   return result;
 }
 
+z.string().superRefine((phoneNumber, ctx)=> {
+  const phoneValidation = z
+    .string()
+    .length(10, "Should have 10 characters")
+    .safeParse(phoneNumber);
+
+  if (!phoneValidation.success) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: phoneValidation.error.errors[0]?.message,
+      path: ["phoneNumber"],
+    });
+  }
+})
+
 // Should not match
 export class ShouldNotTransform {
   addIssue(issue: any) {}
