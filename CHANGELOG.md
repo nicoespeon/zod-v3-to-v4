@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Preserve returned CallExpressions in `.superRefine()` callbacks, as they may have side-effects. [#86](https://github.com/nicoespeon/zod-v3-to-v4/issues/86)
+
 ## [1.14.0] - 2026-01-23
 
 ### Added

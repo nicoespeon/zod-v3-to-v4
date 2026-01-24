@@ -41,7 +41,15 @@ export function stripSuperRefineReturnValues(node: ZodNode) {
           expression.getText() === "undefined";
 
         if (!isUndefinedLiteral) {
-          returnStatement.replaceWithText("return;");
+          // Preserve returned CallExpressions (for potential side-effects)
+          if (expression.isKind(SyntaxKind.CallExpression)) {
+            const indent = returnStatement.getIndentationText();
+            returnStatement.replaceWithText(
+              `${expression.getText()};\n${indent}return;`,
+            );
+          } else {
+            returnStatement.replaceWithText("return;");
+          }
         }
       });
     });

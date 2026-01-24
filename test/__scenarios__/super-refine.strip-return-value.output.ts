@@ -70,3 +70,19 @@ export const returnUndefined = z.object({}).superRefine(() => {
 export const returnNothing = z.object({}).superRefine(() => {
   return;
 });
+
+// Returned CallExpression should be preserved (in case of side-effect)
+let totalIssues = 0;
+const addToTotalIssues = (newIssues: number) => {
+  const newValue = totalIssues + newIssues;
+  // Side effect
+  totalIssues = newValue;
+  return newValue;
+}
+
+
+export const myObject = z.object({}).superRefine(() => {
+  const newIssuesSum = 5;
+  addToTotalIssues(newIssuesSum);
+  return;
+});
