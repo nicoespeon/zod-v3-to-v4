@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Support for Vue Single File Components (`.vue` files). The codemod now discovers and migrates Zod schemas within `<script>` and `<script setup>` blocks. [#23](https://github.com/nicoespeon/zod-v3-to-v4/issues/23)
+
 ### Changed
 
 - Preserve returned CallExpressions in `.superRefine()` callbacks, as they may have side-effects. [#86](https://github.com/nicoespeon/zod-v3-to-v4/issues/86)

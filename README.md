@@ -18,6 +18,8 @@ The first step for you is to upgrade your Zod version to v4. In doubt, check you
 
 Then, you can use this codemod to automatically migrate your code from Zod v3 to v4 syntax.
 
+This codemod also migrates `.vue` files containing Zod schemas.
+
 ### Interactive CLI
 
 You can run it with the following command:
