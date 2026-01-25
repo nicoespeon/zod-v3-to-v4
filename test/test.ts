@@ -4,6 +4,7 @@ import * as prettier from "prettier";
 import { Project } from "ts-morph";
 import { describe, expect, it } from "vitest";
 import { migrateZodV3ToV4 } from "../src/migrate.ts";
+import { migrateVueSource } from "../src/vue-migration.ts";
 
 describe("Zod v3 to v4", () => {
   // https://zod.dev/v4/changelog?id=error-customization
@@ -159,6 +160,24 @@ describe("Zod v3 to v4", () => {
   });
 });
 
+describe("Vue SFC files", () => {
+  it("migrates <script lang='ts'> blocks", async () => {
+    await runVueScenario("vue.basic-script");
+  });
+
+  it("migrates <script setup lang='ts'> blocks", async () => {
+    await runVueScenario("vue.script-setup");
+  });
+
+  it("migrates both <script> and <script setup> blocks", async () => {
+    await runVueScenario("vue.both-scripts");
+  });
+
+  it("leaves files without Zod imports unchanged", async () => {
+    await runVueScenario("vue.no-zod");
+  });
+});
+
 describe("Astro", () => {
   // https://v6.docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod
   describe("runs for Astro", () => {
@@ -249,4 +268,35 @@ async function transform(
     actual,
     expected,
   };
+}
+
+async function runVueScenario(fixturePath: string) {
+  const input = await readFile(
+    `./test/__scenarios__/${fixturePath}.input.vue`,
+    "utf-8",
+  );
+  const expected = await readFile(
+    `./test/__scenarios__/${fixturePath}.output.vue`,
+    "utf-8",
+  );
+
+  const actual = transformVue(input, `${fixturePath}.vue`);
+
+  expect(actual).toEqual(expected);
+}
+
+function transformVue(source: string, filename: string): string {
+  const project = new Project({
+    useInMemoryFileSystem: true,
+    skipFileDependencyResolution: true,
+    compilerOptions: {
+      allowJs: true,
+    },
+  });
+
+  const result = migrateVueSource(source, filename, project, {
+    migrateImportDeclarations: true,
+  });
+
+  return result.content;
 }
