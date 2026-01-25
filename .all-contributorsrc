@@ -279,6 +279,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "noook",
+      "name": "Neil Richter",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19751938?v=4",
+      "profile": "https://nook.sh",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
