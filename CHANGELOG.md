@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.15.0] - 2026-01-25
+
 ### Added
 
 - Support for Vue Single File Components (`.vue` files). The codemod now discovers and migrates Zod schemas within `<script>` and `<script setup>` blocks. [#23](https://github.com/nicoespeon/zod-v3-to-v4/issues/23)
@@ -314,7 +316,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.14.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...HEAD
+[1.15.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.1...1.13.0
 [1.12.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.0...1.12.1
