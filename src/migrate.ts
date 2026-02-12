@@ -9,6 +9,7 @@ import {
   getZodName,
 } from "./collect-imports.ts";
 import { convertAstroDeprecatedZodImports } from "./convert-astro-imports.ts";
+import { convertDescriptionParamToDescribeCall } from "./convert-description-param.ts";
 import {
   convertZArrayPatternsToTopLevelApi,
   convertZCoercePatternsToTopLevelApi,
@@ -90,6 +91,7 @@ export function migrateZodV3ToV4(
     convertErrorMapToErrorFunction(parentStatement);
     convertMessageKeyToError(parentStatement);
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
+    convertDescriptionParamToDescribeCall(parentStatement);
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
     convertZCoercePatternsToTopLevelApi(parentStatement, zodName);
