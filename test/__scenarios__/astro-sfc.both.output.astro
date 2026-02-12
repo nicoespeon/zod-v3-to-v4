@@ -1,0 +1,20 @@
+---
+import { z } from "astro/zod";
+
+const configSchema = z.object({
+  apiUrl: z.url(),
+});
+---
+
+<html>
+  <body>
+    <h1>Hello</h1>
+    <script>
+      import { z } from "zod/v4";
+
+      const formSchema = z.object({
+        name: z.email(),
+      });
+    </script>
+  </body>
+</html>
