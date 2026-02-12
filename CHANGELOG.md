@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Convert `description` param to `.describe()` call. [#100](https://github.com/nicoespeon/zod-v3-to-v4/pull/100)
+
 ## [1.15.0] - 2026-01-25
 
 ### Added
