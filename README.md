@@ -142,6 +142,7 @@ pnpm playground:interactive
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://cgi.cse.unsw.edu.au/~cs1531"><img src="https://avatars.githubusercontent.com/u/86177399?v=4?s=100" width="100px;" alt="Khiet Tam Nguyen"/><br /><sub><b>Khiet Tam Nguyen</b></sub></a><br /><a href="#ideas-nktnet1" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://nook.sh"><img src="https://avatars.githubusercontent.com/u/19751938?v=4?s=100" width="100px;" alt="Neil Richter"/><br /><sub><b>Neil Richter</b></sub></a><br /><a href="#ideas-noook" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jboga"><img src="https://avatars.githubusercontent.com/u/1196151?v=4?s=100" width="100px;" alt="Jeremy Bogatirsky"/><br /><sub><b>Jeremy Bogatirsky</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=jboga" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
