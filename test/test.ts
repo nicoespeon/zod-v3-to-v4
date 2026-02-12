@@ -158,6 +158,12 @@ describe("Zod v3 to v4", () => {
       await runScenario("z-coerce");
     });
   });
+
+  describe("description param", () => {
+    it("converts `description` constructor param to `.describe()` method call", async () => {
+      await runScenario("description-param");
+    });
+  });
 });
 
 describe("Vue SFC files", () => {
