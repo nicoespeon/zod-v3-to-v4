@@ -7,7 +7,6 @@ Prepare a new release for this project.
 1. Read the current `CHANGELOG.md` and `package.json`
 
 2. Determine the version number:
-
    - If a version is provided as argument (`$ARGUMENTS`), use that version
    - If no version is provided, infer it from the Unreleased section in CHANGELOG.md:
      - Look at the subsections under `## Unreleased`
@@ -18,7 +17,6 @@ Prepare a new release for this project.
      - **Ask the user to confirm** the inferred version before proceeding (they may want a different version)
 
 3. Update the CHANGELOG:
-
    - Create a new version section `## [<version>] - <today's date in YYYY-MM-DD format>` right after the `## Unreleased` section
    - Move all content from "Unreleased" to the new version section
    - Leave an empty "Unreleased" section for future changes
@@ -27,7 +25,6 @@ Prepare a new release for this project.
      - Add a new link for the new version comparing from the previous version
 
 4. Update `package.json`:
-
    - Change the `version` field to the new version
 
 5. Commit the changes:

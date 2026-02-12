@@ -260,7 +260,6 @@ The CLI now works with any JSON file (such as `tsconfig.base.json`).
 #### Schema API Migration
 
 - **String schemas**: Migrates validation methods to top-level API
-
   - `z.string().email()` → `z.email()`
   - `z.string().uuid()` → `z.uuid()`
   - `z.string().url()` → `z.url()`
@@ -275,26 +274,21 @@ The CLI now works with any JSON file (such as `tsconfig.base.json`).
   - `z.string().cidr()` → `z.union([z.cidrv4(), z.cidrv6()])`
 
 - **Number schemas**: Migrates integer validation to top-level API
-
   - `z.number().int()` → `z.int()`
   - `z.number().safe()` → `z.int()`
 
 - **Object schemas**: Migrates unknown key handling to top-level API
-
   - `z.object().passthrough()` → `z.passthrough()`
   - `z.object().strict()` → `z.strict()`
   - `z.object().strip()` → `z.strip()`
 
 - **Array schemas**: Migrates non-empty arrays to top-level API
-
   - `z.array().nonempty()` → `z.tuple([schema], schema)`
 
 - **Function schemas**: Migrates to new input/output syntax
-
   - `z.function().args().returns()` → `z.function({ input: [...], output: ... })`
 
 - **Record schemas**: Migrates to top-level API
-
   - `z.record(z.string())` → `z.record(z.string(), z.string())`
 
 - **Enum and Default schemas**: Migrates to new APIs
