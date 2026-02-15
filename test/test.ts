@@ -3,6 +3,7 @@ import { extname } from "node:path";
 import * as prettier from "prettier";
 import { Project } from "ts-morph";
 import { describe, expect, it } from "vitest";
+import { migrateAstroSource } from "../src/astro-migration.ts";
 import { migrateZodV3ToV4 } from "../src/migrate.ts";
 import { migrateVueSource } from "../src/vue-migration.ts";
 
@@ -184,6 +185,24 @@ describe("Vue SFC files", () => {
   });
 });
 
+describe("Astro SFC files", () => {
+  it("migrates frontmatter blocks", async () => {
+    await runAstroScenario("astro-sfc.frontmatter");
+  });
+
+  it("migrates <script> blocks", async () => {
+    await runAstroScenario("astro-sfc.script-block");
+  });
+
+  it("migrates both frontmatter and <script> blocks", async () => {
+    await runAstroScenario("astro-sfc.both");
+  });
+
+  it("leaves files without Zod imports unchanged", async () => {
+    await runAstroScenario("astro-sfc.no-zod");
+  });
+});
+
 describe("Astro", () => {
   // https://v6.docs.astro.build/en/guides/content-collections/#defining-datatypes-with-zod
   describe("runs for Astro", () => {
@@ -301,6 +320,37 @@ function transformVue(source: string, filename: string): string {
   });
 
   const result = migrateVueSource(source, filename, project, {
+    migrateImportDeclarations: true,
+  });
+
+  return result.content;
+}
+
+async function runAstroScenario(fixturePath: string) {
+  const input = await readFile(
+    `./test/__scenarios__/${fixturePath}.input.astro`,
+    "utf-8",
+  );
+  const expected = await readFile(
+    `./test/__scenarios__/${fixturePath}.output.astro`,
+    "utf-8",
+  );
+
+  const actual = transformAstro(input, `${fixturePath}.astro`);
+
+  expect(actual).toEqual(expected);
+}
+
+function transformAstro(source: string, filename: string): string {
+  const project = new Project({
+    useInMemoryFileSystem: true,
+    skipFileDependencyResolution: true,
+    compilerOptions: {
+      allowJs: true,
+    },
+  });
+
+  const result = migrateAstroSource(source, filename, project, {
     migrateImportDeclarations: true,
   });
 

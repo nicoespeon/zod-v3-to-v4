@@ -1,0 +1,62 @@
+---
+const title = "Search";
+---
+
+<html>
+  <body>
+    <h1>{title}</h1>
+    <div id="search-root"></div>
+
+    <script>
+      import { z } from "zod";
+
+      const searchParamsSchema = z.object({
+        query: z.string().min(1),
+        page: z.number().int().min(1).default(1),
+        limit: z.number().int().min(1).max(100).default(20),
+        sort: z.enum(["relevance", "date", "title"]).default("relevance"),
+      });
+
+      const apiResponseSchema = z.object({
+        results: z.array(z.object({
+          id: z.string().uuid(),
+          title: z.string(),
+          url: z.string().url(),
+          score: z.number(),
+        })),
+        total: z.number().int(),
+      }).passthrough();
+
+      const params = searchParamsSchema.parse({
+        query: new URLSearchParams(window.location.search).get("q") ?? "",
+      });
+
+      console.log(params);
+    </script>
+
+    <!-- These should NOT be migrated -->
+    <script src="./analytics.ts"></script>
+    <script is:inline>
+      import { z } from "zod";
+
+      const searchParamsSchema = z.object({
+        query: z.string().min(1),
+        page: z.number().int().min(1).default(1),
+        limit: z.number().int().min(1).max(100).default(20),
+        sort: z.enum(["relevance", "date", "title"]).default("relevance"),
+      });
+
+      const apiResponseSchema = z.object({
+        results: z.array(z.object({
+          id: z.string().uuid(),
+          title: z.string(),
+          url: z.string().url(),
+          score: z.number(),
+        })),
+        total: z.number().int(),
+      }).passthrough();
+
+      console.log("This is an inline script", searchParamsSchema, apiResponseSchema);
+    </script>
+  </body>
+</html>

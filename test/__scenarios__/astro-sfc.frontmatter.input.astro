@@ -1,0 +1,15 @@
+---
+import { z } from "astro/zod";
+
+const schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  age: z.number().int(),
+});
+---
+
+<html>
+  <body>
+    <h1>Hello</h1>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+---
+const title = "My Page";
+---
+
+<html>
+  <body>
+    <h1>{title}</h1>
+    <script>
+      import { z } from "zod/v4";
+
+      const formSchema = z.object({
+        query: z.url(),
+      });
+    </script>
+
+    <!-- Not migrated -->
+    <script src="./some-script.ts"></script>
+    <script is:inline>
+      import { z } from "zod";
+      const formSchema = z.object({ query: z.string().url() });
+    </script>
+  </body>
+</html>

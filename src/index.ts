@@ -16,6 +16,7 @@ import * as path from "node:path";
 import { promisify } from "node:util";
 import { Project } from "ts-morph";
 import { z } from "zod";
+import { discoverAstroFiles, migrateAstroFile } from "./astro-migration.ts";
 import { migrateZodV3ToV4 } from "./migrate.ts";
 import { discoverVueFiles, migrateVueFile } from "./vue-migration.ts";
 
@@ -104,11 +105,13 @@ async function runMigration(tsConfigFilePath: string) {
     }
   }
 
-  // Discover Vue files from the tsconfig directory
+  // Discover Vue and Astro files from the tsconfig directory
   const tsConfigDir = path.dirname(path.resolve(tsConfigFilePath));
   const vueFiles = discoverVueFiles(tsConfigDir);
+  const astroFiles = discoverAstroFiles(tsConfigDir);
 
-  const totalFiles = filesToProcess.length + vueFiles.length;
+  const totalFiles =
+    filesToProcess.length + vueFiles.length + astroFiles.length;
   let processedFilesCount = 0;
   const progressBar = progress({ max: totalFiles });
   progressBar.start("Processing files...");
@@ -144,6 +147,32 @@ async function runMigration(tsConfigFilePath: string) {
       }
     } catch (err) {
       let message = `Failed to migrate Vue file ${vuePath}`;
+      if (err instanceof Error) {
+        message += `\nReason: ${err.message}`;
+      }
+      message += `\n\nPlease report this at https://github.com/nicoespeon/zod-v3-to-v4/issues`;
+      log.error(message);
+    }
+
+    processedFilesCount++;
+    progressBar.advance(
+      1,
+      `Migrated ${processedFilesCount}/${totalFiles} files`,
+    );
+
+    // Wait the next tick to let the progress bar update
+    await wait(0);
+  }
+
+  // Process Astro files
+  for (const astroPath of astroFiles) {
+    try {
+      const result = migrateAstroFile(astroPath, project);
+      if (result.transformed) {
+        fs.writeFileSync(astroPath, result.content, "utf-8");
+      }
+    } catch (err) {
+      let message = `Failed to migrate Astro file ${astroPath}`;
       if (err instanceof Error) {
         message += `\nReason: ${err.message}`;
       }
