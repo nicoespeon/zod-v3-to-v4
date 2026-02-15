@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Support for Astro Single File Components (`.astro` files). The codemod now discovers and migrates Zod schemas within frontmatter and `<script>` blocks. [#93](https://github.com/nicoespeon/zod-v3-to-v4/issues/93)
+
+## [1.16.0] - 2026-02-12
+
+### Added
+
 - Convert `description` param to `.describe()` call. [#100](https://github.com/nicoespeon/zod-v3-to-v4/pull/100)
 
 ## [1.15.0] - 2026-01-25
@@ -260,7 +266,6 @@ The CLI now works with any JSON file (such as `tsconfig.base.json`).
 #### Schema API Migration
 
 - **String schemas**: Migrates validation methods to top-level API
-
   - `z.string().email()` → `z.email()`
   - `z.string().uuid()` → `z.uuid()`
   - `z.string().url()` → `z.url()`
@@ -275,26 +280,21 @@ The CLI now works with any JSON file (such as `tsconfig.base.json`).
   - `z.string().cidr()` → `z.union([z.cidrv4(), z.cidrv6()])`
 
 - **Number schemas**: Migrates integer validation to top-level API
-
   - `z.number().int()` → `z.int()`
   - `z.number().safe()` → `z.int()`
 
 - **Object schemas**: Migrates unknown key handling to top-level API
-
   - `z.object().passthrough()` → `z.passthrough()`
   - `z.object().strict()` → `z.strict()`
   - `z.object().strip()` → `z.strip()`
 
 - **Array schemas**: Migrates non-empty arrays to top-level API
-
   - `z.array().nonempty()` → `z.tuple([schema], schema)`
 
 - **Function schemas**: Migrates to new input/output syntax
-
   - `z.function().args().returns()` → `z.function({ input: [...], output: ... })`
 
 - **Record schemas**: Migrates to top-level API
-
   - `z.record(z.string())` → `z.record(z.string(), z.string())`
 
 - **Enum and Default schemas**: Migrates to new APIs
@@ -320,7 +320,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.16.0...HEAD
+[1.16.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...1.16.0
 [1.15.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.12.1...1.13.0

@@ -224,7 +224,9 @@ function getProjectReferences(tsConfigFilePath: string): string[] {
 
     return config.references
       .map((ref) => {
-        if (!ref.path) return null;
+        if (!ref.path) {
+          return null;
+        }
 
         const refDir = path.resolve(tsConfigDir, ref.path);
 

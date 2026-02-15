@@ -288,6 +288,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "jboga",
+      "name": "Jeremy Bogatirsky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1196151?v=4",
+      "profile": "https://github.com/jboga",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
