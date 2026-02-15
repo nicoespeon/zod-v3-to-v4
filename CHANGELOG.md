@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.17.0] - 2026-02-15
+
 ### Added
 
 - Support for Astro Single File Components (`.astro` files). The codemod now discovers and migrates Zod schemas within frontmatter and `<script>` blocks. [#93](https://github.com/nicoespeon/zod-v3-to-v4/issues/93)
@@ -323,7 +325,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.16.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.0...HEAD
+[1.17.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.16.0...1.17.0
 [1.16.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...1.16.0
 [1.15.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.14.0...1.15.0
 [1.14.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.13.0...1.14.0
