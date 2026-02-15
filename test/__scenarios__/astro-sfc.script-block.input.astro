@@ -12,5 +12,12 @@ const title = "My Page";
         query: z.string().url(),
       });
     </script>
+
+    <!-- Not migrated -->
+    <script src="./some-script.ts"></script>
+    <script is:inline>
+      import { z } from "zod";
+      const formSchema = z.object({ query: z.string().url() });
+    </script>
   </body>
 </html>

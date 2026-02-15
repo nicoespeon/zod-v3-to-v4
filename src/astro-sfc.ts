@@ -22,7 +22,7 @@ const ZOD_IMPORT_PATTERNS = [
 ];
 
 const FRONTMATTER_REGEX = /^---\r?\n([\s\S]*?)\r?\n---/;
-const SCRIPT_TAG_REGEX = /<script(?:\s[^>]*)?>([^]*?)<\/script>/g;
+const SCRIPT_TAG_REGEX = /<script>([^]*?)<\/script>/g;
 
 export function parseAstroSFC(
   source: string,
