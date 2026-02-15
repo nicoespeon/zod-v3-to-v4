@@ -1,0 +1,35 @@
+---
+import { z } from "astro:content";
+
+const blogPostSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  publishDate: z.string().datetime(),
+  updatedDate: z.string().datetime().optional(),
+  heroImage: z.string().url().optional(),
+  draft: z.boolean().default(false),
+  tags: z.array(z.string()).nonempty(),
+  author: z.object({
+    name: z.string(),
+    avatar: z.string().url(),
+  }).strict(),
+});
+
+type BlogPost = z.infer<typeof blogPostSchema>;
+
+const { post } = Astro.props as { post: BlogPost };
+---
+
+<html>
+  <body>
+    <article>
+      <h1>{post.title}</h1>
+      {post.heroImage && <img src={post.heroImage} alt={post.title} />}
+      <p>{post.description}</p>
+      <time>{post.publishDate}</time>
+      <ul>
+        {post.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    </article>
+  </body>
+</html>

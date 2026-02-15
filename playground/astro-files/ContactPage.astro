@@ -1,0 +1,45 @@
+---
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email("Please enter a valid email"),
+  website: z.string().url().optional(),
+  message: z.string().min(10).max(500),
+});
+
+type Contact = z.infer<typeof contactSchema>;
+
+let errors: string[] = [];
+let success = false;
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const result = contactSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    website: formData.get("website"),
+    message: formData.get("message"),
+  });
+
+  if (!result.success) {
+    errors = result.error.flatten().fieldErrors.email ?? [];
+  } else {
+    success = true;
+  }
+}
+---
+
+<html>
+  <body>
+    <h1>Contact Us</h1>
+    {success && <p>Thank you!</p>}
+    <form method="POST">
+      <input name="name" placeholder="Name" />
+      <input name="email" placeholder="Email" />
+      <input name="website" placeholder="Website" />
+      <textarea name="message" placeholder="Message"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </body>
+</html>
