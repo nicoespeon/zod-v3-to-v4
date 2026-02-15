@@ -1,5 +1,5 @@
-import { glob } from "glob";
 import * as fs from "node:fs";
+import { globSync } from "tinyglobby";
 import type { Project } from "ts-morph";
 import { migrateZodV3ToV4 } from "./migrate.ts";
 import {
@@ -21,7 +21,7 @@ export function discoverVueFiles(
   baseDir: string,
   excludePatterns: string[] = ["**/node_modules/**", "**/dist/**"],
 ): string[] {
-  return glob.sync("**/*.vue", {
+  return globSync("**/*.vue", {
     cwd: baseDir,
     absolute: true,
     ignore: excludePatterns,

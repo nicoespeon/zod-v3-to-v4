@@ -1,5 +1,5 @@
-import { glob } from "glob";
 import * as fs from "node:fs";
+import { globSync } from "tinyglobby";
 import type { Project } from "ts-morph";
 import {
   parseAstroSFC,
@@ -21,7 +21,7 @@ export function discoverAstroFiles(
   baseDir: string,
   excludePatterns: string[] = ["**/node_modules/**", "**/dist/**"],
 ): string[] {
-  return glob.sync("**/*.astro", {
+  return globSync("**/*.astro", {
     cwd: baseDir,
     absolute: true,
     ignore: excludePatterns,
