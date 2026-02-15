@@ -99,6 +99,8 @@ export function migrateZodV3ToV4(
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
     convertZFunctionPatternsToTopLevelApi(parentStatement);
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
+    convertOptionalShorthands(parentStatement);
+    convertDefAccess(parentStatement);
     renameZDefaultToZPrefault(parentStatement);
     renameZNativeEnumToZEnum(parentStatement);
     stripSuperRefineReturnValues(parentStatement);
@@ -192,5 +194,39 @@ function replaceZodIssueCodeWithLiteralStrings(node: ZodNode) {
       const literalString =
         ZodIssueCodeToLiteralString[e.getName()] ?? "invalid_type";
       e.replaceWithText(`"${literalString}"`);
+    });
+}
+
+const OPTIONAL_SHORTHANDS: Record<string, string> = {
+  ostring: "string",
+  onumber: "number",
+  oboolean: "boolean",
+};
+
+function convertOptionalShorthands(node: ZodNode) {
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .reverse()
+    .filter((e) => e.getName() in OPTIONAL_SHORTHANDS)
+    .forEach((e) => {
+      const parent = e.getParentIfKind(SyntaxKind.CallExpression);
+      if (!parent) {
+        return;
+      }
+
+      const baseName = OPTIONAL_SHORTHANDS[e.getName()];
+      const zodExpr = e.getExpression().getText();
+      parent.replaceWithText(`${zodExpr}.${baseName}().optional()`);
+    });
+}
+
+function convertDefAccess(node: ZodNode) {
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .reverse()
+    .filter((e) => e.getName() === "_def")
+    .forEach((e) => {
+      const base = e.getExpression().getText();
+      e.replaceWithText(`${base}._zod.def`);
     });
 }

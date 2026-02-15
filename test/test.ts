@@ -144,6 +144,18 @@ describe("Zod v3 to v4", () => {
     it("removes deleted types without importing them if prefixed", async () => {
       await runScenario("zod-types.deleted-prefixed");
     });
+
+    it("replaces `ZodType<Output, Def, Input>` generics with `ZodType<Output, Input>`", async () => {
+      await runScenario("zod-types.generic-params");
+    });
+  });
+
+  it("replaces `z.ostring()`, `z.onumber()`, `z.oboolean()` with `.optional()` equivalents", async () => {
+    await runScenario("z-optional-shorthand");
+  });
+
+  it("replaces `._def` access with `._zod.def`", async () => {
+    await runScenario("def-access");
   });
 
   it("handles import aliases", async () => {

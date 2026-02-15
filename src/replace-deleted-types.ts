@@ -54,6 +54,9 @@ export function replaceDeletedTypes(
     }
   });
 
+  // ZodType<Output, Def, Input> → ZodType<Output, Input>
+  convertZodTypeGenerics(zodReferences);
+
   // Replace references in code
   zodReferences.forEach((node) => {
     if (node.wasForgotten()) {
@@ -89,5 +92,28 @@ export function replaceDeletedTypes(
         return;
       }
     }
+  });
+}
+
+// ZodType<Output, Def, Input> → ZodType<Output, Input>
+function convertZodTypeGenerics(zodReferences: Node[]) {
+  zodReferences.forEach((node) => {
+    if (node.wasForgotten() || node.getText() !== "ZodType") {
+      return;
+    }
+
+    const typeRef = node.getFirstAncestorByKind(SyntaxKind.TypeReference);
+    if (!typeRef) {
+      return;
+    }
+
+    const [output, _def, input] = typeRef.getTypeArguments();
+    if (!output) {
+      return;
+    }
+
+    const outputText = output.getText();
+    const inputText = input ? input.getText() : outputText;
+    typeRef.replaceWithText(`ZodType<${outputText}, ${inputText}>`);
   });
 }

@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Support for Astro Single File Components (`.astro` files). The codemod now discovers and migrates Zod schemas within frontmatter and `<script>` blocks. [#93](https://github.com/nicoespeon/zod-v3-to-v4/issues/93)
+- Migrate `ZodType<Output, Def, Input>` generics to `ZodType<Output, Input>` (drops the middle `Def` parameter)
+- Migrate `z.ostring()`, `z.onumber()`, `z.oboolean()` to `z.string().optional()`, `z.number().optional()`, `z.boolean().optional()`
+- Migrate `._def` access to `._zod.def`
 
 ## [1.16.0] - 2026-02-12
 
