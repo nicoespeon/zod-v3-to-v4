@@ -207,7 +207,7 @@ function convertOptionalShorthands(node: ZodNode) {
   node
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
     .reverse()
-    .filter((e) => e.getName() in OPTIONAL_SHORTHANDS)
+    .filter((e) => Object.hasOwn(OPTIONAL_SHORTHANDS, e.getName()))
     .forEach((e) => {
       const parent = e.getParentIfKind(SyntaxKind.CallExpression);
       if (!parent) {

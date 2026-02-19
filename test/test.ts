@@ -154,6 +154,10 @@ describe("Zod v3 to v4", () => {
     await runScenario("z-optional-shorthand");
   });
 
+  it("does not match `.toString()` or other Object.prototype methods as optional shorthands", async () => {
+    await runScenario("z-optional-shorthand.no-prototype-match");
+  });
+
   it("replaces `._def` access with `._zod.def`", async () => {
     await runScenario("def-access");
   });
