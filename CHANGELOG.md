@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.17.1] - 2026-02-19
+
 ### Fixed
 
 - Fix crash when code contains `.toString()` or other `Object.prototype` methods in transform callbacks. The `in` operator matched prototype chain properties (e.g. `toString`, `valueOf`, `constructor`) as optional shorthands. [#105](https://github.com/nicoespeon/zod-v3-to-v4/issues/105)
@@ -329,7 +331,8 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.0...HEAD
+[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.1...HEAD
+[1.17.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.0...1.17.1
 [1.17.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.16.0...1.17.0
 [1.16.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...1.16.0
 [1.15.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.14.0...1.15.0
