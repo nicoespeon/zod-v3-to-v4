@@ -299,6 +299,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Akkuma",
+      "name": "Greg W",
+      "avatar_url": "https://avatars.githubusercontent.com/u/342889?v=4",
+      "profile": "https://github.com/Akkuma",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
