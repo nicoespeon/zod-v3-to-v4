@@ -48,7 +48,7 @@
     "@vue/compiler-sfc": "3.5.27",
     "tinyglobby": "0.2.15",
     "ts-morph": "26.0.0",
-    "zod": "3.25.12"
+    "zod": "4.3.6"
   },
   "devDependencies": {
     "@types/node": "25.2.0",
