@@ -1,4 +1,4 @@
-import { type SourceFile, SyntaxKind } from "ts-morph";
+import { type Node, type SourceFile, SyntaxKind } from "ts-morph";
 import { ZodIssueCode } from "zod/v3";
 import { findRootExpression } from "./ast.ts";
 import {
@@ -118,6 +118,13 @@ export function migrateZodV3ToV4(
   return sourceFile.getFullText();
 }
 
+const BEHAVIOR_CHANGING_APIS = new Set([
+  "transform",
+  "pipe",
+  "preprocess",
+  "coerce",
+]);
+
 function renameZDefaultToZPrefault(node: ZodNode) {
   node
     .getDescendantsOfKind(SyntaxKind.Identifier)
@@ -127,8 +134,28 @@ function renameZDefaultToZPrefault(node: ZodNode) {
         id.getText() === "default",
     )
     .forEach((identifier) => {
-      identifier.replaceWithText("prefault");
+      const propertyAccess = identifier.getParentIfKind(
+        SyntaxKind.PropertyAccessExpression,
+      )!;
+      if (chainHasBehaviorChangingApi(propertyAccess.getExpression())) {
+        identifier.replaceWithText("prefault");
+      }
     });
+}
+
+function chainHasBehaviorChangingApi(node: Node): boolean {
+  if (node.isKind(SyntaxKind.CallExpression)) {
+    return chainHasBehaviorChangingApi(node.getExpression());
+  }
+
+  if (node.isKind(SyntaxKind.PropertyAccessExpression)) {
+    if (BEHAVIOR_CHANGING_APIS.has(node.getName())) {
+      return true;
+    }
+    return chainHasBehaviorChangingApi(node.getExpression());
+  }
+
+  return false;
 }
 
 function renameZNativeEnumToZEnum(node: ZodNode) {

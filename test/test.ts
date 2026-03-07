@@ -76,7 +76,7 @@ describe("Zod v3 to v4", () => {
 
   // https://zod.dev/v4/changelog?id=default-updates
   describe("z.default()", () => {
-    it("replaces `z.default()` with `z.prefault()` to preserve behavior", async () => {
+    it("replaces `z.default()` with `z.prefault()` when the chain has transform operations", async () => {
       await runScenario("z-default");
     });
   });
