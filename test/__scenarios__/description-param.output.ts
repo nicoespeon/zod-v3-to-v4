@@ -48,3 +48,9 @@ z.object({ description: z.string(), name: z.string() }).describe(
 
 // Description with errorMap that only returns defaults (gets removed)
 z.string().describe("With error map");
+
+// Do NOT transform similar patterns that don't belong to Zod (#109)
+declare function doSomething(opts: {
+  description: string;
+}): { process(schema: z.ZodType): void };
+doSomething({ description: "not a zod thing" }).process(z.object({}));

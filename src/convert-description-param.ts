@@ -1,7 +1,15 @@
-import { ObjectLiteralExpression, SyntaxKind } from "ts-morph";
+import {
+  CallExpression,
+  Node,
+  ObjectLiteralExpression,
+  SyntaxKind,
+} from "ts-morph";
 import { getDirectDescendantsOfKind, type ZodNode } from "./zod-node.ts";
 
-export function convertDescriptionParamToDescribeCall(node: ZodNode) {
+export function convertDescriptionParamToDescribeCall(
+  node: ZodNode,
+  zodName: string,
+) {
   getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
     .filter(
       (id) =>
@@ -21,7 +29,7 @@ export function convertDescriptionParamToDescribeCall(node: ZodNode) {
       const callExpression = objectLiteral.getParentIfKind(
         SyntaxKind.CallExpression,
       );
-      if (!callExpression) {
+      if (!callExpression || !isZodCallExpression(callExpression, zodName)) {
         return;
       }
 
@@ -63,4 +71,18 @@ export function convertDescriptionParamToDescribeCall(node: ZodNode) {
         `${callExpression.getText()}.describe(${descriptionValue})`,
       );
     });
+}
+
+function isZodCallExpression(
+  callExpression: CallExpression,
+  zodName: string,
+): boolean {
+  let expr: Node = callExpression.getExpression();
+  while (
+    expr.isKind(SyntaxKind.PropertyAccessExpression) ||
+    expr.isKind(SyntaxKind.CallExpression)
+  ) {
+    expr = expr.getExpression();
+  }
+  return expr.isKind(SyntaxKind.Identifier) && expr.getText() === zodName;
 }

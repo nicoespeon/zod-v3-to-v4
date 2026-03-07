@@ -91,7 +91,7 @@ export function migrateZodV3ToV4(
     convertErrorMapToErrorFunction(parentStatement);
     convertMessageKeyToError(parentStatement);
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
-    convertDescriptionParamToDescribeCall(parentStatement);
+    convertDescriptionParamToDescribeCall(parentStatement, zodName);
     convertZNumberPatternsToZInt(parentStatement, zodName);
     convertZStringPatternsToTopLevelApi(parentStatement, zodName);
     convertZCoercePatternsToTopLevelApi(parentStatement, zodName);

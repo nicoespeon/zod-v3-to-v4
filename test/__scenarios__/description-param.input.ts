@@ -56,3 +56,9 @@ z.string({
     return { message: ctx.defaultError };
   },
 });
+
+// Do NOT transform similar patterns that don't belong to Zod (#109)
+declare function doSomething(opts: {
+  description: string;
+}): { process(schema: z.ZodType): void };
+doSomething({ description: "not a zod thing" }).process(z.object({}));
