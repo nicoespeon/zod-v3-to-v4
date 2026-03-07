@@ -1,4 +1,5 @@
 {
+  "peacock.color": "#0d7d6c",
   "editor.codeActionsOnSave": {
     "source.organizeImports": "never"
   },
@@ -7,5 +8,24 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.organizeImports": {
     "caseFirst": "lower"
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#12ab94",
+    "activityBar.background": "#12ab94",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#f8e2fc",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#12ab94",
+    "statusBar.background": "#0d7d6c",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#12ab94",
+    "statusBarItem.remoteBackground": "#0d7d6c",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#0d7d6c",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#0d7d6c99",
+    "titleBar.inactiveForeground": "#e7e7e799"
   }
 }
