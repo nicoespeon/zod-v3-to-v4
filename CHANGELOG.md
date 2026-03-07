@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.17.3](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.17.2...v1.17.3) (2026-03-07)
+
+
+### Bug Fixes
+
+* trigger release ([0501551](https://github.com/nicoespeon/zod-v3-to-v4/commit/050155104ddf82b24326822c34fa8e4e5d3fadca))
+
 ## [1.17.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.1...v1.17.2) (2026-03-07)
 
 
