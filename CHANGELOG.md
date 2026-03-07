@@ -10,6 +10,14 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.17.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.1...v1.17.2) (2026-03-07)
+
+
+### Bug Fixes
+
+* only convert .default() to .prefault() when chain has behavior-changing APIs ([2e6cafa](https://github.com/nicoespeon/zod-v3-to-v4/commit/2e6cafa4ab0be2ee836d03e09e48585bd469288c))
+* only convert description param to .describe() on Zod calls ([60ec880](https://github.com/nicoespeon/zod-v3-to-v4/commit/60ec880619ac5957c6d46d9926f46dd10a97123a)), closes [#109](https://github.com/nicoespeon/zod-v3-to-v4/issues/109)
+
 ## [1.17.1] - 2026-02-19
 
 ### Fixed
