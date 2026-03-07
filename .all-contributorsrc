@@ -308,6 +308,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "paulrudy",
+      "name": "paulrudy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1110792?v=4",
+      "profile": "https://github.com/paulrudy",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
