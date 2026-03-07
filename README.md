@@ -145,6 +145,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jboga"><img src="https://avatars.githubusercontent.com/u/1196151?v=4?s=100" width="100px;" alt="Jeremy Bogatirsky"/><br /><sub><b>Jeremy Bogatirsky</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=jboga" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Akkuma"><img src="https://avatars.githubusercontent.com/u/342889?v=4?s=100" width="100px;" alt="Greg W"/><br /><sub><b>Greg W</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3AAkkuma" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/paulrudy"><img src="https://avatars.githubusercontent.com/u/1110792?v=4?s=100" width="100px;" alt="paulrudy"/><br /><sub><b>paulrudy</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Apaulrudy" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dukejeffrie"><img src="https://avatars.githubusercontent.com/u/688490?v=4?s=100" width="100px;" alt="Tiago tms Silveira"/><br /><sub><b>Tiago tms Silveira</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Adukejeffrie" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
