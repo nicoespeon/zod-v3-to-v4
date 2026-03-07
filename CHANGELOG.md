@@ -2,10 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+---
+
+Entries below v1.17.1 were written by hand following the [Keep a Changelog](https://keepachangelog.com) format. Starting with the next release, entries are generated automatically by [release-please](https://github.com/googleapis/release-please) from [Conventional Commits](https://www.conventionalcommits.org).
+
+---
 
 ## [1.17.1] - 2026-02-19
 
@@ -331,7 +334,6 @@ For more information about Zod v4 changes, see the [official migration guide](ht
 
 <!-- Links -->
 
-[Unreleased]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.1...HEAD
 [1.17.1]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.17.0...1.17.1
 [1.17.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.16.0...1.17.0
 [1.16.0]: https://github.com/nicoespeon/zod-v3-to-v4/compare/1.15.0...1.16.0
