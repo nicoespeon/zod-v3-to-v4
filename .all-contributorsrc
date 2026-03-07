@@ -317,6 +317,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "dukejeffrie",
+      "name": "Tiago tms Silveira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/688490?v=4",
+      "profile": "https://github.com/dukejeffrie",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
