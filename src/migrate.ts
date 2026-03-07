@@ -99,6 +99,7 @@ export function migrateZodV3ToV4(
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
     convertZFunctionPatternsToTopLevelApi(parentStatement);
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
+    convertInstanceofFileToZFile(parentStatement, zodName);
     convertOptionalShorthands(parentStatement);
     convertDefAccess(parentStatement);
     renameZDefaultToZPrefault(parentStatement);
@@ -244,6 +245,40 @@ function convertOptionalShorthands(node: ZodNode) {
       const baseName = OPTIONAL_SHORTHANDS[e.getName()];
       const zodExpr = e.getExpression().getText();
       parent.replaceWithText(`${zodExpr}.${baseName}().optional()`);
+    });
+}
+
+function convertInstanceofFileToZFile(node: ZodNode, zodName: string) {
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .reverse()
+    .filter((propAccess) => {
+      if (propAccess.getName() !== "instanceof") {
+        return false;
+      }
+
+      if (propAccess.getExpression().getText() !== zodName) {
+        return false;
+      }
+
+      const callExpr = propAccess.getParentIfKind(SyntaxKind.CallExpression);
+      if (!callExpr) {
+        return false;
+      }
+
+      const [firstArg] = callExpr.getArguments();
+      return firstArg?.getText() === "File";
+    })
+    .forEach((propAccess) => {
+      const callExpr = propAccess.getParentIfKind(SyntaxKind.CallExpression)!;
+      const args = callExpr.getArguments();
+      const secondArg = args[1];
+
+      if (secondArg) {
+        callExpr.replaceWithText(`${zodName}.file(${secondArg.getText()})`);
+      } else {
+        callExpr.replaceWithText(`${zodName}.file()`);
+      }
     });
 }
 

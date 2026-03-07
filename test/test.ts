@@ -170,6 +170,13 @@ describe("Zod v3 to v4", () => {
     await runScenario("zod-v3-import");
   });
 
+  // https://zod.dev/v4/changelog?id=zfile
+  describe("z.file()", () => {
+    it("replaces `z.instanceof(File)` with `z.file()`", async () => {
+      await runScenario("z-file");
+    });
+  });
+
   describe("coercion", () => {
     it("replaces droppped `z.X({ coerce: true })` with `z.coerce.X()`", async () => {
       await runScenario("z-coerce");
