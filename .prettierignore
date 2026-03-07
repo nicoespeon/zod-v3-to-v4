@@ -5,3 +5,5 @@
 /test/__scenarios__
 /playground
 /playground-monorepo
+# Changelog is now managed by release-please
+CHANGELOG.md
