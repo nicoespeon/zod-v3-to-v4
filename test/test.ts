@@ -154,6 +154,12 @@ describe("Zod v3 to v4", () => {
     });
   });
 
+  describe("Zod class static .create() calls", () => {
+    it("replaces `z.Zod*.create()` with `z.*()` public API equivalents", async () => {
+      await runScenario("zod-class.static-create");
+    });
+  });
+
   it("replaces `z.ostring()`, `z.onumber()`, `z.oboolean()` with `.optional()` equivalents", async () => {
     await runScenario("z-optional-shorthand");
   });

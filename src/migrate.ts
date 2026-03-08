@@ -100,6 +100,7 @@ export function migrateZodV3ToV4(
     convertZFunctionPatternsToTopLevelApi(parentStatement, zodName);
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
     convertInstanceofFileToZFile(parentStatement, zodName);
+    convertStaticCreateToBuilder(parentStatement, zodName);
     convertOptionalShorthands(parentStatement);
     convertDefAccess(parentStatement);
     renameZDefaultToZPrefault(parentStatement);
@@ -279,6 +280,47 @@ function convertInstanceofFileToZFile(node: ZodNode, zodName: string) {
       } else {
         callExpr.replaceWithText(`${zodName}.file()`);
       }
+    });
+}
+
+const ZOD_CLASS_TO_BUILDER: Record<string, string> = {
+  ZodOptional: "optional",
+  ZodNullable: "nullable",
+  ZodTuple: "tuple",
+};
+
+function convertStaticCreateToBuilder(node: ZodNode, zodName: string) {
+  node
+    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    .reverse()
+    .forEach((propAccess) => {
+      if (propAccess.getName() !== "create") {
+        return;
+      }
+
+      const inner = propAccess.getExpression();
+      if (!inner.isKind(SyntaxKind.PropertyAccessExpression)) {
+        return;
+      }
+      if (inner.getExpression().getText() !== zodName) {
+        return;
+      }
+
+      const builderName = ZOD_CLASS_TO_BUILDER[inner.getName()];
+      if (!builderName) {
+        return;
+      }
+
+      const callExpr = propAccess.getParentIfKind(SyntaxKind.CallExpression);
+      if (!callExpr) {
+        return;
+      }
+
+      const args = callExpr
+        .getArguments()
+        .map((a) => a.getText())
+        .join(", ");
+      callExpr.replaceWithText(`${zodName}.${builderName}(${args})`);
     });
 }
 
