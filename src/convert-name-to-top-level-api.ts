@@ -268,42 +268,56 @@ export function convertZArrayPatternsToTopLevelApi(
     });
 }
 
-export function convertZFunctionPatternsToTopLevelApi(node: ZodNode) {
+export function convertZFunctionPatternsToTopLevelApi(
+  node: ZodNode,
+  zodName: string,
+) {
   const oldName = "function";
   const names = ["args", "returns"];
 
   getCallExpressionsToConvert(node, {
     oldName,
     names,
-  }).forEach((callExpression) => {
-    let inputText: string | undefined;
-    let outputText: string | undefined;
+  })
+    .filter((callExpression) => {
+      const functionAccess = callExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        .find((e) => e.getName() === oldName);
+      return functionAccess?.getExpression().getText() === zodName;
+    })
+    .forEach((callExpression) => {
+      let inputText: string | undefined;
+      let outputText: string | undefined;
 
-    // Remove deprecated names from the chain
-    callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-      // Start from the deepest, otherwise we can't get info from removed nodes
-      .reverse()
-      .filter((expression) => names.includes(expression.getName()))
-      .forEach((expression) => {
-        const parent = expression.getFirstAncestorByKind(
-          SyntaxKind.CallExpression,
-        );
-        if (expression.getName() === "args") {
-          inputText = `[${parent
-            ?.getArguments()
-            .map((arg) => arg.getText())
-            .join(", ")}]`;
-        } else if (expression.getName() === "returns") {
-          outputText = parent?.getArguments()[0]?.getText();
-        }
-        parent?.replaceWithText(expression.getExpression().getText());
-      });
+      // Remove deprecated names from the chain
+      callExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        // Start from the deepest, otherwise we can't get info from removed nodes
+        .reverse()
+        .filter((expression) => names.includes(expression.getName()))
+        .forEach((expression) => {
+          const parent = expression.getFirstAncestorByKind(
+            SyntaxKind.CallExpression,
+          );
+          if (expression.getName() === "args") {
+            inputText = `[${parent
+              ?.getArguments()
+              .map((arg) => arg.getText())
+              .join(", ")}]`;
+          } else if (expression.getName() === "returns") {
+            outputText = parent?.getArguments()[0]?.getText();
+          }
+          parent?.replaceWithText(expression.getExpression().getText());
+        });
 
-    callExpression.addArgument(
-      `{ input: ${inputText}, output: ${outputText} }`,
-    );
-  });
+      const functionCall = callExpression
+        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+        .find((e) => e.getName() === oldName)
+        ?.getFirstAncestorByKind(SyntaxKind.CallExpression);
+      functionCall?.addArgument(
+        `{ input: ${inputText}, output: ${outputText} }`,
+      );
+    });
 }
 
 export function convertZRecordPatternsToTopLevelApi(

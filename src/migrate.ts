@@ -97,7 +97,7 @@ export function migrateZodV3ToV4(
     convertZCoercePatternsToTopLevelApi(parentStatement, zodName);
     convertZObjectPatternsToTopLevelApi(parentStatement, zodName);
     convertZArrayPatternsToTopLevelApi(parentStatement, zodName);
-    convertZFunctionPatternsToTopLevelApi(parentStatement);
+    convertZFunctionPatternsToTopLevelApi(parentStatement, zodName);
     convertZRecordPatternsToTopLevelApi(parentStatement, zodName);
     convertInstanceofFileToZFile(parentStatement, zodName);
     convertOptionalShorthands(parentStatement);

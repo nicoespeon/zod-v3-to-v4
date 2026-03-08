@@ -123,6 +123,10 @@ describe("Zod v3 to v4", () => {
     it("replaces `z.args()` and `z.returns()` with `z.function()` parameters", async () => {
       await runScenario("z-function");
     });
+
+    it("preserves chained methods like `.nullish()` after transformation", async () => {
+      await runScenario("z-function.chained-methods");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=zrecord
