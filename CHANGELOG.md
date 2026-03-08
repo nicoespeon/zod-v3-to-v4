@@ -10,6 +10,18 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.18.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.17.3...v1.18.0) (2026-03-08)
+
+
+### Features
+
+* convert `z.instanceof(File)` to `z.file()` ([909f9ff](https://github.com/nicoespeon/zod-v3-to-v4/commit/909f9ff30a6b030a9a8504259a2e58252ce881ff)), closes [#11](https://github.com/nicoespeon/zod-v3-to-v4/issues/11)
+
+
+### Bug Fixes
+
+* transform z.function() args into .function() not trailing methods ([fdaf1e4](https://github.com/nicoespeon/zod-v3-to-v4/commit/fdaf1e4284f333d29b0b4b409c96adf6eb07f62e)), closes [#78](https://github.com/nicoespeon/zod-v3-to-v4/issues/78)
+
 ## [1.17.3](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.17.2...v1.17.3) (2026-03-07)
 
 
