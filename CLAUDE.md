@@ -73,7 +73,8 @@ Always start from the test, whether adding a new migration or fixing a bug:
 
 1. Write the **minimal** fixture pair (input + expected output)
 2. Run tests — **confirm the test fails** for the right reason before touching source code
-3. Write the source code to make the test pass
+3. **Pause and ask the user** to review the failing tests before continuing. Wait for their approval or edits before moving on.
+4. Write the source code to make the test pass
 
 When writing test fixtures, always include a sanity-check case with a similar-looking API that is **not** a Zod reference, to verify the codemod leaves non-Zod code alone.
 
