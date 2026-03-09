@@ -236,7 +236,7 @@ export function convertDeprecatedErrorKeysToErrorFunction(node: ZodNode) {
     });
 }
 
-export function convertZodErrorToTreeifyError(
+export function convertZodErrorFormatToTreeifyError(
   sourceFile: SourceFile,
   zodName: string,
 ) {
@@ -248,29 +248,33 @@ export function convertZodErrorToTreeifyError(
     .filter((expression) => {
       const argsCount = expression.getArguments().length;
       const methodCalled = expression.getExpression().getLastChild();
-
-      const looksLikeZodErrorFormat =
-        methodCalled?.getText() === "format" && argsCount === 0;
-      const looksLikeZodErrorFlatten =
-        methodCalled?.getText() === "flatten" && argsCount === 0;
-
-      return looksLikeZodErrorFormat || looksLikeZodErrorFlatten;
+      return methodCalled?.getText() === "format" && argsCount === 0;
     })
     .forEach((expression) => {
       const caller =
         expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
       expression.replaceWithText(`${zodName}.treeifyError(${caller})`);
+    });
+}
 
-      // Get rid of `.formErrors` or `.fieldErrors` on `z.treeifyError()`
-      const parentObject = expression.getParentIfKind(
-        SyntaxKind.PropertyAccessExpression,
-      );
-      if (
-        parentObject &&
-        ["formErrors", "fieldErrors"].includes(parentObject.getName())
-      ) {
-        parentObject.replaceWithText(expression.getText());
-      }
+export function convertZodErrorFlattenToFlattenError(
+  sourceFile: SourceFile,
+  zodName: string,
+) {
+  sourceFile
+    .getDescendantsOfKind(SyntaxKind.CallExpression)
+    .filter((expression) =>
+      isZodReference(zodName, ["ZodType", "ZodError"], expression),
+    )
+    .filter((expression) => {
+      const argsCount = expression.getArguments().length;
+      const methodCalled = expression.getExpression().getLastChild();
+      return methodCalled?.getText() === "flatten" && argsCount === 0;
+    })
+    .forEach((expression) => {
+      const caller =
+        expression.getFirstChild()?.getFirstChild()?.getText() ?? "";
+      expression.replaceWithText(`${zodName}.flattenError(${caller})`);
     });
 
   sourceFile
@@ -278,16 +282,10 @@ export function convertZodErrorToTreeifyError(
     .filter((expression) =>
       isZodReference(zodName, ["ZodType", "ZodError"], expression),
     )
-    .filter((expression) => {
-      const looksLikeZodErrorFormErrors = expression.getName() === "formErrors";
-      const looksLikeZodErrorFieldErrors =
-        expression.getName() === "fieldErrors";
-
-      return looksLikeZodErrorFormErrors || looksLikeZodErrorFieldErrors;
-    })
+    .filter((expression) => expression.getName() === "formErrors")
     .forEach((expression) => {
       const caller = expression.getFirstChild()?.getText() ?? "";
-      expression.replaceWithText(`${zodName}.treeifyError(${caller})`);
+      expression.replaceWithText(`${zodName}.flattenError(${caller})`);
     });
 }
 

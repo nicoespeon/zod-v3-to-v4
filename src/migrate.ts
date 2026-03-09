@@ -26,8 +26,9 @@ import {
   convertMessageKeyToError,
   convertSetErrorMapToConfig,
   convertZodErrorAddIssueToDirectPushes,
+  convertZodErrorFlattenToFlattenError,
+  convertZodErrorFormatToTreeifyError,
   convertZodErrorMapType,
-  convertZodErrorToTreeifyError,
 } from "./convert-zod-errors.ts";
 import { replaceDeletedTypes } from "./replace-deleted-types.ts";
 import { isZodNode, type ZodNode } from "./zod-node.ts";
@@ -109,7 +110,8 @@ export function migrateZodV3ToV4(
     replaceZodIssueCodeWithLiteralStrings(parentStatement);
   });
 
-  convertZodErrorToTreeifyError(sourceFile, zodName);
+  convertZodErrorFormatToTreeifyError(sourceFile, zodName);
+  convertZodErrorFlattenToFlattenError(sourceFile, zodName);
   convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
   convertSetErrorMapToConfig(sourceFile, zodName);
   convertZodErrorMapType(sourceFile, zodName);
