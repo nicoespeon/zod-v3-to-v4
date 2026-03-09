@@ -10,6 +10,18 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.19.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.18.0...v1.19.0) (2026-03-09)
+
+
+### Features
+
+* convert z.Zod*.create() calls to public API equivalents ([2636875](https://github.com/nicoespeon/zod-v3-to-v4/commit/26368758ef170707373b25b5f4b7a516071567b1)), closes [#79](https://github.com/nicoespeon/zod-v3-to-v4/issues/79)
+
+
+### Bug Fixes
+
+* use z.flattenError() for .flatten() and .formErrors conversions ([83ec4f4](https://github.com/nicoespeon/zod-v3-to-v4/commit/83ec4f4b8bc7e1a48563e6f0cf932a77f60ff60f))
+
 ## [1.18.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.17.3...v1.18.0) (2026-03-08)
 
 
