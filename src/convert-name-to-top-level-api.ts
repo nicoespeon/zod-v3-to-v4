@@ -1,4 +1,9 @@
-import { CallExpression, SyntaxKind } from "ts-morph";
+import {
+  CallExpression,
+  Node,
+  PropertyAccessExpression,
+  SyntaxKind,
+} from "ts-morph";
 import { type ZodNode } from "./zod-node.ts";
 
 export function convertZNumberPatternsToZInt(node: ZodNode, zodName: string) {
@@ -408,17 +413,18 @@ function convertNameToTopLevelApi(
         parent.replaceWithText(expression.getExpression().getText());
       });
 
-    // Replace old name with top-level API
-    callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-      .filter((e) => e.getName() === oldName)
-      .forEach((e) => {
-        if (options.omitArgs) {
-          e.replaceWithText(`${zodName}.${newName}`);
-        } else {
-          e.getParent()?.replaceWithText(`${zodName}.${newName}(${argsText})`);
-        }
-      });
+    // Walk only the direct expression chain to avoid renaming nested
+    // z.object() calls inside arguments
+    const target = findPropertyAccessInChain(callExpression, oldName);
+    if (target) {
+      if (options.omitArgs) {
+        target.replaceWithText(`${zodName}.${newName}`);
+      } else {
+        target
+          .getParent()
+          ?.replaceWithText(`${zodName}.${newName}(${argsText})`);
+      }
+    }
   });
 }
 
@@ -503,6 +509,25 @@ function convertNameToTopLevelApiAndWrapInUnion(
       });
     },
   );
+}
+
+function findPropertyAccessInChain(
+  node: Node,
+  name: string,
+): PropertyAccessExpression | undefined {
+  let current: Node = node;
+  while (true) {
+    if (current.isKind(SyntaxKind.CallExpression)) {
+      current = current.getExpression();
+    } else if (current.isKind(SyntaxKind.PropertyAccessExpression)) {
+      if (current.getName() === name) {
+        return current;
+      }
+      current = current.getExpression();
+    } else {
+      return undefined;
+    }
+  }
 }
 
 function getCallExpressionsToConvert(
