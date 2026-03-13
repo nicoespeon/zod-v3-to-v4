@@ -10,6 +10,14 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.19.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.19.0...v1.19.1) (2026-03-13)
+
+
+### Bug Fixes
+
+* clean up virtual source files when SFC migration fails ([333ea1b](https://github.com/nicoespeon/zod-v3-to-v4/commit/333ea1b0c94d7e6c64a8bbec1879a048bcdb85e0)), closes [#129](https://github.com/nicoespeon/zod-v3-to-v4/issues/129)
+* don't convert nested z.object() when only the outer has .passthrough()/.strict() ([92b596f](https://github.com/nicoespeon/zod-v3-to-v4/commit/92b596f2cdf6c47ff3cf33e18f5cca260051e006)), closes [#128](https://github.com/nicoespeon/zod-v3-to-v4/issues/128)
+
 ## [1.19.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.18.0...v1.19.0) (2026-03-09)
 
 
