@@ -90,8 +90,10 @@ function migrateScriptBlock(
     overwrite: true,
   });
 
-  const migrated = migrateZodV3ToV4(sourceFile, options);
-  project.removeSourceFile(sourceFile);
-
-  return migrated ?? block.content;
+  try {
+    const migrated = migrateZodV3ToV4(sourceFile, options);
+    return migrated ?? block.content;
+  } finally {
+    project.removeSourceFile(sourceFile);
+  }
 }
