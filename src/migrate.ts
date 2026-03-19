@@ -24,6 +24,7 @@ import {
   convertDeprecatedErrorKeysToErrorFunction,
   convertErrorMapToErrorFunction,
   convertMessageKeyToError,
+  convertRefineFunctionParamsToObject,
   convertSetErrorMapToConfig,
   convertZodErrorAddIssueToDirectPushes,
   convertZodErrorFlattenToFlattenError,
@@ -90,6 +91,7 @@ export function migrateZodV3ToV4(
     }
 
     convertErrorMapToErrorFunction(parentStatement);
+    convertRefineFunctionParamsToObject(parentStatement);
     convertMessageKeyToError(parentStatement);
     convertDeprecatedErrorKeysToErrorFunction(parentStatement);
     convertDescriptionParamToDescribeCall(parentStatement, zodName);

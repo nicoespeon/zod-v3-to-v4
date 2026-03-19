@@ -46,6 +46,12 @@ describe("Zod v3 to v4", () => {
     });
   });
 
+  describe(".refine()", () => {
+    it("converts function-form error params to plain object", async () => {
+      await runScenario("refine.function-to-object");
+    });
+  });
+
   describe(".superRefine()", () => {
     it("strips return values from superRefine callbacks", async () => {
       await runScenario("super-refine.strip-return-value");

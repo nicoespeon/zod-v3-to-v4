@@ -147,6 +147,48 @@ export function convertErrorMapToErrorFunction(node: ZodNode) {
     });
 }
 
+export function convertRefineFunctionParamsToObject(node: ZodNode) {
+  getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
+    .filter(
+      (id) =>
+        id.getParentIfKind(SyntaxKind.PropertyAccessExpression) &&
+        id.getText() === "refine",
+    )
+    .map((id) => id.getParent()?.getParentIfKind(SyntaxKind.CallExpression))
+    .filter((callExpr) => callExpr !== undefined)
+    .forEach((callExpr) => {
+      const secondArg = callExpr.getArguments()[1];
+      if (!secondArg?.isKind(SyntaxKind.ArrowFunction)) {
+        return;
+      }
+
+      if (secondArg.getParameters().length > 0) {
+        return;
+      }
+
+      const body = secondArg.getBody();
+      if (body.isKind(SyntaxKind.ParenthesizedExpression)) {
+        const inner = body.getExpression();
+        if (inner.isKind(SyntaxKind.ObjectLiteralExpression)) {
+          secondArg.replaceWithText(inner.getText());
+        }
+      } else if (body.isKind(SyntaxKind.Block)) {
+        const statements = body.getStatements();
+        if (statements.length !== 1) {
+          return;
+        }
+        const stmt = statements[0]!;
+        if (!stmt.isKind(SyntaxKind.ReturnStatement)) {
+          return;
+        }
+        const expr = stmt.getExpression();
+        if (expr?.isKind(SyntaxKind.ObjectLiteralExpression)) {
+          secondArg.replaceWithText(expr.getText());
+        }
+      }
+    });
+}
+
 export function convertMessageKeyToError(node: ZodNode) {
   getDirectDescendantsOfKind(node, SyntaxKind.Identifier)
     .filter(
