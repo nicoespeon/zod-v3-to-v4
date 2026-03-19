@@ -148,6 +148,9 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dukejeffrie"><img src="https://avatars.githubusercontent.com/u/688490?v=4?s=100" width="100px;" alt="Tiago tms Silveira"/><br /><sub><b>Tiago tms Silveira</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Adukejeffrie" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mhzendehpey"><img src="https://avatars.githubusercontent.com/u/51740060?v=4?s=100" width="100px;" alt="M. Hossein Zendehpey"/><br /><sub><b>M. Hossein Zendehpey</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Amhzendehpey" title="Bug reports">🐛</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://palerdot.in"><img src="https://avatars.githubusercontent.com/u/4299398?v=4?s=100" width="100px;" alt="Arun Kumar"/><br /><sub><b>Arun Kumar</b></sub></a><br /><a href="#ideas-palerdot" title="Ideas, Planning, & Feedback">🤔</a></td>
+    </tr>
   </tbody>
   <tfoot>
     <tr>
