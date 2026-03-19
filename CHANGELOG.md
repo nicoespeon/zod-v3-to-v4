@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.20.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.19.1...v1.20.0) (2026-03-19)
+
+
+### Features
+
+* convert .refine() function-form error params to plain object ([ecba615](https://github.com/nicoespeon/zod-v3-to-v4/commit/ecba6155edf93c512d697a346a9ec56ac8a5369d)), closes [#131](https://github.com/nicoespeon/zod-v3-to-v4/issues/131)
+
 ## [1.19.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.19.0...v1.19.1) (2026-03-13)
 
 
