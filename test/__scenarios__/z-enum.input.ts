@@ -8,9 +8,10 @@ enum Color {
 
 const ColorSchema = z.nativeEnum(Color);
 
-// Rename Enum to enum
+// Rename Enum and Values to enum
 const schema = z.enum(["id_token", "token", "code"]);
 schema.Enum.token;
+schema.Values.token;
 
 let mySchema: any;
 console.log("should not change:", mySchema.Enum.token);
