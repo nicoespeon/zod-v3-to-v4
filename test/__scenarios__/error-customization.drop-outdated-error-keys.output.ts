@@ -18,6 +18,11 @@ z.string({
   error: "This message takes precedence",
 });
 
+const required = (name: string) =>
+  z.string({
+    error: (issue) => (issue.input === undefined ? `The ${name} field is required` : undefined),
+  });
+
 const password = (requiredMessage: string) =>
   z
     .string({

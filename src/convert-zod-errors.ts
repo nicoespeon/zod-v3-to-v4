@@ -244,17 +244,19 @@ export function convertDeprecatedErrorKeysToErrorFunction(node: ZodNode) {
     )
     .forEach((objectLiteral) => {
       const requiredErrorProp = objectLiteral.getProperty("required_error");
-      const requiredErrorValue = (
-        requiredErrorProp?.getLastChildIfKind(SyntaxKind.StringLiteral) ||
-        requiredErrorProp?.getLastChildIfKind(SyntaxKind.Identifier)
-      )?.getText();
+      const requiredErrorValue = requiredErrorProp?.isKind(
+        SyntaxKind.PropertyAssignment,
+      )
+        ? requiredErrorProp.getInitializer()?.getText()
+        : undefined;
 
       const invalidTypeErrorProp =
         objectLiteral.getProperty("invalid_type_error");
-      const invalidTypeErrorValue = (
-        invalidTypeErrorProp?.getLastChildIfKind(SyntaxKind.StringLiteral) ||
-        invalidTypeErrorProp?.getLastChildIfKind(SyntaxKind.Identifier)
-      )?.getText();
+      const invalidTypeErrorValue = invalidTypeErrorProp?.isKind(
+        SyntaxKind.PropertyAssignment,
+      )
+        ? invalidTypeErrorProp.getInitializer()?.getText()
+        : undefined;
 
       if (!requiredErrorProp && !invalidTypeErrorProp) {
         return;
