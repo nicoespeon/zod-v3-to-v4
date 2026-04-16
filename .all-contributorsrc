@@ -345,6 +345,17 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "bardiharborow",
+      "name": "Bardi Harborow",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1073681?v=4",
+      "profile": "https://bardiharborow.com",
+      "contributions": [
+        "ideas",
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
