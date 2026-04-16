@@ -150,6 +150,7 @@ pnpm playground:interactive
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://palerdot.in"><img src="https://avatars.githubusercontent.com/u/4299398?v=4?s=100" width="100px;" alt="Arun Kumar"/><br /><sub><b>Arun Kumar</b></sub></a><br /><a href="#ideas-palerdot" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://bardiharborow.com"><img src="https://avatars.githubusercontent.com/u/1073681?v=4?s=100" width="100px;" alt="Bardi Harborow"/><br /><sub><b>Bardi Harborow</b></sub></a><br /><a href="#ideas-bardiharborow" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Abardiharborow" title="Bug reports">🐛</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=bardiharborow" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
