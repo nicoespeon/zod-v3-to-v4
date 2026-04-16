@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./src"
+    "rootDir": "./src",
+    // Prevents a stale cache from skipping emit after `prebuild` wipes dist.
+    "incremental": false
   },
   "include": ["./src/**/*.ts", "./src/**/*.js"],
   "exclude": [
