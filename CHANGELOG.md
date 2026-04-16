@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.0...v1.21.1) (2026-04-16)
+
+
+### Bug Fixes
+
+* set explicit `rootDir` in build tsconfig ([8402dcd](https://github.com/nicoespeon/zod-v3-to-v4/commit/8402dcdc036430ca7d63b63f74924872a5289fde))
+
 ## [1.21.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.20.0...v1.21.0) (2026-04-16)
 
 
