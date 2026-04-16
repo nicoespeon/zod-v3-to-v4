@@ -19,6 +19,9 @@ z.string({
   message: "This message takes precedence",
 });
 
+const required = (name: string) =>
+  z.string({ required_error: `The ${name} field is required` });
+
 const password = (requiredMessage: string) =>
   z.string({ required_error: requiredMessage }).min(12);
 
