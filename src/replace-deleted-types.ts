@@ -31,6 +31,25 @@ const DELETED_TYPES: DeletedType[] = [
     importName: "ZodType",
     getReplacement: () => "ZodType",
   },
+  {
+    name: "ZodSchema",
+    importName: "ZodType",
+    getReplacement: (node) => {
+      // ZodSchema<Output, Def, Input> → ZodType<Output, Input> (drop middle)
+      // Preserve the original shape for 0, 1, or 2 generics
+      const typeRef = node.getFirstAncestorByKind(SyntaxKind.TypeReference);
+      const typeArgs = typeRef?.getTypeArguments() ?? [];
+      if (typeArgs.length === 0) {
+        return "ZodType";
+      }
+      if (typeArgs.length === 3) {
+        const outputText = typeArgs[0]!.getText();
+        const inputText = typeArgs[2]!.getText();
+        return `ZodType<${outputText}, ${inputText}>`;
+      }
+      return `ZodType<${typeArgs.map((t) => t.getText()).join(", ")}>`;
+    },
+  },
 ];
 
 export function replaceDeletedTypes(

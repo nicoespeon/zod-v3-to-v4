@@ -80,11 +80,6 @@ export function migrateZodV3ToV4(
       return;
     }
 
-    const parentType = node.getFirstAncestorByKind(SyntaxKind.QualifiedName);
-    if (parentType?.getText().endsWith("ZodSchema")) {
-      parentType?.getRight().replaceWithText("ZodType");
-    }
-
     const parentStatement = node.getParentWhile(isZodNode) || node;
     if (!isZodNode(parentStatement)) {
       return;
