@@ -10,6 +10,23 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.20.0...v1.21.0) (2026-04-16)
+
+
+### Features
+
+* transform enum `.Values` to `.enum` ([80ef4e7](https://github.com/nicoespeon/zod-v3-to-v4/commit/80ef4e7537e7269ffae0ab81881bb9ca6145135a))
+* transform enum `.Values` to `.enum` ([#142](https://github.com/nicoespeon/zod-v3-to-v4/issues/142)) ([7482353](https://github.com/nicoespeon/zod-v3-to-v4/commit/7482353f1e72dcdb9a737435c31cf506b935fc35))
+
+
+### Bug Fixes
+
+* preserve prefix when trimming middle generic of `z.ZodType<A, B, C>` ([656ec05](https://github.com/nicoespeon/zod-v3-to-v4/commit/656ec05ee2f593279eaf9926cd1ea840c847a6bc))
+* transform `schema.array().nonempty()` to `z.tuple([schema], schema)` ([6e521ee](https://github.com/nicoespeon/zod-v3-to-v4/commit/6e521eeee9e89e684def0e62db35955cc89d5497))
+* transform `ZodSchema<A, B, C>` to `ZodType<A, C>` ([e795b95](https://github.com/nicoespeon/zod-v3-to-v4/commit/e795b954d142d46e93092258d89a93ba3e67707e))
+* transform non-string literal values of `required_error` ([36831a8](https://github.com/nicoespeon/zod-v3-to-v4/commit/36831a8a518a339a23d8e4d3de7bc48cc865f439))
+* transform non-string literal values of `required_error` ([#144](https://github.com/nicoespeon/zod-v3-to-v4/issues/144)) ([bf540e3](https://github.com/nicoespeon/zod-v3-to-v4/commit/bf540e35ee84a4450c1b7690569ecdf012710b7f))
+
 ## [1.20.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.19.1...v1.20.0) (2026-03-19)
 
 
