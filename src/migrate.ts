@@ -117,8 +117,7 @@ export function migrateZodV3ToV4(
   convertZodErrorAddIssueToDirectPushes(sourceFile, zodName);
   convertSetErrorMapToConfig(sourceFile, zodName);
   convertZodErrorMapType(sourceFile, zodName);
-  renameZSchemaEnumToLowercase(sourceFile, zodName);
-  renameZSchemaValuesWithEnum(sourceFile, zodName);
+  renameZSchemaEnumAccessors(sourceFile, zodName);
 
   convertAstroDeprecatedZodImports(importDeclarations);
 
@@ -178,30 +177,12 @@ function renameZNativeEnumToZEnum(node: ZodNode) {
     });
 }
 
-function renameZSchemaEnumToLowercase(sourceFile: SourceFile, zodName: string) {
+function renameZSchemaEnumAccessors(sourceFile: SourceFile, zodName: string) {
+  const DEPRECATED_ACCESSORS = ["Enum", "Values"];
+
   sourceFile
     .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-    .filter((node) => node.getName() === "Enum")
-    .filter((node) => {
-      const rootNode = findRootExpression(node);
-      const expression = rootNode?.getExpression();
-
-      const isFromZodEnum =
-        expression?.isKind(SyntaxKind.PropertyAccessExpression) &&
-        expression.getName() === "enum" &&
-        expression.getExpression().getText() === zodName;
-
-      return isFromZodEnum;
-    })
-    .forEach((node) => {
-      node.getNameNode().replaceWithText("enum");
-    });
-}
-
-function renameZSchemaValuesWithEnum(sourceFile: SourceFile, zodName: string) {
-  sourceFile
-    .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-    .filter((node) => node.getName() === "Values")
+    .filter((node) => DEPRECATED_ACCESSORS.includes(node.getName()))
     .filter((node) => {
       const rootNode = findRootExpression(node);
       const expression = rootNode?.getExpression();
