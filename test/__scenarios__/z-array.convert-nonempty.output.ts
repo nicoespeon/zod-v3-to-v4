@@ -14,3 +14,6 @@ export const nestedNonEmpty = z.object({
     })
   ),
 });
+
+const schema = z.number();
+const FluentNonEmpty = z.tuple([schema], schema);

@@ -260,14 +260,17 @@ export function convertZArrayPatternsToTopLevelApi(
             return;
           }
 
+          // `z.array(schema)` exposes the element via the call argument,
+          // `schema.array()` exposes it via the property access expression.
           const arraySchemaArg = parent.getArguments()[0];
-          if (!arraySchemaArg) {
-            return;
-          }
+          const elementText = arraySchemaArg
+            ? arraySchemaArg.getText()
+            : e.getExpression().getText();
 
-          const arraySchemaArgText = arraySchemaArg.getText();
-          parent.removeArgument(arraySchemaArg);
-          parent.addArgument(`[${arraySchemaArgText}], ${arraySchemaArgText}`);
+          if (arraySchemaArg) {
+            parent.removeArgument(arraySchemaArg);
+          }
+          parent.addArgument(`[${elementText}], ${elementText}`);
           e.replaceWithText(`${zodName}.tuple`);
         });
     });
