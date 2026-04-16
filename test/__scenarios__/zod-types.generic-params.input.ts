@@ -6,6 +6,8 @@ function processSchema(schema: ZodType<number, z.ZodNumberDef, number>) {
 }
 type Only2Generics = ZodType<string, z.ZodStringDef>;
 
-// ZodSchema is an alias of ZodType in v3 — should get renamed *and* have its middle generic stripped
+// ZodSchema is an alias of ZodType in v3
 type AliasPrefixed = z.ZodSchema<string, z.ZodStringDef, string>;
 type AliasUnprefixed = ZodSchema<string, z.ZodStringDef, string>;
+
+type PrefixedZodType = z.ZodType<string, z.ZodStringDef, string>;

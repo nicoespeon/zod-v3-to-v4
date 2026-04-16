@@ -133,6 +133,7 @@ function convertZodTypeGenerics(zodReferences: Node[]) {
 
     const outputText = output.getText();
     const inputText = input ? input.getText() : outputText;
-    typeRef.replaceWithText(`ZodType<${outputText}, ${inputText}>`);
+    const typeNameText = typeRef.getTypeName().getText();
+    typeRef.replaceWithText(`${typeNameText}<${outputText}, ${inputText}>`);
   });
 }
