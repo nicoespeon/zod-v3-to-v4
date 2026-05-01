@@ -46,7 +46,7 @@
   "dependencies": {
     "@clack/prompts": "1.0.1",
     "@vue/compiler-sfc": "3.5.27",
-    "tinyglobby": "0.2.15",
+    "tinyglobby": "0.2.16",
     "ts-morph": "27.0.2",
     "zod": "3.25.12"
   },
