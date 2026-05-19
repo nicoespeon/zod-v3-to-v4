@@ -49,8 +49,14 @@ z.object({ description: z.string(), name: z.string() }).describe(
 // Description with errorMap that only returns defaults (gets removed)
 z.string().describe("With error map");
 
-// Do NOT transform similar patterns that don't belong to Zod (#109)
+// Do NOT transform similar patterns that don't belong to Zod
 declare function doSomething(opts: {
   description: string;
 }): { process(schema: z.ZodType): void };
 doSomething({ description: "not a zod thing" }).process(z.object({}));
+
+// Do NOT transform from third-party extensions (e.g. zod-openapi).
+// @ts-expect-error -- `.openapi()` requires the zod-openapi extension
+z.string().openapi({ description: "An email" });
+// @ts-expect-error -- `.openapi()` requires the zod-openapi extension
+z.string().openapi({ description: "User name", example: "John" });

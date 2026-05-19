@@ -33,6 +33,15 @@ export function convertDescriptionParamToDescribeCall(
         return;
       }
 
+      // Don't migrate API coming from extensions, such as zod-openapi.
+      const methodAccess = callExpression.getExpression();
+      if (
+        methodAccess.isKind(SyntaxKind.PropertyAccessExpression) &&
+        methodAccess.getName() === "openapi"
+      ) {
+        return;
+      }
+
       const descriptionProp = objectLiteral.getProperty("description");
       if (!descriptionProp) {
         return;
