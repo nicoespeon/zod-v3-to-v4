@@ -356,6 +356,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "willarion",
+      "name": "Marina",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62561106?v=4",
+      "profile": "https://www.linkedin.com/in/marinaanisimova/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
