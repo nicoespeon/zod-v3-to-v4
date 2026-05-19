@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.1...v1.21.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* don't lift `description` out of extension methods like `.openapi()` ([d07862b](https://github.com/nicoespeon/zod-v3-to-v4/commit/d07862b99e4c6042ca30b1d55176345a70a9a2c9)), closes [#157](https://github.com/nicoespeon/zod-v3-to-v4/issues/157)
+
 ## [1.21.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.0...v1.21.1) (2026-04-16)
 
 
