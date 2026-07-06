@@ -365,6 +365,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "shurane",
+      "name": "Ehtesh Choudhury",
+      "avatar_url": "https://avatars.githubusercontent.com/u/541433?v=4",
+      "profile": "https://github.com/shurane",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
