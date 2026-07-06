@@ -10,6 +10,14 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.3](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.2...v1.21.3) (2026-07-06)
+
+
+### Bug Fixes
+
+* don't misread key/member names as Zod chain methods ([fc161d6](https://github.com/nicoespeon/zod-v3-to-v4/commit/fc161d6b814683150e8c5d9e25cefece476c5637)), closes [#166](https://github.com/nicoespeon/zod-v3-to-v4/issues/166)
+* remove duplicated @types/estree key from lockfile ([121e999](https://github.com/nicoespeon/zod-v3-to-v4/commit/121e999bd6744ef6bed3e093b4020221faec0ddb))
+
 ## [1.21.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.1...v1.21.2) (2026-05-19)
 
 
