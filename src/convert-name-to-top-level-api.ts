@@ -382,10 +382,9 @@ function convertNameToTopLevelApi(
       return;
     }
 
-    const name = callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
-      .find((expression) => names.includes(expression.getName()))
-      ?.getName();
+    const name = getChainPropertyAccessExpressions(callExpression)
+      .map((expression) => expression.getName())
+      .find((chainName) => names.includes(chainName));
 
     const match = renames.find((r) => r.name === name);
     if (!match) {
@@ -514,6 +513,25 @@ function convertNameToTopLevelApiAndWrapInUnion(
   );
 }
 
+// Walks the direct expression chain (skipping call arguments) so we only
+// consider property accesses that are actual chained method calls.
+function getChainPropertyAccessExpressions(
+  node: Node,
+): PropertyAccessExpression[] {
+  const result: PropertyAccessExpression[] = [];
+  let current: Node = node;
+  while (true) {
+    if (current.isKind(SyntaxKind.CallExpression)) {
+      current = current.getExpression();
+    } else if (current.isKind(SyntaxKind.PropertyAccessExpression)) {
+      result.push(current);
+      current = current.getExpression();
+    } else {
+      return result;
+    }
+  }
+}
+
 function findPropertyAccessInChain(
   node: Node,
   name: string,
@@ -563,15 +581,13 @@ function getCallExpressionsToConvert(
       .filter(
         (e): e is CallExpression => !!e?.isKind(SyntaxKind.CallExpression),
       )
-      // Only keep the ones with rename candidates inside
+      // Only keep the ones with rename candidates in the method chain.
+      // A matching name inside a call argument (e.g. `batch.date` in
+      // `.safeParse(batch.date)`) is not a chain method and must be ignored.
       .filter((callExpression) =>
-        callExpression
-          .getDescendants()
-          .some(
-            (child) =>
-              child.isKind(SyntaxKind.PropertyAccessExpression) &&
-              names.includes(child.getName()),
-          ),
+        getChainPropertyAccessExpressions(callExpression).some((expression) =>
+          names.includes(expression.getName()),
+        ),
       )
   );
 }

@@ -41,6 +41,10 @@ z.object({ name: z.string() }).describe("A user object");
 // z.object shape field named "description" -- should NOT be transformed
 z.object({ description: z.string() });
 
+// z.object shape field "description" holding a variable schema -- should NOT be transformed
+const nullableStr = z.string().nullable().optional();
+z.strictObject({ date: nullableStr, description: nullableStr });
+
 // z.object with both: shape field AND second-arg description
 z.object({ description: z.string(), name: z.string() }).describe(
   "Schema with description field",

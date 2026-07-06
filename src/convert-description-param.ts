@@ -42,6 +42,17 @@ export function convertDescriptionParamToDescribeCall(
         return;
       }
 
+      // For object factories, the first argument is the shape (keys are field
+      // names), not an options object. A `description` key there is a field.
+      const objectFactories = ["object", "strictObject", "looseObject"];
+      if (
+        methodAccess.isKind(SyntaxKind.PropertyAccessExpression) &&
+        objectFactories.includes(methodAccess.getName()) &&
+        callExpression.getArguments()[0] === objectLiteral
+      ) {
+        return;
+      }
+
       const descriptionProp = objectLiteral.getProperty("description");
       if (!descriptionProp) {
         return;
