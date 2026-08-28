@@ -9,18 +9,22 @@ z.cidrv6().safeParse("2001:db8::/32");
 z.union([z.cidrv4(), z.cidrv6()]).safeParse("127.0.0.1/32");
 
 const cidrv4SchemaWithAttrs = z
-  .cidrv4()
+  .string()
   .trim()
+  .pipe(z.cidrv4())
   .optional()
   .describe("IPv4 CIDR Schema");
 
 const cidrv6SchemaWithAttrs = z
-  .cidrv6()
+  .string()
   .trim()
+  .pipe(z.cidrv6())
   .optional()
   .describe("IPv6 CIDR Schema");
 
 const cidrSchemaWithAttrs = z
-  .union([z.cidrv4().trim(), z.cidrv6().trim()])
+  .string()
+  .trim()
+  .pipe(z.union([z.cidrv4(), z.cidrv6()]))
   .optional()
   .describe("Some CIDR Schema");

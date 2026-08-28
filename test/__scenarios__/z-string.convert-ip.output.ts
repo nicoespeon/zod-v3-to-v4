@@ -8,11 +8,23 @@ z.ipv4().safeParse("127.0.0.1");
 z.ipv6().safeParse("::1");
 z.union([z.ipv4(), z.ipv6()]).safeParse("127.0.0.1");
 
-const ipv4SchemaWithAttrs = z.ipv4().trim().optional().describe("IPv4 Schema");
+const ipv4SchemaWithAttrs = z
+  .string()
+  .trim()
+  .pipe(z.ipv4())
+  .optional()
+  .describe("IPv4 Schema");
 
-const ipv6SchemaWithAttrs = z.ipv6().trim().optional().describe("IPv6 Schema");
+const ipv6SchemaWithAttrs = z
+  .string()
+  .trim()
+  .pipe(z.ipv6())
+  .optional()
+  .describe("IPv6 Schema");
 
 const ipSchemaWithAttrs = z
-  .union([z.ipv4().trim(), z.ipv6().trim()])
+  .string()
+  .trim()
+  .pipe(z.union([z.ipv4(), z.ipv6()]))
   .optional()
   .describe("Some IP Schema");
