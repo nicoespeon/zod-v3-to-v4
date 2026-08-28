@@ -41,12 +41,8 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         with:
           cache: pnpm
-          node-version: "23"
+          node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      # Ensure npm 11.5.1 or later for trusted publishing
-      - name: Update npm
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm install -g npm@latest
       - name: Build
         if: ${{ steps.release.outputs.release_created }}
         run: |
