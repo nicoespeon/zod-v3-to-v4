@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.5](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.4...v1.21.5) (2026-08-28)
+
+
+### Bug Fixes
+
+* publish releases on Node 24 LTS ([#178](https://github.com/nicoespeon/zod-v3-to-v4/issues/178)) ([c6f5596](https://github.com/nicoespeon/zod-v3-to-v4/commit/c6f55965792097e508f2d3b9095624e8f355592b))
+
 ## [1.21.4](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.3...v1.21.4) (2026-08-28)
 
 
