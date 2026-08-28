@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.21.4](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.3...v1.21.4) (2026-08-28)
+
+
+### Bug Fixes
+
+* preserve normalization order when hoisting string formats ([#175](https://github.com/nicoespeon/zod-v3-to-v4/issues/175)) ([b16cd0e](https://github.com/nicoespeon/zod-v3-to-v4/commit/b16cd0e136f51d457a70b74f99c9a4bbe98a081b)), closes [#174](https://github.com/nicoespeon/zod-v3-to-v4/issues/174)
+
 ## [1.21.3](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.2...v1.21.3) (2026-07-06)
 
 
