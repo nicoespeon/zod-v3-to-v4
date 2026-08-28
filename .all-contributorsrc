@@ -374,6 +374,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "benleder",
+      "name": "Ben Leder",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34696955?v=4",
+      "profile": "https://www.linkedin.com/in/ben-leder/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
