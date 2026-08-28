@@ -82,6 +82,10 @@ describe("Zod v3 to v4", () => {
     it("replaces dropped `z.string().cidr()` with `z.union([z.cidrv4(), z.cidrv6()])`", async () => {
       await runScenario("z-string.convert-cidr");
     });
+
+    it("keeps normalization before validation when converting to top-level APIs", async () => {
+      await runScenario("z-string.normalization-order");
+    });
   });
 
   // https://zod.dev/v4/changelog?id=default-updates

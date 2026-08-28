@@ -392,6 +392,17 @@ function convertNameToTopLevelApi(
     }
 
     const newName = match.newName ?? match.name;
+
+    const pipedChain = buildPipedChain(callExpression, {
+      zodName,
+      formatName: match.name,
+      newName,
+    });
+    if (pipedChain) {
+      callExpression.replaceWithText(pipedChain);
+      return;
+    }
+
     let argsText = "";
 
     // Remove deprecated names from the chain
@@ -436,6 +447,89 @@ type ConvertNameOptions = {
   renames: { name: string; newName?: string }[];
   omitArgs?: boolean;
 };
+
+// Zod applies string checks in chain order, so `.trim()` before a format
+// normalizes the value first. Hoisting the format to the top-level API would
+// validate before normalizing, which silently rejects inputs that used to pass.
+function buildPipedChain(
+  callExpression: CallExpression,
+  {
+    zodName,
+    formatName,
+    newName,
+  }: { zodName: string; formatName: string; newName: string },
+) {
+  const chain = getChainPropertyAccessExpressions(callExpression).reverse();
+  const formatIndex = chain.findIndex((e) => e.getName() === formatName);
+
+  const format = chain[formatIndex];
+  const formatCall = format?.getParent();
+  if (!format || !formatCall?.isKind(SyntaxKind.CallExpression)) {
+    return undefined;
+  }
+
+  const beforeFormat = format.getExpression();
+  if (!normalizesBeforeValidating(beforeFormat)) {
+    return undefined;
+  }
+
+  const trailing = chain.slice(formatIndex + 1).map(toCallText);
+  const calls = trailing.filter((call) => call !== undefined);
+  // A chained property that isn't a call, we can't rebuild the chain safely
+  if (calls.length !== trailing.length) {
+    return undefined;
+  }
+
+  // Only string schemas have these, they wouldn't exist on the pipe
+  const isStringCheck = (call: { name: string }) =>
+    STRING_CHECK_METHODS.includes(call.name);
+  const checks = textOf(calls.filter(isStringCheck));
+  const wrappers = textOf(calls.filter((call) => !isStringCheck(call)));
+
+  const topLevelFormat = `${zodName}.${newName}(${getArgsText(formatCall)})`;
+  return `${beforeFormat.getText()}.pipe(${topLevelFormat}${checks})${wrappers}`;
+}
+
+function normalizesBeforeValidating(beforeFormat: Node) {
+  return getChainPropertyAccessExpressions(beforeFormat).some((e) =>
+    NORMALIZING_METHODS.includes(e.getName()),
+  );
+}
+
+const NORMALIZING_METHODS = ["trim", "toLowerCase", "toUpperCase"];
+
+const STRING_CHECK_METHODS = [
+  ...NORMALIZING_METHODS,
+  "min",
+  "max",
+  "length",
+  "nonempty",
+  "regex",
+  "includes",
+  "startsWith",
+  "endsWith",
+];
+
+function toCallText(expression: PropertyAccessExpression) {
+  const call = expression.getParent();
+  if (!call?.isKind(SyntaxKind.CallExpression)) {
+    return undefined;
+  }
+
+  const name = expression.getName();
+  return { name, text: `.${name}(${getArgsText(call)})` };
+}
+
+function textOf(calls: { text: string }[]) {
+  return calls.map((call) => call.text).join("");
+}
+
+function getArgsText(call: CallExpression) {
+  return call
+    .getArguments()
+    .map((arg) => arg.getText())
+    .join(", ");
+}
 
 function convertNameToTopLevelApiAndWrapInUnion(
   node: NodeToConvert,
@@ -498,6 +592,17 @@ function convertNameToTopLevelApiAndWrapInUnion(
           }
 
           // Default behavior: create union
+          // Piping keeps the normalization out of the union members
+          if (normalizesBeforeValidating(expression.getExpression())) {
+            const members = renames
+              .map(({ name }) => `${zodName}.${name}()`)
+              .join(", ");
+            parent.replaceWithText(
+              `${text}.pipe(${zodName}.union([${members}]))`,
+            );
+            return;
+          }
+
           const unionText = renames
             .map(({ name }) => `${text}.${name}()`)
             .join(", ");
