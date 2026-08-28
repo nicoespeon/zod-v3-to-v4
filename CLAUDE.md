@@ -17,7 +17,7 @@ Codemod CLI that migrates Zod v3 code to v4. Uses **ts-morph** for AST-based tra
 - **ESM module** (`"type": "module"`)
 - **ts-morph** for AST manipulation (not jscodeshift)
 - **Vitest** for testing
-- **pnpm 9.15.4**, Node.js 23.6.0 (see `.tool-versions`)
+- **pnpm 9.15.4**, Node.js 24.16.0 (see `.tool-versions`)
 - **TypeScript strict mode** with `noUncheckedIndexedAccess`
 - Import paths use `.ts` extensions (`rewriteRelativeImportExtensions`)
 
