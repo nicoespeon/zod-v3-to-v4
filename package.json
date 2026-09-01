@@ -51,7 +51,7 @@
     "zod": "3.25.12"
   },
   "devDependencies": {
-    "@types/node": "26.1.0",
+    "@types/node": "26.4.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.8",
     "prettier": "3.8.1",
