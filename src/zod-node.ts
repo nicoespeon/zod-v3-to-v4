@@ -9,9 +9,7 @@ import {
 import { findRootNode } from "./ast.ts";
 
 export type ZodNode =
-  | CallExpression
-  | PropertyAccessExpression
-  | ExpressionStatement;
+  CallExpression | PropertyAccessExpression | ExpressionStatement;
 
 export function isZodNode(node: Node): node is ZodNode {
   return (
