@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.22.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.22.0...v1.22.1) (2026-10-20)
+
+
+### Continuous Integration
+
+* publish to npm when a GitHub release is published ([343f286](https://github.com/nicoespeon/zod-v3-to-v4/commit/343f286bf3601bea68ee5ab704349d56f0b6f6f6))
+
 ## [1.22.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.5...v1.22.0) (2026-10-20)
 
 
