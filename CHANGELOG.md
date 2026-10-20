@@ -10,6 +10,19 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.22.0](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.5...v1.22.0) (2026-10-20)
+
+
+### Features
+
+* add -y/--yes flag to auto-confirm prompts ([#190](https://github.com/nicoespeon/zod-v3-to-v4/issues/190)) ([ac8514c](https://github.com/nicoespeon/zod-v3-to-v4/commit/ac8514c8bc97891949d73fadfb7e3d5a86c43ca9))
+
+
+### Bug Fixes
+
+* fail instead of prompting when -y gets an invalid tsconfig ([1d8bf9b](https://github.com/nicoespeon/zod-v3-to-v4/commit/1d8bf9b9b940461ba2a1cfc7ae613b7726ad50f9))
+* make -y work without a tsconfig path ([1e0c7a1](https://github.com/nicoespeon/zod-v3-to-v4/commit/1e0c7a162354bc5e250336a46544f0aad4cb4ff2))
+
 ## [1.21.5](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.21.4...v1.21.5) (2026-08-28)
 
 
