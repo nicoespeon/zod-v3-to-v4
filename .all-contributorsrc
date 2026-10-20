@@ -383,6 +383,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "jericbas",
+      "name": "Jeric Bas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34228201?v=4",
+      "profile": "https://github.com/jericbas",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
