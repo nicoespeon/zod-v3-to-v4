@@ -28,9 +28,9 @@ intro(`🏗️  Let's migrate Zod from v3 to v4`);
 // Ex: npx zod-v3-to-v4 path/to/your/tsconfig.json -y
 const args = process.argv.slice(2);
 const autoYes = args.includes("-y") || args.includes("--yes");
-const tsConfigFilePathParam = args.find(
-  (arg) => arg !== "-y" && arg !== "--yes",
-);
+const tsConfigFilePathParam =
+  args.find((arg) => arg !== "-y" && arg !== "--yes") ??
+  (autoYes ? "tsconfig.json" : undefined);
 if (tsConfigFilePathParam) {
   const isValid = validateTsConfigPath(tsConfigFilePathParam);
   if (isValid.success) {
@@ -49,7 +49,7 @@ Let's do it interactively!`,
 // Check if the git working directory is clean
 const { stdout } = await execAsync("git status --porcelain");
 const isGitDirty = stdout.trim().length > 0;
-if (isGitDirty && !autoYes) {
+if (isGitDirty) {
   const shouldContinue = await confirm({
     message: "Your git working directory is dirty. Continue?",
   });

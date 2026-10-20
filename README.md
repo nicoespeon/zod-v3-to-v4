@@ -44,6 +44,8 @@ You can also pass `-y` (or `--yes`) to automatically answer "yes" to confirmatio
 npx zod-v3-to-v4 path/to/your/tsconfig.json -y
 ```
 
+Without a path, `-y` uses the `tsconfig.json` of the current directory.
+
 This is useful if you ever need to run the codemod in script (e.g. in a CI pipeline).
 
 ### Installing it as a package
