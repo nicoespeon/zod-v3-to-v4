@@ -38,6 +38,12 @@ Alternatively, you can pass the path to your `tsconfig.json` file as an argument
 npx zod-v3-to-v4 path/to/your/tsconfig.json
 ```
 
+You can also pass `-y` (or `--yes`) to automatically answer "yes" to confirmation prompts (such as migrating all referenced packages in a monorepo):
+
+```bash
+npx zod-v3-to-v4 path/to/your/tsconfig.json -y
+```
+
 This is useful if you ever need to run the codemod in script (e.g. in a CI pipeline).
 
 ### Installing it as a package

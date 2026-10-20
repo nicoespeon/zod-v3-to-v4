@@ -25,9 +25,12 @@ const execAsync = promisify(exec);
 intro(`🏗️  Let's migrate Zod from v3 to v4`);
 
 // Check if an argument was provided after calling the script
-// Ex: npx zod-v3-to-v4 path/to/your/tsconfig.json
+// Ex: npx zod-v3-to-v4 path/to/your/tsconfig.json -y
 const args = process.argv.slice(2);
-const tsConfigFilePathParam = args[0];
+const autoYes = args.includes("-y") || args.includes("--yes");
+const tsConfigFilePathParam = args.find(
+  (arg) => arg !== "-y" && arg !== "--yes",
+);
 if (tsConfigFilePathParam) {
   const isValid = validateTsConfigPath(tsConfigFilePathParam);
   if (isValid.success) {
@@ -46,7 +49,7 @@ Let's do it interactively!`,
 // Check if the git working directory is clean
 const { stdout } = await execAsync("git status --porcelain");
 const isGitDirty = stdout.trim().length > 0;
-if (isGitDirty) {
+if (isGitDirty && !autoYes) {
   const shouldContinue = await confirm({
     message: "Your git working directory is dirty. Continue?",
   });
@@ -88,9 +91,11 @@ async function runMigration(tsConfigFilePath: string) {
   // Ask the user if they want to migrate all the references.
   const isMonorepoRoot = filesToProcess.length === 0 && references.length > 0;
   if (isMonorepoRoot) {
-    const shouldFollowRefs = await confirm({
-      message: `Found ${references.length} project reference(s). Migrate all referenced packages?`,
-    });
+    const shouldFollowRefs = autoYes
+      ? true
+      : await confirm({
+          message: `Found ${references.length} project reference(s). Migrate all referenced packages?`,
+        });
 
     if (isCancel(shouldFollowRefs)) {
       cancel("Migration cancelled.");
