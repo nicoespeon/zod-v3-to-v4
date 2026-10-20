@@ -49,11 +49,40 @@ describe("CLI", () => {
     expect(readSource(projectDir)).toBe(zodV4Source);
   });
 
-  it("still asks to continue on a dirty git working directory when falling back to interactive mode, given -y", () => {
+  it("fails with an error instead of prompting, given -y and an invalid path", () => {
     const projectDir = createProject();
     projectDirs.push(projectDir);
 
-    const output = runCli(projectDir, ["missing/tsconfig.json", "-y"]);
+    const result = runCli(projectDir, ["missing/tsconfig.json", "-y"]);
+
+    expect(result).toMatchObject({
+      status: 1,
+      output: expect.stringContaining(
+        `"missing/tsconfig.json" is not a valid tsconfig file. File not found.`,
+      ),
+    });
+  });
+
+  it("fails with an error instead of prompting, given -y and no tsconfig.json in the current directory", () => {
+    const projectDir = createProject();
+    projectDirs.push(projectDir);
+    rmSync(join(projectDir, "tsconfig.json"));
+
+    const result = runCli(projectDir, ["-y"]);
+
+    expect(result).toMatchObject({
+      status: 1,
+      output: expect.stringContaining(
+        `"tsconfig.json" is not a valid tsconfig file. File not found.`,
+      ),
+    });
+  });
+
+  it("asks to continue on a dirty git working directory, given no path", () => {
+    const projectDir = createProject();
+    projectDirs.push(projectDir);
+
+    const { output } = runCli(projectDir, []);
 
     expect(output).toContain("Your git working directory is dirty. Continue?");
   });
@@ -93,11 +122,11 @@ function readSource(projectDir: string, packageDir = ".") {
 
 // No stdin, like in a CI pipeline: any prompt makes the CLI exit early.
 function runCli(cwd: string, args: string[]) {
-  const { stdout, stderr } = spawnSync("node", [cliPath, ...args], {
+  const { status, stdout, stderr } = spawnSync("node", [cliPath, ...args], {
     cwd,
     stdio: ["ignore", "pipe", "pipe"],
     encoding: "utf-8",
     timeout: 20_000,
   });
-  return stdout + stderr;
+  return { status, output: stdout + stderr };
 }

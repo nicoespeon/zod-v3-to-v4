@@ -39,8 +39,16 @@ if (tsConfigFilePathParam) {
     process.exit(0);
   }
 
+  const invalidPathMessage = `"${tsConfigFilePathParam}" is not a valid tsconfig file. ${isValid.reason}`;
+
+  // -y runs in CI, where a prompt would wait silently for nobody
+  if (autoYes) {
+    log.error(invalidPathMessage);
+    process.exit(1);
+  }
+
   log.warn(
-    `"${tsConfigFilePathParam}" is not a valid tsconfig file. ${isValid.reason}
+    `${invalidPathMessage}
 
 Let's do it interactively!`,
   );
