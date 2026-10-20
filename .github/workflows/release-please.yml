@@ -1,6 +1,6 @@
 # Automates releases from conventional commits using release-please.
 # It maintains the CHANGELOG, versioning, and creation of GitHub releases.
-# When a Release PR is merged, it also publishes to npm via OIDC trusted publishing.
+# When a GitHub release is published, it also publishes to npm via OIDC trusted publishing.
 #
 # Docs: https://github.com/marketplace/actions/release-please-action
 
@@ -10,6 +10,14 @@ on:
   push:
     branches:
       - main
+  release:
+    types: [published]
+  # Retry a failed npm publish without creating a new release
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish (e.g. v1.22.1)"
+        required: true
 
 permissions:
   id-token: write
@@ -19,35 +27,36 @@ permissions:
 
 jobs:
   release-please:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       # Create a release PR from the Conventional Commits
       - uses: googleapis/release-please-action@v4
-        id: release
         with:
           # Use a custom token to trigger CI workflow (GITHUB_TOKEN can't)
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: node
 
-      # Once the PR is merged, publish to npm
+  # Separate job so a release-please failure after creating the release can't skip it
+  publish:
+    if: ${{ github.event_name != 'push' }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.release_created }}
+        with:
+          ref: ${{ inputs.tag || github.ref }}
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-        if: ${{ steps.release.outputs.release_created }}
       - name: Setup Node
         uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.release_created }}
         with:
           cache: pnpm
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
       - name: Build
-        if: ${{ steps.release.outputs.release_created }}
         run: |
           pnpm install --frozen-lockfile
           pnpm build
       - name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}
         run: npm publish
