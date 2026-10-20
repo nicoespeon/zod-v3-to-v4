@@ -154,6 +154,7 @@ pnpm playground:interactive
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/marinaanisimova/"><img src="https://avatars.githubusercontent.com/u/62561106?v=4?s=100" width="100px;" alt="Marina"/><br /><sub><b>Marina</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Awillarion" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/shurane"><img src="https://avatars.githubusercontent.com/u/541433?v=4?s=100" width="100px;" alt="Ehtesh Choudhury"/><br /><sub><b>Ehtesh Choudhury</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Ashurane" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/ben-leder/"><img src="https://avatars.githubusercontent.com/u/34696955?v=4?s=100" width="100px;" alt="Ben Leder"/><br /><sub><b>Ben Leder</b></sub></a><br /><a href="https://github.com/nicoespeon/zod-v3-to-v4/issues?q=author%3Abenleder" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jericbas"><img src="https://avatars.githubusercontent.com/u/34228201?v=4?s=100" width="100px;" alt="Jeric Bas"/><br /><sub><b>Jeric Bas</b></sub></a><br /><a href="#ideas-jericbas" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/nicoespeon/zod-v3-to-v4/commits?author=jericbas" title="Code">💻</a></td>
     </tr>
   </tbody>
   <tfoot>
