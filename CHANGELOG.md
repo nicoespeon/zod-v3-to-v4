@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.22.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.22.1...v1.22.2) (2026-10-28)
+
+
+### Bug Fixes
+
+* leave non-schema variables alone ([#194](https://github.com/nicoespeon/zod-v3-to-v4/issues/194)) ([e9df96f](https://github.com/nicoespeon/zod-v3-to-v4/commit/e9df96ff2ef051c5b1ef99efdbfc7e94db83c67b))
+
 ## [1.22.1](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.22.0...v1.22.1) (2026-10-20)
 
 
