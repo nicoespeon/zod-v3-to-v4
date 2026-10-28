@@ -14,6 +14,12 @@ describe("Zod v3 to v4", () => {
       await runScenario("error-customization.deprecate-message");
     });
 
+    it("leaves `message` alone in variables that only reference a schema", async () => {
+      await runScenario(
+        "error-customization.deprecate-message.non-zod-variables",
+      );
+    });
+
     it("replaces `invalid_type_error` and `required_error` with `error` function", async () => {
       await runScenario("error-customization.drop-outdated-error-keys");
     });

@@ -103,23 +103,22 @@ export function collectDerivedZodSchemaReferences(
   identifierMap: Map<string, Identifier[]>,
 ): Identifier[] {
   const derivedReferences: Identifier[] = [];
-  const visited = new Set<string>();
+  const visited = new Set<Node>();
 
   function collectFromReferences(refs: Node[]) {
     for (const ref of refs) {
-      // Find the variable declaration that contains this Zod reference
-      const variableDeclaration = ref.getFirstAncestorByKind(
+      // Find the variable declaration initialized from this Zod reference
+      const variableDeclaration = getChainedExpression(ref).getParentIfKind(
         SyntaxKind.VariableDeclaration,
       );
       if (!variableDeclaration) {
         continue;
       }
 
-      const variableName = variableDeclaration.getName();
-      if (visited.has(variableName)) {
+      if (visited.has(variableDeclaration)) {
         continue;
       }
-      visited.add(variableName);
+      visited.add(variableDeclaration);
 
       // Get the identifier node for the variable name
       const nameNode = variableDeclaration.getNameNode();
@@ -128,9 +127,10 @@ export function collectDerivedZodSchemaReferences(
       }
 
       // Find all references to this variable
-      const allReferences = identifierMap.get(variableName) ?? [];
+      const allReferences = identifierMap.get(nameNode.getText()) ?? [];
+      const variableSymbol = nameNode.getSymbol();
       const variableReferences = allReferences.filter(
-        (node) => node !== nameNode,
+        (node) => node !== nameNode && node.getSymbol() === variableSymbol,
       );
 
       derivedReferences.push(...variableReferences);
@@ -142,4 +142,14 @@ export function collectDerivedZodSchemaReferences(
 
   collectFromReferences(zodReferences);
   return derivedReferences;
+}
+
+// `schema.min(1)` is chained from `schema`, `useForm(schema)` is not
+function getChainedExpression(node: Node): Node {
+  const parent = node.getParent();
+  const isChainedFromNode =
+    (Node.isPropertyAccessExpression(parent) ||
+      Node.isCallExpression(parent)) &&
+    parent.getExpression() === node;
+  return isChainedFromNode ? getChainedExpression(parent) : node;
 }
