@@ -2,6 +2,6 @@
   "name": "@playground/app",
   "private": true,
   "dependencies": {
-    "zod": "4.0.5"
+    "zod": "4.6.6"
   }
 }
