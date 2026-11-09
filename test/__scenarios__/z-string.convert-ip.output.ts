@@ -28,3 +28,9 @@ const ipSchemaWithAttrs = z
   .pipe(z.union([z.ipv4(), z.ipv6()]))
   .optional()
   .describe("Some IP Schema");
+
+const IP_MAX = { ip: 45 };
+const ipSchemaWithMaxFromProperty = z.union([
+  z.ipv4().max(IP_MAX.ip),
+  z.ipv6().max(IP_MAX.ip),
+]);

@@ -28,3 +28,6 @@ const ipSchemaWithAttrs = z
   .ip()
   .optional()
   .describe("Some IP Schema");
+
+const IP_MAX = { ip: 45 };
+const ipSchemaWithMaxFromProperty = z.string().max(IP_MAX.ip).ip();

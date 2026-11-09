@@ -29,3 +29,7 @@ export const urlSchema = z.object({
 
 // @ts-expect-error
 z.url().safeParse(stripeSession.url);
+
+// Format name used as a property in args
+const FIELD_MAX = { email: 254 };
+z.email("Invalid email").max(FIELD_MAX.email);

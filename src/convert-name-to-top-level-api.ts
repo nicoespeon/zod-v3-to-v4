@@ -406,8 +406,7 @@ function convertNameToTopLevelApi(
     let argsText = "";
 
     // Remove deprecated names from the chain
-    callExpression
-      .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+    getChainPropertyAccessExpressions(callExpression)
       .filter((expression) => names.includes(expression.getName()))
       .forEach((expression) => {
         const parent = expression.getFirstAncestorByKind(
@@ -542,8 +541,7 @@ function convertNameToTopLevelApiAndWrapInUnion(
 
   getCallExpressionsToConvert(node, { oldName: nameToWrap, names }).forEach(
     (callExpression) => {
-      callExpression
-        .getDescendantsOfKind(SyntaxKind.PropertyAccessExpression)
+      getChainPropertyAccessExpressions(callExpression)
         .filter((expression) => names.includes(expression.getName()))
         .forEach((expression) => {
           const parent = expression.getFirstAncestorByKind(
