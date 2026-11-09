@@ -10,6 +10,13 @@ Entries below v1.17.1 were written by hand following the [Keep a Changelog](http
 
 ---
 
+## [1.22.3](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.22.2...v1.22.3) (2026-11-09)
+
+
+### Bug Fixes
+
+* ignore format names in call arguments ([b919365](https://github.com/nicoespeon/zod-v3-to-v4/commit/b919365d2c69f46a33ea0c258f295662d49bb8a4)), closes [#204](https://github.com/nicoespeon/zod-v3-to-v4/issues/204)
+
 ## [1.22.2](https://github.com/nicoespeon/zod-v3-to-v4/compare/v1.22.1...v1.22.2) (2026-10-28)
 
 
